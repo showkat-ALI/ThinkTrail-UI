@@ -12,9 +12,11 @@ import { signin } from "../../../feature/auth/authSlice";
 import { useEffect } from "react";
 import Router from "next/router";
 import Link from "next/link";
+import { jwtDecode } from "jwt-decode";
 
 const signinFormSchema = z
   .object({
+    id: z.string(),
     email: z.string().email("Enter a Valid Email Address!"),
     password: z.string(),
   })
@@ -55,57 +57,25 @@ const SigninForm = () => {
       toast.error((error as any).data.message);
       // toast.error(error?.data?.message);
     } else if (isSuccess) {
-      const {
-        id,
-        title,
-        firstName,
-        lastName,
-        gender,
-        email,
-        phone,
-        state,
-        country,
-        currentJob,
-        studentType,
-        status,
-        highestStudy,
-        avatar,
-        roles = [],
-        expertise = "",
-        houseOrFlat = "",
-        landMark = "",
-        streetAddress = "",
-        townOrCity = "",
-        stateOrCountry = "",
-        postalOrZip = "",
-        userName = "",
-      } = data.data.user;
+      console.log("userDATA", data);
+
+      const { accessToken, needsPasswordChange } = data.data;
+
+      // Extract data from refreshToken
+      const decodedToken: any = jwtDecode(accessToken as string);
+      const { userId, role, email, status, isDeleted } = decodedToken;
+
+      // Set refreshToken to cookie
 
       dispatch(
         signin({
-          id,
-          title,
-          firstName,
-          lastName,
-          gender,
-          email,
-          phone,
-          state,
-          country,
-          currentJob,
-          studentType,
-          status,
-          highestStudy,
-          avatar,
-          roles,
-          expertise,
-          houseOrFlat,
-          landMark,
-          streetAddress,
-          townOrCity,
-          stateOrCountry,
-          postalOrZip,
-          userName,
+          id: userId,
+          email: email,
+          needsPasswordChange: needsPasswordChange,
+
+          status: status,
+          isDeleted: isDeleted,
+          roles: [role],
         })
       );
 
@@ -124,6 +94,18 @@ const SigninForm = () => {
       <div className="text-center text-lg font-semibold leading-3">
         <h3>Sign In</h3>
         <p className="text-sm mt-3">Sign in to stay connected.</p>
+      </div>
+      <div className="w-full">
+        <div className="mb-2 block">
+          <Label htmlFor="id" value="id" />
+        </div>
+        <TextInput
+          id="email"
+          type="text"
+          placeholder="250000001"
+          {...register("id")}
+        />
+        {errors.id && <InputErrorMessage message={errors.id?.message || ""} />}
       </div>
       <div className="w-full">
         <div className="mb-2 block">
