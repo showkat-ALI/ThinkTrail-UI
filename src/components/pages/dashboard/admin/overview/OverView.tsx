@@ -5,20 +5,41 @@ import { TiTick } from "react-icons/ti";
 import { BiTime } from "react-icons/bi";
 import { AiFillStar } from "react-icons/ai";
 import { Dropdown } from "flowbite-react";
-import {useGetAllEnrollmentInstructorQuery,useAllEnrollmentQuery } from "../../../../../feature/api/dashboardApi";
-import {Spinner} from "flowbite-react";
+import {
+  useGetAllEnrollmentInstructorQuery,
+  useAllEnrollmentQuery,
+} from "../../../../../feature/api/dashboardApi";
+import { Spinner } from "flowbite-react";
 import { useAppSelector } from "../../../../../app/hooks";
 
 const OverView = () => {
-  const { firstName,lastName,_id,roles } =
-  useAppSelector((state) => state.auth.user);
-  const { isError, data, error, isLoading, isSuccess } = useGetAllEnrollmentInstructorQuery(_id)
-  const { isError:enrollIsError, data:enrollData, error:enrollError, isLoading:enrollLoading, isSuccess:enrollSuccess } = useAllEnrollmentQuery({})
+  const { id, role } = useAppSelector((state) => state.auth.user);
+  const { isError, data, error, isLoading, isSuccess } =
+    useGetAllEnrollmentInstructorQuery(id);
+  const {
+    isError: enrollIsError,
+    data: enrollData,
+    error: enrollError,
+    isLoading: enrollLoading,
+    isSuccess: enrollSuccess,
+  } = useAllEnrollmentQuery({});
   const allCatagory = [
     {
       id: 0,
       name: "Course in progress",
-      number: isLoading ? <div><Spinner/></div>: roles.includes("instructor") ? data?.data?.enrollments?.length :  roles.includes("admin") && enrollLoading?   <div><Spinner/></div> : enrollData?.data?.enrollments?.length ,
+      number: isLoading ? (
+        <div>
+          <Spinner />
+        </div>
+      ) : role === "instructor" ? (
+        data?.data?.enrollments?.length
+      ) : role === "admin" && enrollLoading ? (
+        <div>
+          <Spinner />
+        </div>
+      ) : (
+        enrollData?.data?.enrollments?.length
+      ),
       logo: FaPenSquare,
     },
     {
@@ -40,7 +61,7 @@ const OverView = () => {
       logo: AiFillStar,
     },
   ];
- 
+
   return (
     <div className="mb-5">
       <div className="flex justify-between items-center mb-4">

@@ -8,7 +8,7 @@ import DashboardLayout from "../../components/layouts/DashboardLayout";
 const Students: NextPage = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["student", "instructor", "admin"]}>
+      <AccessTemplate accessRole={"superAdmin"}>
         <Head>
           <title>Screen Live Class | Fourth IT Academy</title>
         </Head>

@@ -75,7 +75,7 @@ const SigninForm = () => {
 
           status: status,
           isDeleted: isDeleted,
-          roles: [role],
+          role: role,
         })
       );
 

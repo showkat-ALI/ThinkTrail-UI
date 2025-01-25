@@ -49,8 +49,20 @@ const MobileAsideBar = () => {
   if (!show) {
     width = "-translate-x-[240px] w-0";
   }
-  const { avatar, firstName, lastName, userName, roles, studentType } =
-    useAppSelector((state) => state.auth.user);
+  const avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde"; // Unsplash avatar URL
+  const firstName = "John";
+  const lastName = "Doe";
+  const userName = "johndoe123";
+  const {
+    id,
+    email,
+    isDeleted,
+    role,
+    needsPasswordChange,
+    status,
+    passwordChangedAt,
+  } = useAppSelector((state) => state.auth.user);
+  const studentType = "self-pace";
   const router = useRouter();
   const [logout, { isSuccess, isError, error }] = useLogoutMutation();
   const dispatch = useAppDispatch();
@@ -138,7 +150,7 @@ const MobileAsideBar = () => {
             </div>
             {/* menu section  */}
             <div className="flex flex-col gap-3 font-nunito">
-              {roles.includes("admin")
+              {role === "admin"
                 ? [
                     {
                       name: "Dashboard",
@@ -223,7 +235,7 @@ const MobileAsideBar = () => {
                           : "",
                     },
                   ].map((single, idx) => <Item key={idx} item={single} />)
-                : roles.includes("instructor")
+                : role === "instructor"
                 ? [
                     {
                       name: "Dashboard",
@@ -403,7 +415,7 @@ const MobileAsideBar = () => {
                           : "",
                     },
                   ].map((single, idx) => <Item key={idx} item={single} />)
-                : roles.includes("student") && studentType === "self-pace"
+                : role === "student" && studentType === "self-pace"
                 ? [
                     {
                       name: "Dashboard",
@@ -457,7 +469,7 @@ const MobileAsideBar = () => {
                           : "",
                     },
                   ].map((single, idx) => <Item key={idx} item={single} />)
-                : roles.includes("student") &&
+                : role === "student" &&
                   studentType === "instructor-led" &&
                   [
                     {

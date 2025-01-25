@@ -44,8 +44,21 @@ import { Disclosure } from "@headlessui/react";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 const AsideBar = () => {
-  const { avatar, firstName, lastName, userName, roles, studentType } =
-    useAppSelector((state) => state.auth.user);
+  const avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde"; // Unsplash avatar URL
+  const firstName = "John";
+  const lastName = "Doe";
+  const userName = "johndoe123";
+  const {
+    id,
+    email,
+    isDeleted,
+    role,
+    needsPasswordChange,
+    status,
+    passwordChangedAt,
+  } = useAppSelector((state) => state.auth.user);
+  console.log("userId", id);
+  const studentType = "self-pace";
   const [show, setShow] = useState(true);
   let width = "w-[260px]";
   if (!show) {
@@ -140,7 +153,7 @@ const AsideBar = () => {
         </div>
         {/* menu section  */}
         <div className="flex flex-col gap-3 font-nunito">
-          {roles.includes("admin")
+          {role === "admin"
             ? [
                 {
                   name: "Dashboard",
@@ -225,7 +238,56 @@ const AsideBar = () => {
                       : "",
                 },
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : roles.includes("instructor")
+            : role === "superAdmin"
+            ? [
+                {
+                  name: "Creation",
+                  id: 6,
+                  url: "/dashboard/semester",
+                  icon: AiOutlineTeam,
+                  active:
+                    router.pathname == "/dashboard/semester" ||
+                    router.pathname === "/dashboard/assignment-creation" ||
+                    router.pathname ===
+                      "/dashboard/assignment/submitassignment" ||
+                    router.pathname === "/dashboard/assignmentmarking/[id]" ||
+                    router.pathname ===
+                      "/dashboard/assignment/submit-assignment" ||
+                    router.pathname === "/dashboard/assignment/edit/[id]" ||
+                    router.pathname ===
+                      "/dashboard/assignments/[singleAssignment]"
+                      ? "!border-[#3A57E8] !text-[#3A57E8]"
+                      : "",
+                  children: [
+                    {
+                      name: "All Assignment",
+                      url: "/dashboard/semester",
+                      active:
+                        router.pathname == "/dashboard/semester"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Add Assignment",
+                      url: "/dashboard/assignment-creation",
+                      active:
+                        router.pathname == "/dashboard/assignment-creation"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Submitted Assignment",
+                      url: "/dashboard/assignment/submit-assignment",
+                      active:
+                        router.pathname ==
+                        "/dashboard/assignment/submit-assignment"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                  ],
+                },
+              ].map((single, idx) => <Item key={idx} item={single} />)
+            : role === "instructor"
             ? [
                 {
                   name: "Dashboard",
@@ -326,32 +388,34 @@ const AsideBar = () => {
                       "/dashboard/assignments/[singleAssignment]"
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
-                    children: [
-                      {
-                        name: "All Assignment",
-                        url: "/dashboard/assignment/all-assignments",
-                        active:
-                          router.pathname == "/dashboard/assignment/all-assignments"
-                            ? "!border-[#3A57E8] !text-[#3A57E8]"
-                            : "" 
-                      },
-                      {
-                        name: "Add Assignment",
-                        url: "/dashboard/assignment-creation",
-                        active:
-                          router.pathname == "/dashboard/assignment-creation"
-                            ? "!border-[#3A57E8] !text-[#3A57E8]"
-                            : "",
-                      },
-                      {
-                        name: "Submitted Assignment",
-                        url: "/dashboard/assignment/submit-assignment",
-                        active:
-                          router.pathname == "/dashboard/assignment/submit-assignment"
-                            ? "!border-[#3A57E8] !text-[#3A57E8]"
-                            : "",
-                      },
-                    ],    
+                  children: [
+                    {
+                      name: "All Assignment",
+                      url: "/dashboard/assignment/all-assignments",
+                      active:
+                        router.pathname ==
+                        "/dashboard/assignment/all-assignments"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Add Assignment",
+                      url: "/dashboard/assignment-creation",
+                      active:
+                        router.pathname == "/dashboard/assignment-creation"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Submitted Assignment",
+                      url: "/dashboard/assignment/submit-assignment",
+                      active:
+                        router.pathname ==
+                        "/dashboard/assignment/submit-assignment"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                  ],
                 },
 
                 {
@@ -436,7 +500,7 @@ const AsideBar = () => {
                       : "",
                 },
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : roles.includes("student") && studentType === "self-pace"
+            : role === "student" && studentType === "self-pace"
             ? [
                 {
                   name: "Dashboard",
@@ -491,7 +555,7 @@ const AsideBar = () => {
                       : "",
                 },
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : roles.includes("student") &&
+            : role === "student" &&
               studentType === "instructor-led" &&
               [
                 {

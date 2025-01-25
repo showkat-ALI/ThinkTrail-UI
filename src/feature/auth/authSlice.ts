@@ -8,7 +8,7 @@ type User = {
 
   status: "in-progress" | "blocked";
   isDeleted: boolean;
-  roles: ("admin" | "student" | "hr" | "instructor")[];
+  role: ("admin" | "student" | "hr" | "instructor" | "superAdmin") | undefined;
 };
 
 type InitialState = {
@@ -23,7 +23,7 @@ const initialState: InitialState = {
     needsPasswordChange: false,
     status: "in-progress",
     isDeleted: false,
-    roles: [],
+    role: undefined,
   },
   refresh: false,
 };
@@ -56,7 +56,7 @@ const authSlice = createSlice({
       state.user.id = "";
       state.user.email = "";
       state.user.needsPasswordChange = false;
-      state.user.roles = [];
+      state.user.role = undefined;
       state.user.isDeleted = false;
       state.user.status = "in-progress";
     },
