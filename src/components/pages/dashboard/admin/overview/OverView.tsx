@@ -13,7 +13,7 @@ import { Spinner } from "flowbite-react";
 import { useAppSelector } from "../../../../../app/hooks";
 
 const OverView = () => {
-  const { id, role } = useAppSelector((state) => state.auth.user);
+  const { id, roles } = useAppSelector((state) => state.auth.user);
   const { isError, data, error, isLoading, isSuccess } =
     useGetAllEnrollmentInstructorQuery(id);
   const {
@@ -31,9 +31,9 @@ const OverView = () => {
         <div>
           <Spinner />
         </div>
-      ) : role === "instructor" ? (
+      ) : roles?.includes("instructor") ? (
         data?.data?.enrollments?.length
-      ) : role === "admin" && enrollLoading ? (
+      ) : roles?.includes("admin") && enrollLoading ? (
         <div>
           <Spinner />
         </div>

@@ -6,15 +6,15 @@ import dynamic from "next/dynamic";
 import PrivateTemplate from "../../../templates/PrivateTemplate";
 import AccessTemplate from "../../../templates/AccessTemplate";
 import { useAppSelector } from "../../../app/hooks";
+import { useGetUserQuery } from "../../../feature/api/authApi";
 
 const Student = () => {
-  const { roles, firstName } = useAppSelector((state) => state.auth.user);
-
+  const { data, isSuccess, isError } = useGetUserQuery({});
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["student"]}>
+      <AccessTemplate accessRoles={["student", "superAdmin"]}>
         <Head>
-          <title>{firstName} | My Courses</title>
+          <title> {data?.data?.name?.firstName}| My Courses</title>
         </Head>
         <DashboardLayout>
           <MyCourses />

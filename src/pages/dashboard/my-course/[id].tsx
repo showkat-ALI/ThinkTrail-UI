@@ -8,7 +8,7 @@ import AccessTemplate from "../../../templates/AccessTemplate";
 export default function mycourses() {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["student"]}>
+      <AccessTemplate accessRoles={["student", "superAdmin"]}>
         <Head>
           <title>My Courses | Fourth IT Academy</title>
         </Head>

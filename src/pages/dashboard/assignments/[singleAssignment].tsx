@@ -9,7 +9,7 @@ import AccessTemplate from "../../../templates/AccessTemplate";
 export default function index() {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["instructor"]}>
+      <AccessTemplate accessRoles={["instructor", "superAdmin"]}>
         <Head>
           <title>Instructor | Fourth IT Academy</title>
         </Head>

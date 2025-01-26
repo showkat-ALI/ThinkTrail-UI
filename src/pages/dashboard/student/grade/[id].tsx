@@ -8,7 +8,7 @@ import AccessTemplate from "../../../../templates/AccessTemplate";
 const index = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["instructor"]}>
+      <AccessTemplate accessRoles={["instructor", "superAdmin"]}>
         <Head>
           <title>Student Grade</title>
         </Head>

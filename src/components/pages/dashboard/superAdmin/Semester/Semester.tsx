@@ -1,5 +1,5 @@
 import React from "react";
-import { CreateSemester } from "./CreateSemester";
+import CreateSemester from "./CreateSemester";
 
 export const Semester = () => {
   return (

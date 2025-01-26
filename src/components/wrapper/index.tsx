@@ -41,14 +41,14 @@ const PageWrapper = (props: PageWrapperProps) => {
           isDeleted,
           status,
         } = data?.data;
-        const { needsPasswordChange, role } = user;
+        const { needsPasswordChange, roles } = user;
         setTimeout(() => {
           dispatch(
             signin({
               id,
               email,
               needsPasswordChange,
-              role,
+              roles,
               isDeleted,
               status,
             })

@@ -7,10 +7,9 @@ import PrivateTemplate from "../../../../templates/PrivateTemplate";
 import AccessTemplate from "../../../../templates/AccessTemplate";
 
 const Index: NextPage = () => {
-
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["student"]}>
+      <AccessTemplate accessRoles={["student", "superAdmin"]}>
         <Head>
           <title>Students | Fourth IT Academy</title>
         </Head>

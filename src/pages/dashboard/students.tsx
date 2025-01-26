@@ -9,7 +9,7 @@ import dynamic from "next/dynamic";
 const Students: NextPage = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["admin", "instructor"]}>
+      <AccessTemplate accessRoles={["admin", "instructor", "superAdmin"]}>
         <Head>
           <title>Students | Fourth IT Academy</title>
         </Head>

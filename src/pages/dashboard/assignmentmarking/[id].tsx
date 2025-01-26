@@ -1,21 +1,21 @@
-import React from 'react'
+import React from "react";
 
 //componentff
-import Assignment from '../../../components/pages/dashboard/instructor/Assignment/Assignmentmarking';
-import DashboardLayout from '../../../components/layouts/DashboardLayout';
+import Assignment from "../../../components/pages/dashboard/instructor/Assignment/Assignmentmarking";
+import DashboardLayout from "../../../components/layouts/DashboardLayout";
 import PrivateTemplate from "../../../templates/PrivateTemplate";
 import AccessTemplate from "../../../templates/AccessTemplate";
 
 const index = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["instructor"]}>
+      <AccessTemplate accessRoles={["instructor", "superAdmin"]}>
         <DashboardLayout>
           <Assignment />
         </DashboardLayout>
       </AccessTemplate>
     </PrivateTemplate>
-  )
-}
+  );
+};
 
-export default index
+export default index;

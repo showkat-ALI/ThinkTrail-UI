@@ -10,7 +10,7 @@ import AccessTemplate from "../../../../templates/AccessTemplate";
 const Edit = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["admin", "instructor"]}>
+      <AccessTemplate accessRoles={["admin", "instructor", "superAdmin"]}>
         <Head>
           <title>Instructor File | Fourth IT Academy</title>
         </Head>

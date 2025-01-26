@@ -5,11 +5,10 @@ import File from "../../components/pages/dashboard/instructor/files/File";
 import PrivateTemplate from "../../templates/PrivateTemplate";
 import AccessTemplate from "../../templates/AccessTemplate";
 
-
 const Files = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["instructor","student"]}>
+      <AccessTemplate accessRoles={["superAdmin"]}>
         <Head>
           <title>Files | Fourth IT Academy</title>
         </Head>

@@ -52,7 +52,7 @@ const AsideBar = () => {
     id,
     email,
     isDeleted,
-    role,
+    roles,
     needsPasswordChange,
     status,
     passwordChangedAt,
@@ -153,7 +153,7 @@ const AsideBar = () => {
         </div>
         {/* menu section  */}
         <div className="flex flex-col gap-3 font-nunito">
-          {role === "admin"
+          {roles && roles.includes("admin")
             ? [
                 {
                   name: "Dashboard",
@@ -238,7 +238,7 @@ const AsideBar = () => {
                       : "",
                 },
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : role === "superAdmin"
+            : roles && roles.includes("superAdmin")
             ? [
                 {
                   name: "Creation",
@@ -247,20 +247,25 @@ const AsideBar = () => {
                   icon: AiOutlineTeam,
                   active:
                     router.pathname == "/dashboard/semester" ||
-                    router.pathname === "/dashboard/assignment-creation" ||
-                    router.pathname ===
-                      "/dashboard/assignment/submitassignment" ||
-                    router.pathname === "/dashboard/assignmentmarking/[id]" ||
-                    router.pathname ===
-                      "/dashboard/assignment/submit-assignment" ||
-                    router.pathname === "/dashboard/assignment/edit/[id]" ||
+                    router.pathname === "/dashboard/academic-faculty" ||
+                    router.pathname === "/dashboard/academic-department" ||
+                    router.pathname === "/dashboard/faculty" ||
+                    router.pathname === "/dashboard/course/creation" ||
                     router.pathname ===
                       "/dashboard/assignments/[singleAssignment]"
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                   children: [
                     {
-                      name: "All Assignment",
+                      name: "Academic faculty",
+                      url: "/dashboard/academic-faculty",
+                      active:
+                        router.pathname == "/dashboard/academic-faculty"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Semester",
                       url: "/dashboard/semester",
                       active:
                         router.pathname == "/dashboard/semester"
@@ -268,26 +273,33 @@ const AsideBar = () => {
                           : "",
                     },
                     {
-                      name: "Add Assignment",
-                      url: "/dashboard/assignment-creation",
+                      name: "Academic department",
+                      url: "/dashboard/academic-department",
                       active:
-                        router.pathname == "/dashboard/assignment-creation"
+                        router.pathname == "/dashboard/academic-department"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
                     {
-                      name: "Submitted Assignment",
-                      url: "/dashboard/assignment/submit-assignment",
+                      name: "Course creation",
+                      url: "/dashboard/course/creation",
                       active:
-                        router.pathname ==
-                        "/dashboard/assignment/submit-assignment"
+                        router.pathname == "/dashboard/course/creation"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Semester Registration",
+                      url: "/dashboard/semester-registration",
+                      active:
+                        router.pathname == "/dashboard/semester-registration"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
                   ],
                 },
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : role === "instructor"
+            : roles && roles.includes("instructor")
             ? [
                 {
                   name: "Dashboard",
@@ -500,7 +512,7 @@ const AsideBar = () => {
                       : "",
                 },
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : role === "student" && studentType === "self-pace"
+            : roles?.includes("student") && studentType === "self-pace"
             ? [
                 {
                   name: "Dashboard",
@@ -555,7 +567,8 @@ const AsideBar = () => {
                       : "",
                 },
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : role === "student" &&
+            : roles &&
+              roles.includes("student") &&
               studentType === "instructor-led" &&
               [
                 {
@@ -734,7 +747,7 @@ export const IlearnDropdown = (props: {
 }) => {
   const { dropdowns, option } = props;
   return (
-    <Disclosure as="div" className="">
+    <Disclosure as="div" className="" defaultOpen>
       {({ open }) => (
         <>
           <Disclosure.Button className="flex w-full  justify-between items-center  text-left text-[#8A92A6] hover:text-[#3A57E8] cursor-pointer px-10 py-2">

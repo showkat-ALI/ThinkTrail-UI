@@ -57,7 +57,7 @@ const MobileAsideBar = () => {
     id,
     email,
     isDeleted,
-    role,
+    roles,
     needsPasswordChange,
     status,
     passwordChangedAt,
@@ -150,7 +150,7 @@ const MobileAsideBar = () => {
             </div>
             {/* menu section  */}
             <div className="flex flex-col gap-3 font-nunito">
-              {role === "admin"
+              {roles && roles.includes("admin")
                 ? [
                     {
                       name: "Dashboard",
@@ -235,7 +235,57 @@ const MobileAsideBar = () => {
                           : "",
                     },
                   ].map((single, idx) => <Item key={idx} item={single} />)
-                : role === "instructor"
+                : roles && roles.includes("superAdmin")
+                ? [
+                    {
+                      name: "Creation",
+                      id: 6,
+                      url: "/dashboard/semester",
+                      icon: AiOutlineTeam,
+                      active:
+                        router.pathname == "/dashboard/semester" ||
+                        router.pathname === "/dashboard/assignment-creation" ||
+                        router.pathname ===
+                          "/dashboard/assignment/submitassignment" ||
+                        router.pathname ===
+                          "/dashboard/assignmentmarking/[id]" ||
+                        router.pathname ===
+                          "/dashboard/assignment/submit-assignment" ||
+                        router.pathname === "/dashboard/assignment/edit/[id]" ||
+                        router.pathname ===
+                          "/dashboard/assignments/[singleAssignment]"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                      children: [
+                        {
+                          name: "All Assignment",
+                          url: "/dashboard/semester",
+                          active:
+                            router.pathname == "/dashboard/semester"
+                              ? "!border-[#3A57E8] !text-[#3A57E8]"
+                              : "",
+                        },
+                        {
+                          name: "Add Assignment",
+                          url: "/dashboard/assignment-creation",
+                          active:
+                            router.pathname == "/dashboard/assignment-creation"
+                              ? "!border-[#3A57E8] !text-[#3A57E8]"
+                              : "",
+                        },
+                        {
+                          name: "Submitted Assignment",
+                          url: "/dashboard/assignment/submit-assignment",
+                          active:
+                            router.pathname ==
+                            "/dashboard/assignment/submit-assignment"
+                              ? "!border-[#3A57E8] !text-[#3A57E8]"
+                              : "",
+                        },
+                      ],
+                    },
+                  ].map((single, idx) => <Item key={idx} item={single} />)
+                : roles && roles.includes("instructor")
                 ? [
                     {
                       name: "Dashboard",
@@ -299,12 +349,12 @@ const MobileAsideBar = () => {
                     },
                     {
                       name: "Messages",
-                      id: 4,
+                      id: 3,
                       url: "/dashboard/messages",
                       icon: BsFillChatLeftDotsFill,
                       active:
                         router.pathname == "/dashboard/messages"
-                          ? "!border-[#3A57E8] text-[#3A57E8]"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
                     {
@@ -330,18 +380,52 @@ const MobileAsideBar = () => {
                           "/dashboard/assignment/submitassignment" ||
                         router.pathname ===
                           "/dashboard/assignmentmarking/[id]" ||
+                        router.pathname ===
+                          "/dashboard/assignment/submit-assignment" ||
                         router.pathname === "/dashboard/assignment/edit/[id]" ||
                         router.pathname ===
                           "/dashboard/assignments/[singleAssignment]"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
+                      children: [
+                        {
+                          name: "All Assignment",
+                          url: "/dashboard/assignment/all-assignments",
+                          active:
+                            router.pathname ==
+                            "/dashboard/assignment/all-assignments"
+                              ? "!border-[#3A57E8] !text-[#3A57E8]"
+                              : "",
+                        },
+                        {
+                          name: "Add Assignment",
+                          url: "/dashboard/assignment-creation",
+                          active:
+                            router.pathname == "/dashboard/assignment-creation"
+                              ? "!border-[#3A57E8] !text-[#3A57E8]"
+                              : "",
+                        },
+                        {
+                          name: "Submitted Assignment",
+                          url: "/dashboard/assignment/submit-assignment",
+                          active:
+                            router.pathname ==
+                            "/dashboard/assignment/submit-assignment"
+                              ? "!border-[#3A57E8] !text-[#3A57E8]"
+                              : "",
+                        },
+                      ],
                     },
 
                     {
                       name: "Live Class",
                       id: 7,
-                      url: "/dashboard/my-account",
+                      url: "/dashboard/live-class-with-screen",
                       icon: VscDeviceCameraVideo,
+                      active:
+                        router.pathname == "/dashboard/live-class-with-screen"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
                     },
                     {
                       name: "Files",
@@ -415,7 +499,7 @@ const MobileAsideBar = () => {
                           : "",
                     },
                   ].map((single, idx) => <Item key={idx} item={single} />)
-                : role === "student" && studentType === "self-pace"
+                : roles?.includes("student") && studentType === "self-pace"
                 ? [
                     {
                       name: "Dashboard",
@@ -434,7 +518,8 @@ const MobileAsideBar = () => {
                       icon: AiOutlineUser,
                       active:
                         router.pathname == "/dashboard/my-course" ||
-                        router.pathname === "/dashboard/my-course/[id]"
+                        router.pathname === "/dashboard/my-course/[id]" ||
+                        router.pathname == "/dashboard/page-overview/[id]"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
@@ -469,7 +554,8 @@ const MobileAsideBar = () => {
                           : "",
                     },
                   ].map((single, idx) => <Item key={idx} item={single} />)
-                : role === "student" &&
+                : roles &&
+                  roles.includes("student") &&
                   studentType === "instructor-led" &&
                   [
                     {
@@ -484,7 +570,9 @@ const MobileAsideBar = () => {
                       url: "/dashboard/my-course",
                       icon: AiOutlineUser,
                       active:
-                        router.pathname == "/dashboard/my-course"
+                        router.pathname == "/dashboard/my-course" ||
+                        router.pathname === "/dashboard/my-course/[id]" ||
+                        router.pathname == "/dashboard/page-overview/[id]"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
@@ -536,14 +624,22 @@ const MobileAsideBar = () => {
                     {
                       name: "Live Class",
                       id: 7,
-                      url: "/dashboard/my-account",
+                      url: "/dashboard/live-class-with-screen",
+                      active:
+                        router.pathname == "/dashboard/live-class-with-screen"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
                       icon: VscDeviceCameraVideo,
                     },
                     {
                       name: "Grades",
                       id: 8,
-                      url: "/dashboard/grades",
+                      url: "/dashboard/students/grade",
                       icon: MdNoteAdd,
+                      active:
+                        router.pathname == "/dashboard/students/grade"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
                     },
                     {
                       name: "My Account",

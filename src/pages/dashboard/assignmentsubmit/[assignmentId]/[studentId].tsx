@@ -8,7 +8,7 @@ import AccessTemplate from "../../../../templates/AccessTemplate";
 const assignmentsubmit = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["student"]}>
+      <AccessTemplate accessRoles={["student"]}>
         <Head>Assignment | Fourth IT Academy</Head>
         <DashboardLayout>
           <AssignmentSubmitted />

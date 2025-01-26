@@ -14,9 +14,9 @@ const PrivateTemplate = (props: PrivateTemplateProps) => {
   const {
     refresh,
 
-    user: { email, role },
+    user: { email, roles },
   } = useAppSelector((state) => state.auth);
-  console.log(email, role);
+  console.log(email, roles);
   useEffect(() => {
     if (refresh && !isAuthorized(email, refresh)) {
       router.push("/signin");

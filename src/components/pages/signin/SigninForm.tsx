@@ -63,7 +63,7 @@ const SigninForm = () => {
 
       // Extract data from refreshToken
       const decodedToken: any = jwtDecode(accessToken as string);
-      const { userId, role, email, status, isDeleted } = decodedToken;
+      const { userId, roles, email, status, isDeleted } = decodedToken;
 
       // Set refreshToken to cookie
 
@@ -75,7 +75,7 @@ const SigninForm = () => {
 
           status: status,
           isDeleted: isDeleted,
-          role: role,
+          roles: roles,
         })
       );
 

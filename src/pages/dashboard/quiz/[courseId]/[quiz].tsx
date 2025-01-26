@@ -9,13 +9,13 @@ import AccessTemplate from "../../../../templates/AccessTemplate";
 const quiz: NextPage = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["student"]}>
+      <AccessTemplate accessRoles={["student", "superAdmin"]}>
         <Head>
           <title>Students | Fourth IT Academy</title>
         </Head>
 
         <DashboardLayout>
-            <Quiz />
+          <Quiz />
         </DashboardLayout>
       </AccessTemplate>
     </PrivateTemplate>

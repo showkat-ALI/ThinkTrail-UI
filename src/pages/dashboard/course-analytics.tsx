@@ -8,7 +8,7 @@ import AccessTemplate from "../../templates/AccessTemplate";
 export default function courseAnalytics() {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={"superAdmin"}>
+      <AccessTemplate accessRoles={["superAdmin"]}>
         <Head>
           <title>courses-analytics | Fourth IT Academy</title>
         </Head>

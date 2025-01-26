@@ -2,28 +2,28 @@ import { useAppSelector } from "../app/hooks";
 import NotFound from "../components/pages/404";
 
 type Roles =
-  | ("admin" | "student" | "instructor" | "hr" | "superAdmin")
+  | ("admin" | "student" | "instructor" | "hr" | "superAdmin")[]
   | undefined;
 type PrivateTemplateProps = {
   children: React.ReactNode;
-  accessRole: Roles;
+  accessRoles: Roles;
 };
 
 const AccessTemplate = (props: PrivateTemplateProps) => {
-  const roleAccessChecker = (userRole: Roles, accessRole: Roles) => {
-    if (userRole !== undefined) {
-      return true;
+  const roleAccessChecker = (userRoles: Roles, accessRoles: Roles) => {
+    if (!userRoles || !accessRoles) {
+      return false;
     }
 
-    return false;
+    return accessRoles.some((role) => userRoles.includes(role));
   };
 
-  const { children, accessRole } = props;
+  const { children, accessRoles } = props;
   const {
-    user: { role },
+    user: { roles },
   } = useAppSelector((state) => state.auth);
 
-  return roleAccessChecker(role, accessRole) ? <>{children}</> : <NotFound />;
+  return roleAccessChecker(roles, accessRoles) ? <>{children}</> : <NotFound />;
 };
 
 export default AccessTemplate;

@@ -8,7 +8,7 @@ import AccessTemplate from "../../../../templates/AccessTemplate";
 export default function overview() {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["student"]}>
+      <AccessTemplate accessRoles={["student", "superAdmin"]}>
         <Head>
           <title>Instructor | Fourth IT Academy</title>
         </Head>

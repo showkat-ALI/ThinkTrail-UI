@@ -6,24 +6,28 @@ type User = {
   passwordChangedAt?: Date;
   needsPasswordChange: false;
 
-  status: "in-progress" | "blocked";
+  status: "in-progress" | "blocked" | undefined;
   isDeleted: boolean;
-  role: ("admin" | "student" | "hr" | "instructor" | "superAdmin") | undefined;
+  roles:
+    | ("admin" | "student" | "hr" | "instructor" | "superAdmin")[]
+    | undefined;
 };
 
 type InitialState = {
+  data: any;
   user: User;
   refresh: boolean;
 };
 
 const initialState: InitialState = {
+  data: null,
   user: {
     id: "",
     email: "",
     needsPasswordChange: false,
     status: "in-progress",
     isDeleted: false,
-    role: undefined,
+    roles: undefined,
   },
   refresh: false,
 };
@@ -56,9 +60,9 @@ const authSlice = createSlice({
       state.user.id = "";
       state.user.email = "";
       state.user.needsPasswordChange = false;
-      state.user.role = undefined;
+      state.user.roles = [];
       state.user.isDeleted = false;
-      state.user.status = "in-progress";
+      state.user.status = undefined;
     },
     refresher: (state) => {
       state.refresh = true;

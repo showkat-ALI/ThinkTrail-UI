@@ -1,9 +1,10 @@
 import React from "react";
-import Head from "next/head";
-import DashboardLayout from "../../../components/layouts/DashboardLayout";
+import AcademicDepartment from "../../../components/pages/dashboard/superAdmin/academicdepartment/AcademicDepartment";
 import PrivateTemplate from "../../../templates/PrivateTemplate";
 import AccessTemplate from "../../../templates/AccessTemplate";
-import { Semester } from "../../../components/pages/dashboard/superAdmin/Semester/Semester";
+import Head from "next/head";
+import DashboardLayout from "../../../components/layouts/DashboardLayout";
+
 function index() {
   return (
     <>
@@ -13,12 +14,11 @@ function index() {
             <title>Instructor | Fourth IT Academy</title>
           </Head>
           <DashboardLayout>
-            <Semester />
+            <AcademicDepartment />
           </DashboardLayout>
         </AccessTemplate>
       </PrivateTemplate>
     </>
   );
 }
-
 export default index;

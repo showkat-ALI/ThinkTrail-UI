@@ -28,6 +28,10 @@ const dashboardApi = createApi({
     "optimization",
     "allfile",
     "liveclass",
+    "semester",
+    "department",
+    "academicFaculty",
+    "academicDepartment",
   ],
 
   endpoints: (builder) => ({
@@ -1124,6 +1128,28 @@ const dashboardApi = createApi({
       }),
       providesTags: [],
     }),
+    //create academic Semester
+    addAcademicSemester: builder.mutation({
+      query: (body: any) => ({
+        url: "/api/v1/academic-semesters/create-academic-semester",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["semester"],
+    }),
+    getAllSemesters: builder.query({
+      query: () => ({ url: "/api/v1/academic-semesters" }),
+      providesTags: [],
+    }),
+    //create academic Semester
+    addAcademicDepartment: builder.mutation({
+      query: (body: any) => ({
+        url: "/api/v1/academic-departments/create-academic-department",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["academicDepartment"],
+    }),
   }),
 });
 
@@ -1242,5 +1268,8 @@ export const {
   useDeleteOneMentoringMutation,
   useUpdateOneMetoringMutation,
   useGetAllAcademicSemestersQuery,
+  useAddAcademicSemesterMutation,
+  useGetAllSemestersQuery,
+  useAddAcademicDepartmentMutation,
 } = dashboardApi;
 export default dashboardApi;

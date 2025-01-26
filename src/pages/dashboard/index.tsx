@@ -9,16 +9,16 @@ import { useAppSelector } from "../../app/hooks";
 import MyCourses from "../../components/pages/dashboard/stundent-self/my-courses/Student";
 
 const DashboardPage: NextPage = () => {
-  const { role } = useAppSelector((state) => state.auth.user);
+  const { roles } = useAppSelector((state) => state.auth.user);
 
   return (
     <PrivateTemplate>
       {/* <AccessTemplate accessRole={"admin"}> */}
       <>
         <PrivateTemplate>
-          {role === "instructor" && (
+          {roles?.includes("instructor") && (
             <PrivateTemplate>
-              <AccessTemplate accessRole={"instructor"}>
+              <AccessTemplate accessRoles={["instructor"]}>
                 <Head>
                   <title> | Fourth IT Academy</title>
                 </Head>
@@ -29,9 +29,9 @@ const DashboardPage: NextPage = () => {
               </AccessTemplate>
             </PrivateTemplate>
           )}
-          {role === "admin" && (
+          {roles?.includes("admin") && (
             <PrivateTemplate>
-              <AccessTemplate accessRole={"admin"}>
+              <AccessTemplate accessRoles={["admin"]}>
                 <Head>
                   <title>| Fourth IT Academy</title>
                 </Head>
@@ -42,9 +42,9 @@ const DashboardPage: NextPage = () => {
               </AccessTemplate>
             </PrivateTemplate>
           )}
-          {role === "superAdmin" && (
+          {roles?.includes("superAdmin") && (
             <PrivateTemplate>
-              <AccessTemplate accessRole={"superAdmin"}>
+              <AccessTemplate accessRoles={["superAdmin"]}>
                 <Head>
                   <title>| Fourth IT Academy</title>
                 </Head>
@@ -55,9 +55,9 @@ const DashboardPage: NextPage = () => {
               </AccessTemplate>
             </PrivateTemplate>
           )}
-          {role === "student" && (
+          {roles?.includes("student") && (
             <PrivateTemplate>
-              <AccessTemplate accessRole={"student"}>
+              <AccessTemplate accessRoles={["student"]}>
                 <Head>
                   <title> | Fourth IT Academy</title>
                 </Head>

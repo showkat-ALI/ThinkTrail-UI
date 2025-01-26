@@ -9,7 +9,7 @@ export default function index() {
   return (
     <>
       <PrivateTemplate>
-        <AccessTemplate accessRole={["instructor"]}>
+        <AccessTemplate accessRoles={["instructor", "superAdmin"]}>
           <Head>
             <title>Submitted Assignments | Fourth IT Academy</title>
           </Head>

@@ -8,7 +8,7 @@ import PrivateTemplate from "../../templates/PrivateTemplate";
 const UsersPage: NextPage = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["admin"]}>
+      <AccessTemplate accessRoles={["admin", "superAdmin"]}>
         <Head>
           <title>Instructor | Fourth IT Academy</title>
         </Head>

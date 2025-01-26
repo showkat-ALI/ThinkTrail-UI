@@ -7,7 +7,7 @@ import Head from "next/head";
 export default function index() {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRole={["admin", "instructor"]}>
+      <AccessTemplate accessRoles={["admin", "instructor", "superAdmin"]}>
         <Head>
           <title>Create Announcement | Fourth IT Academy</title>
         </Head>

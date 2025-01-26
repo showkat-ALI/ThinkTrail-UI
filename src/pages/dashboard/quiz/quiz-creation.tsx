@@ -7,21 +7,21 @@ import PrivateTemplate from "../../../templates/PrivateTemplate";
 import AccessTemplate from "../../../templates/AccessTemplate";
 
 const students: NextPage = () => {
-    return (
-        <PrivateTemplate>
-            <AccessTemplate accessRole={["admin", "instructor"]}>
-                <Head>
-                    <title>Quiz Creation | Fourth IT Academy</title>
-                </Head>
+  return (
+    <PrivateTemplate>
+      <AccessTemplate accessRoles={["admin", "instructor", "superAdmin"]}>
+        <Head>
+          <title>Quiz Creation | Fourth IT Academy</title>
+        </Head>
 
-                <DashboardLayout>
-                    <div>
-                        <QuizCreation />
-                    </div>
-                </DashboardLayout>
-            </AccessTemplate>
-        </PrivateTemplate>
-    );
+        <DashboardLayout>
+          <div>
+            <QuizCreation />
+          </div>
+        </DashboardLayout>
+      </AccessTemplate>
+    </PrivateTemplate>
+  );
 };
 
 export default dynamic(() => Promise.resolve(students), { ssr: false });

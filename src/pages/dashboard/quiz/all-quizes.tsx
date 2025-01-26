@@ -9,7 +9,7 @@ const Courses: NextPage = () => {
   return (
     <>
       <PrivateTemplate>
-        <AccessTemplate accessRole={["student"]}>
+        <AccessTemplate accessRoles={["student", "superAdmin"]}>
           <Head>
             <title>All Quiz | Fourth IT Academy</title>
           </Head>
