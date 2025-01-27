@@ -2,13 +2,17 @@ import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaEnvelopeOpenText } from "react-icons/fa";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { IoMdPersonAdd } from "react-icons/io";
+
 import responsiveStyle from "../../../../../styles/ContactStyle.module.css";
 import {
+  useGetAllAcademicDepartmentsQuery,
   useGetAllAdminsQuery,
   useGetAllMentoringsQuery,
 } from "../../../../../feature/api/dashboardApi";
 import MentoringViewModal from "../../../../common/mentoring-view/index";
 import DeleteMentoring from "./DepartmentAssign";
+import AssignAdminModel from "../../../../common/assignAdmin/assignAdmin";
 
 interface IStudentProps {
   student: any;
@@ -16,16 +20,24 @@ interface IStudentProps {
   setShow: (show: boolean) => void;
   handleClose: () => void;
   setmentorId: any;
+  AllDepartments: any;
 }
 
 const AssignAdmin = () => {
   const { data, isLoading, isError, isSuccess } = useGetAllAdminsQuery({});
+  const {
+    data: AllDepartments,
+    isLoading: AlldepisLoading,
+    isError: AlldeptisError,
+    isSuccess: AlldeptisSuccess,
+  } = useGetAllAcademicDepartmentsQuery({});
   console.log(data);
   const [show, setShow] = useState<boolean>(false);
   const [mentorId, setmentorId] = useState("");
   const handleClose = () => {
     setShow(false);
   };
+  let allAdmin;
 
   return (
     <>
@@ -33,11 +45,15 @@ const AssignAdmin = () => {
         className={` ${responsiveStyle.responsiveTable} overflow-x-scroll lg:overflow-x-auto md:w-full mx-auto shadow-md sm:rounded-lg mt-12`}
       >
         {show && (
-          <MentoringViewModal
+          <AssignAdminModel
             show={show}
             handleClose={handleClose}
-            id={mentorId}
+            _id={mentorId}
             setShow={setShow}
+            Alldepartments={AllDepartments}
+            AlldeptisError={AlldeptisError}
+            AlldepisLoading={AlldepisLoading}
+            AlldeptisSuccess={AlldeptisSuccess}
           />
         )}
         <table className="w-full text-[16px] md:text-[18px] text-left">
@@ -54,7 +70,7 @@ const AssignAdmin = () => {
               </th>
 
               <th scope="col" className="py-3 px-6 font-nunito">
-                Operation
+                Send Mail
               </th>
               <th scope="col" className="py-3 px-6 text-center font-nunito">
                 Action
@@ -75,6 +91,7 @@ const AssignAdmin = () => {
                   setShow={setShow}
                   handleClose={handleClose}
                   setmentorId={setmentorId}
+                  AllDepartments={AllDepartments}
                 />
               ))
             ) : (
@@ -99,15 +116,13 @@ function Table({
   const {
     email,
     name: { firstName },
-    updatedAt,
-    interest,
     createdAt,
+    _id,
     id,
   } = student;
   const date = new Date(createdAt).toLocaleDateString();
   const [modalDelete, setmodalDelete] = useState(false);
   const [deleteMentorId, setdeleteMentorId] = useState("");
-
   const handleMentorView = (id: any) => {
     setShow(true);
     setmentorId(id);
@@ -155,13 +170,13 @@ function Table({
         <td className="py-4 px-6">
           <div className="flex justify-center space-x-6">
             <button
-              onClick={() => handleMentorView(id)}
+              onClick={() => handleMentorView(_id)}
               className="w-[32px] h-[32px] flex justify-center items-center text-white rounded-full bg-[#3A57E8] "
             >
-              <MdOutlineRemoveRedEye />
+              <IoMdPersonAdd />
             </button>
             <button
-              onClick={() => handleDelete(id)}
+              onClick={() => handleDelete(_id)}
               className="w-[32px] h-[32px] flex justify-center items-center text-white rounded-full bg-[#3A57E8] "
             >
               <AiOutlineDelete />

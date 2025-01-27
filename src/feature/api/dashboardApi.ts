@@ -1159,6 +1159,14 @@ const dashboardApi = createApi({
       query: () => ({ url: "/api/v1/admins" }),
       providesTags: [],
     }),
+    assignAdmin: builder.mutation({
+      query: ({ id, body }: { id: string; body: any }) => ({
+        url: `/api/v1/admins/assignDepartment/${id}`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: [],
+    }),
   }),
 });
 
@@ -1282,5 +1290,6 @@ export const {
   useAddAcademicDepartmentMutation,
   useGetAllAcademicDepartmentsQuery,
   useGetAllAdminsQuery,
+  useAssignAdminMutation,
 } = dashboardApi;
 export default dashboardApi;
