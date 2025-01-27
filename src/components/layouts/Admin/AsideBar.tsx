@@ -298,6 +298,16 @@ const AsideBar = () => {
                     },
                   ],
                 },
+                {
+                  name: "Assign Admin",
+                  url: "/dashboard/admins/assign-admin",
+                  id: 344,
+                  icon: AiOutlineAppstore,
+                  active:
+                    router.pathname == "/dashboard/admins/assign-admin"
+                      ? "!border-[#3A57E8] !text-[#3A57E8]"
+                      : "",
+                },
               ].map((single, idx) => <Item key={idx} item={single} />)
             : roles && roles.includes("instructor")
             ? [

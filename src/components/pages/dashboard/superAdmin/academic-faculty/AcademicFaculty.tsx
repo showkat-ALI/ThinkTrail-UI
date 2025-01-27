@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import {
   useAddAcademicDepartmentMutation,
   useAddAcademicSemesterMutation,
+  useGetAllAcademicDepartmentsQuery,
   useGetAllAcademicSemestersQuery,
 } from "../../../../../feature/api/dashboardApi";
 import { toast } from "react-toastify";
@@ -26,13 +27,13 @@ const AcademicFaculty = () => {
     { error, data, isLoading, isSuccess, isError },
   ] = useAddAcademicDepartmentMutation();
   const {
-    data: allAcademicSemesterData,
-    error: semesterErr,
-    isLoading: semesterLoading,
-    isError: semesterError,
-    isSuccess: semesterSuccess,
-  } = useGetAllAcademicSemestersQuery({});
-  console.log(allAcademicSemesterData);
+    data: AllAcademicDepartments,
+    error: deptErr,
+    isLoading: deptLoading,
+    isError: deptERRor,
+    isSuccess: deptSuccess,
+  } = useGetAllAcademicDepartmentsQuery({});
+  console.log(AllAcademicDepartments);
   const submitFirstStep = async (data: RegistrationFirstStepFromData) => {
     console.log("Form data", data);
     await AddAcademicDepartment(data).unwrap();
@@ -61,7 +62,9 @@ const AcademicFaculty = () => {
           <div className="from_middel lg:flex md:flex gap-7 sm:block">
             <div className="from_lft lg:w-3/6 sm:w-full">
               <div className="form_control h-[7rem]">
-                <label className="text-sm font-medium">Department Name</label>
+                <label className="text-sm font-medium">
+                  Academic Faculty Name
+                </label>
                 <br />
                 <select
                   {...register("name", { required: true })}
@@ -89,7 +92,9 @@ const AcademicFaculty = () => {
               </div>
 
               <div className="form_control h-[7rem]">
-                <label className="text-sm font-medium">Select Semester</label>
+                <label className="text-sm font-medium">
+                  Select Academic Department
+                </label>
                 <br />
                 <select
                   {...register("academicSemester", { required: true })}
@@ -102,12 +107,13 @@ const AcademicFaculty = () => {
                     padding: " 11px 17px",
                   }}
                 >
-                  <option value={""}>{"Select Semester"}</option>
-                  {allAcademicSemesterData?.data?.map((semester: any) => (
-                    <option value={semester?._id} key={semester._id}>
-                      {semester.name} - {semester.year}
-                    </option>
-                  ))}
+                  <option value={""}>{"Select Department"}</option>
+                  {AllAcademicDepartments?.data?.length > 0 &&
+                    AllAcademicDepartments.data.map((semester: any) => (
+                      <option value={semester?._id} key={semester?._id}>
+                        {semester?.name}
+                      </option>
+                    ))}
                 </select>
                 <div className="">
                   {errors.academicSemester && (

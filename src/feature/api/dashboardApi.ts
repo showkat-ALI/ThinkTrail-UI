@@ -1150,6 +1150,15 @@ const dashboardApi = createApi({
       }),
       invalidatesTags: ["academicDepartment"],
     }),
+    //get all academic department
+    getAllAcademicDepartments: builder.query({
+      query: () => ({ url: "/api/v1/academic-departments" }),
+      providesTags: [],
+    }),
+    getAllAdmins: builder.query({
+      query: () => ({ url: "/api/v1/admins" }),
+      providesTags: [],
+    }),
   }),
 });
 
@@ -1271,5 +1280,7 @@ export const {
   useAddAcademicSemesterMutation,
   useGetAllSemestersQuery,
   useAddAcademicDepartmentMutation,
+  useGetAllAcademicDepartmentsQuery,
+  useGetAllAdminsQuery,
 } = dashboardApi;
 export default dashboardApi;

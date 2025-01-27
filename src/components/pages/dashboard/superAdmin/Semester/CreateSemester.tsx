@@ -88,14 +88,12 @@ const CreateSemester = () => {
                   }}
                 >
                   <option value={""}>{"Select Year"}</option>
-                  {Array.from(
-                    { length: 20 },
-                    (_, i) => new Date().getFullYear() + i
-                  ).map((year) => (
-                    <option value={year} key={year}>
-                      {year}
-                    </option>
-                  ))}
+                  <option
+                    value={new Date().getFullYear()}
+                    key={new Date().getFullYear()}
+                  >
+                    {new Date().getFullYear()}
+                  </option>
                 </select>
                 <div className="">
                   {errors.year && <InputErrorMessage message={"Enter Year"} />}

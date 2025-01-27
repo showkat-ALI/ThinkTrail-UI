@@ -1,11 +1,11 @@
 import React from "react";
-import AcademicFaculty from "../../../components/pages/dashboard/superAdmin/academic-faculty/AcademicFaculty";
 import PrivateTemplate from "../../../templates/PrivateTemplate";
 import AccessTemplate from "../../../templates/AccessTemplate";
 import Head from "next/head";
 import DashboardLayout from "../../../components/layouts/DashboardLayout";
+import AssignAdmin from "../../../components/pages/dashboard/superAdmin/assign-admin/AssignAdmin";
 
-const index = () => {
+const Assignadmin = () => {
   return (
     <>
       <PrivateTemplate>
@@ -14,11 +14,11 @@ const index = () => {
             <title>Instructor | Fourth IT Academy</title>
           </Head>
           <DashboardLayout>
-            <AcademicFaculty />
+            <AssignAdmin />
           </DashboardLayout>
         </AccessTemplate>
       </PrivateTemplate>
     </>
   );
 };
-export default index;
+export default Assignadmin;
