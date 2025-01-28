@@ -300,11 +300,21 @@ const AsideBar = () => {
                 },
                 {
                   name: "Assign Admin",
-                  url: "/dashboard/admins/assign-admin",
+                  url: "/dashboard/assign-instructor/assign-admin",
                   id: 344,
                   icon: AiOutlineAppstore,
                   active:
                     router.pathname == "/dashboard/admins/assign-admin"
+                      ? "!border-[#3A57E8] !text-[#3A57E8]"
+                      : "",
+                },
+                {
+                  name: "Assign Instructors",
+                  url: "/dashboard/assign-instructor/assign-instructor",
+                  id: 344,
+                  icon: AiOutlineAppstore,
+                  active:
+                    router.pathname == "/dashboard/admins/assign-instructor"
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },

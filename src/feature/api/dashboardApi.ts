@@ -1159,9 +1159,33 @@ const dashboardApi = createApi({
       query: () => ({ url: "/api/v1/admins" }),
       providesTags: [],
     }),
+    getAllAcademicFaculties: builder.query({
+      query: () => ({ url: "/api/v1/academic-faculties" }),
+      providesTags: [],
+    }),
+    getAllFaculties: builder.query({
+      query: () => ({ url: "/api/v1/faculties" }),
+      providesTags: [],
+    }),
     assignAdmin: builder.mutation({
       query: ({ id, body }: { id: string; body: any }) => ({
         url: `/api/v1/admins/assignDepartment/${id}`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: [],
+    }),
+    assignAFacultytoAcademicFaculty: builder.mutation({
+      query: ({ id, body }: { id: string; body: any }) => ({
+        url: `/api/v1/academic-faculties/assign-faculty/${id}`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: [],
+    }),
+    addAcademicFaculty: builder.mutation({
+      query: (body: any) => ({
+        url: `api/v1/academic-faculties/create-academic-faculty`,
         method: "POST",
         body: body,
       }),
@@ -1291,5 +1315,9 @@ export const {
   useGetAllAcademicDepartmentsQuery,
   useGetAllAdminsQuery,
   useAssignAdminMutation,
+  useAddAcademicFacultyMutation,
+  useGetAllAcademicFacultiesQuery,
+  useAssignAFacultytoAcademicFacultyMutation,
+  useGetAllFacultiesQuery,
 } = dashboardApi;
 export default dashboardApi;

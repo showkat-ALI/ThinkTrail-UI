@@ -6,14 +6,13 @@ import { IoMdPersonAdd } from "react-icons/io";
 
 import responsiveStyle from "../../../../../styles/ContactStyle.module.css";
 import {
-  useGetAllAcademicDepartmentsQuery,
-  useGetAllAdminsQuery,
-  useGetAllMentoringsQuery,
+  useGetAllAcademicFacultiesQuery,
+  useGetAllFacultiesQuery,
 } from "../../../../../feature/api/dashboardApi";
-import MentoringViewModal from "../../../../common/mentoring-view/index";
-import DeleteMentoring from "./DepartmentAssign";
+import DeleteMentoring from "./InstructorAssign";
 import AssignAdminModel from "../../../../common/assignAdmin/assignAdmin";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
+import AssignInstructorModal from "../../../../common/assignInstructor/AssignInstructor";
 
 interface IStudentProps {
   student: any;
@@ -24,14 +23,15 @@ interface IStudentProps {
   AllDepartments: any;
 }
 
-const AssignAdmin = () => {
-  const { data, isLoading, isError, isSuccess } = useGetAllAdminsQuery({});
+const AssignInstructors = () => {
+  const { data, isLoading, isError, isSuccess } =
+    useGetAllAcademicFacultiesQuery({});
   const {
     data: AllDepartments,
     isLoading: AlldepisLoading,
     isError: AlldeptisError,
     isSuccess: AlldeptisSuccess,
-  } = useGetAllAcademicDepartmentsQuery({});
+  } = useGetAllFacultiesQuery({});
   console.log(data);
   const [show, setShow] = useState<boolean>(false);
   const [mentorId, setmentorId] = useState("");
@@ -39,14 +39,14 @@ const AssignAdmin = () => {
     setShow(false);
   };
   let allAdmin;
-
+  console.log(data);
   return (
     <>
       <div
         className={` ${responsiveStyle.responsiveTable} overflow-x-scroll lg:overflow-x-auto md:w-full mx-auto shadow-md sm:rounded-lg mt-12`}
       >
         {show && (
-          <AssignAdminModel
+          <AssignInstructorModal
             show={show}
             handleClose={handleClose}
             _id={mentorId}
@@ -61,18 +61,15 @@ const AssignAdmin = () => {
           <thead className="text-[#ADB5BD] font-nunito">
             <tr>
               <th scope="col" className="py-3 px-6 font-nunito">
-                Name
+                Faculty Name
               </th>
               <th scope="col" className="py-3 px-6 font-nunito ">
-                Email
+                Department Name
               </th>
               <th scope="col" className="py-3 px-6 font-nunito">
-                ID
+                Semester
               </th>
 
-              <th scope="col" className="py-3 px-6 font-nunito">
-                Send Mail
-              </th>
               <th scope="col" className="py-3 px-6 text-center font-nunito">
                 Action
               </th>
@@ -105,7 +102,7 @@ const AssignAdmin = () => {
   );
 };
 
-export default AssignAdmin;
+export default AssignInstructors;
 
 function Table({
   student,
@@ -114,15 +111,7 @@ function Table({
   handleClose,
   setmentorId,
 }: IStudentProps) {
-  const {
-    email,
-    name: { firstName },
-    createdAt,
-    _id,
-    id,
-    assignedDepartment,
-  } = student;
-  const date = new Date(createdAt).toLocaleDateString();
+  const { academicDepartment, name, _id, assignedFaculty } = student;
   const [modalDelete, setmodalDelete] = useState(false);
   const [deleteMentorId, setdeleteMentorId] = useState("");
   const handleMentorView = (id: any) => {
@@ -151,27 +140,20 @@ function Table({
           <div className="flex items-center space-x-2 justify-center">
             <div>
               <h2 className="text-[16px] md:text-[18px] text-[#232D42] font-medium  font-nunito">
-                {firstName}
+                {name}
               </h2>
             </div>
           </div>
         </td>
-        <td className="py-4 px-6 font-nunito">{email}</td>
-        <td className="py-4 px-6 font-nunito">{id}</td>
+        <td className="py-4 px-6 font-nunito">{academicDepartment?.name}</td>
         <td className="py-4 px-6 font-nunito">
-          <a
-            href={` mailto: ${email} `}
-            className="
-          text-[16px] flex items-center space-x-1.5 text-white px-4 py-1.5 rounded bg-[#3A57E8] 
-          "
-          >
-            <FaEnvelopeOpenText />
-            <span>Email</span>
-          </a>
+          {academicDepartment?.academicSemester?.name}-{" "}
+          {academicDepartment?.academicSemester?.year}
         </td>
+
         <td className="py-4 px-6">
           <div className="flex justify-center space-x-6">
-            {assignedDepartment ? (
+            {assignedFaculty ? (
               <div className="w-[32px] h-[32px] flex justify-center items-center text-white rounded-full bg-[#3A57E8]">
                 <IoCheckmarkDoneCircleSharp />
               </div>

@@ -4,6 +4,7 @@ import { InputErrorMessage } from "../../../../utils/error";
 import "react-quill/dist/quill.snow.css";
 import {
   useAddAcademicDepartmentMutation,
+  useAddAcademicFacultyMutation,
   useAddAcademicSemesterMutation,
   useGetAllAcademicDepartmentsQuery,
   useGetAllAcademicSemestersQuery,
@@ -12,7 +13,7 @@ import { toast } from "react-toastify";
 
 type RegistrationFirstStepFromData = {
   name: string;
-  academicSemester: string;
+  academicDepartment: string;
 };
 
 const AcademicFaculty = () => {
@@ -22,10 +23,8 @@ const AcademicFaculty = () => {
     formState: { errors },
   } = useForm<RegistrationFirstStepFromData>();
 
-  const [
-    AddAcademicDepartment,
-    { error, data, isLoading, isSuccess, isError },
-  ] = useAddAcademicDepartmentMutation();
+  const [AddAcademicFaculty, { error, data, isLoading, isSuccess, isError }] =
+    useAddAcademicFacultyMutation();
   const {
     data: AllAcademicDepartments,
     error: deptErr,
@@ -35,23 +34,28 @@ const AcademicFaculty = () => {
   } = useGetAllAcademicDepartmentsQuery({});
   console.log(AllAcademicDepartments);
   const submitFirstStep = async (data: RegistrationFirstStepFromData) => {
-    console.log("Form data", data);
-    await AddAcademicDepartment(data).unwrap();
+    console.log("fac data", data);
+    await AddAcademicFaculty(data).unwrap();
   };
 
   useEffect(() => {
     if (isError) {
       toast.error((error as any).data.message);
     } else if (isSuccess) {
-      toast.success("Department has been added successfully!");
+      toast.success("Academic Faculty has been added successfully!");
     }
   }, [isError, isSuccess, data, error]);
-  const AcademicDepartments = [
-    "EEE",
-    "CSE",
-    "CIVIL",
-    "ManageMent",
-    "Accounting",
+  const AcademicFaculties = [
+    "Faculty of MATHMATICS",
+    "Faculty of Science",
+    "Faculty of EEE",
+    "Faculty of CSE",
+    "Faculty of MME",
+    "Faculty of ENGLISH",
+    "Faculty of ARCH",
+    "Faculty of ME",
+    "Faculty of BENGALI",
+    "Faculty of SOCIOLOGY",
   ];
   return (
     <>
@@ -63,7 +67,7 @@ const AcademicFaculty = () => {
             <div className="from_lft lg:w-3/6 sm:w-full">
               <div className="form_control h-[7rem]">
                 <label className="text-sm font-medium">
-                  Academic Faculty Name
+                  Select Academic Faculty Name
                 </label>
                 <br />
                 <select
@@ -77,8 +81,8 @@ const AcademicFaculty = () => {
                     padding: " 11px 17px",
                   }}
                 >
-                  <option value="">{"Select department Name"}</option>
-                  {AcademicDepartments.map((key, value) => (
+                  <option value="">{"Select Faculty Name"}</option>
+                  {AcademicFaculties.map((key, value) => (
                     <option value={key} key={value}>
                       {key}
                     </option>
@@ -86,7 +90,7 @@ const AcademicFaculty = () => {
                 </select>
                 <div className="">
                   {errors.name && (
-                    <InputErrorMessage message={"Enter your Semester Name"} />
+                    <InputErrorMessage message={"Enter your Faculty Name"} />
                   )}
                 </div>
               </div>
@@ -97,7 +101,7 @@ const AcademicFaculty = () => {
                 </label>
                 <br />
                 <select
-                  {...register("academicSemester", { required: true })}
+                  {...register("academicDepartment", { required: true })}
                   className="mt-3 text-[#8A92A6]"
                   style={{
                     boxShadow: "0px 1px 15px rgb(0 0 0 / 15%)",
@@ -107,17 +111,18 @@ const AcademicFaculty = () => {
                     padding: " 11px 17px",
                   }}
                 >
-                  <option value={""}>{"Select Department"}</option>
+                  <option value={""}>{"Select Academic Department"}</option>
                   {AllAcademicDepartments?.data?.length > 0 &&
                     AllAcademicDepartments.data.map((semester: any) => (
                       <option value={semester?._id} key={semester?._id}>
-                        {semester?.name}
+                        {semester?.name}-{semester?.academicSemester?.name}-
+                        {semester?.academicSemester?.year}
                       </option>
                     ))}
                 </select>
                 <div className="">
-                  {errors.academicSemester && (
-                    <InputErrorMessage message={"Enter Semester"} />
+                  {errors.academicDepartment && (
+                    <InputErrorMessage message={"Enter Academic department"} />
                   )}
                 </div>
               </div>
