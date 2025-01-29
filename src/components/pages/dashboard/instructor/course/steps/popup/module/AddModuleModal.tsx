@@ -67,7 +67,8 @@ const AddModuleModal = ({
           </h3>
           <form
             className="space-y-6"
-            onSubmit={handleSubmit(CreateModuleHandler)}
+            // onSubmit={handleSubmit(CreateModuleHandler)}
+            onSubmit={(e) => e.preventDefault()}
           >
             <FormTextInput
               name="name"

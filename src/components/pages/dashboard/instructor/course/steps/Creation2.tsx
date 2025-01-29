@@ -89,21 +89,21 @@ const Creation2 = (props: StepPropss) => {
 
   const submitSecondStep = (data: props) => {
     // console.log(data)
-    if (isUploadSuccess) {
-      setFormData((prev: object) => ({ ...prev, ...data }));
-      const userData = { ...formData, ...data };
-      if (filePreview) {
-        userData.courseImage = filePreview;
-      }
-      setFormData((prev: object) => ({ ...prev, ...userData }));
-      if (id == "") {
-        createCourse(userData);
-      }
-      id && setStep(3);
-      if (isSuccess) {
-        setStep(3);
-      }
-    }
+    // if (isUploadSuccess) {
+    //   setFormData((prev: object) => ({ ...prev, ...data }));
+    //   const userData = { ...formData, ...data };
+    //   if (filePreview) {
+    //     userData.courseImage = filePreview;
+    //   }
+    //   setFormData((prev: object) => ({ ...prev, ...userData }));
+    //   if (id == "") {
+    //     createCourse(userData);
+    //   }
+    // id && setStep(3);
+    // if (isSuccess) {
+    setStep(3);
+    // }
+    // }
   };
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const Creation2 = (props: StepPropss) => {
               <label className="mb-2 text-base font-medium">
                 Upload course image
               </label>
-              <div className="flex flex-col md:flex-row justify-center gap-2 items-center">
+              {/* <div className="flex flex-col md:flex-row justify-center gap-2 items-center">
                 <label
                   className="text-white xsm:w-[7.5rem] lg:w-[9.5rem] justify-center items-center flex gap-3 bg-[#3A57E8] rounded-lg shadow-lg tracking-wide  cursor-pointer"
                   style={{ padding: "10px 0px" }}
@@ -153,7 +153,7 @@ const Creation2 = (props: StepPropss) => {
                 <span className="text-[#727272] text-sm">
                   {picsname ? picsname : "No file choosen"}
                 </span>
-              </div>
+              </div> */}
               <div className="text-right mt-3">
                 <button>
                   <Image src={DeleteIcon} width={24} height={27} alt="" />

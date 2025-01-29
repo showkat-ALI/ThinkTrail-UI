@@ -125,7 +125,7 @@ const Creation1 = (props: StepPropss) => {
             </div>
             <div className="from_middel lg:flex md:flex gap-7 sm:block">
               <div className="from_lft lg:w-3/6 sm:w-full">
-                <div className="form_control h-[7rem]">
+                {/* <div className="form_control h-[7rem]">
                   <label className="text-sm font-medium">Course Category</label>
                   <br />
                   <select
@@ -155,7 +155,7 @@ const Creation1 = (props: StepPropss) => {
                       <InputErrorMessage message={"Enter your category"} />
                     )}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="form_control h-[7rem]">
                   <label className="text-sm font-medium">Language</label>

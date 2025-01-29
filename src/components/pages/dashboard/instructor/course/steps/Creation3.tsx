@@ -79,48 +79,65 @@ const Creation3 = (props: StepPropss) => {
                 <Spinner aria-label="Default status example" />
               </div>
             ) : (
-              isSuccess &&
-              data.data.modules.map(
-                (
-                  {
-                    id,
-                    pages,
-                    name,
-                    assignments,
-                    quizzes,
-                    videos,
-                    slides,
-                    duration,
-                  }: {
-                    pages: string[];
-                    duration: number;
-                    id: string;
-                    name: string;
-                    index: string;
-                    assignments: string[];
-                    quizzes: string[];
-                    videos: string[];
-                    slides: string[];
-                  },
-                  index: string
-                ) => (
-                  <Module
-                    pages={pages}
-                    key={id}
-                    setmoduleName={setmoduleName}
-                    duration={duration}
-                    setModuleId={setModuleId}
-                    setEditShowModal={setEditShowModal}
-                    id={id}
-                    name={name}
-                    index={index}
-                    assignments={assignments}
-                    quizzes={quizzes}
-                    videos={videos}
-                    slides={slides}
-                  />
-                )
-              )
+              // (
+              //   isSuccess &&
+              //   data.data.modules.map(
+              //     (
+              //       {
+              //         id,
+              //         pages,
+              //         name,
+              //         assignments,
+              //         quizzes,
+              //         videos,
+              //         slides,
+              //         duration,
+              //       }: {
+              //         pages: string[];
+              //         duration: number;
+              //         id: string;
+              //         name: string;
+              //         index: string;
+              //         assignments: string[];
+              //         quizzes: string[];
+              //         videos: string[];
+              //         slides: string[];
+              //       },
+              //       index: string
+              //     ) => (
+              //       <Module
+              //         pages={pages}
+              //         key={id}
+              //         setmoduleName={setmoduleName}
+              //         duration={duration}
+              //         setModuleId={setModuleId}
+              //         setEditShowModal={setEditShowModal}
+              //         id={id}
+              //         name={name}
+              //         index={index}
+              //         assignments={assignments}
+              //         quizzes={quizzes}
+              //         videos={videos}
+              //         slides={slides}
+              //       />
+              //     )
+              //   )
+              // )
+              <Module
+                pages={["kdjkjdk"]}
+                key={id}
+                setmoduleName={setmoduleName}
+                duration={455}
+                setModuleId={setModuleId}
+                setEditShowModal={setEditShowModal}
+                id={id}
+                name={"jkjdk"}
+                index={id}
+                assignments={["assignments"]}
+                quizzes={["quizzes"]}
+                videos={["videos"]}
+                slides={["slides"]}
+              />
             )}
 
             <div className="btn flex justify-end gap-5">
