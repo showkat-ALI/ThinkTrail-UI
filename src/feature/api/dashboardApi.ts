@@ -275,9 +275,9 @@ const dashboardApi = createApi({
         submissionAttempts: string;
         availFrom: string;
         availUntil: string;
-        key: string;
+        createdBy: string;
       }) => ({
-        url: "/api/v1/assignments",
+        url: "/api/v1/assignment/create-assignment",
         method: "POST",
         body: body,
       }),

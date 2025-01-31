@@ -16,7 +16,15 @@ const AssignmentCategory = ({
   id: string;
   setShowModal: any;
 }) => {
-  const { id: userId, roles } = useAppSelector((state) => state.auth.user);
+  const {
+    id: userId,
+    email,
+    isDeleted,
+    roles,
+    needsPasswordChange,
+    status,
+    passwordChangedAt,
+  } = useAppSelector((state) => state.auth.user);
   const { data, isSuccess, isError, isLoading } = useGetAssignmentQuery({});
   const {
     data: instructorAssignmentData,
@@ -75,7 +83,7 @@ const AssignmentCategory = ({
           </Link>
           <div>
             <ul className="flex flex-col gap-[10px] text-[#8A92A6] text-[15px] mb-2 h-[12rem] overflow-y-scroll	">
-              {roles.includes("admin") &&
+              {roles?.includes("superAdmin") &&
                 (isLoading ? (
                   <div>Loading....</div>
                 ) : isError ? (
@@ -102,7 +110,8 @@ const AssignmentCategory = ({
                 ) : (
                   <div>No assignment found</div>
                 ))}
-              {roles.includes("instructor") &&
+              {(roles?.includes("instructor") ||
+                roles?.includes("superAdmin")) &&
                 (instructorAssignmentLoading ? (
                   <div>Loading....</div>
                 ) : instructorAssignmentIsError ? (

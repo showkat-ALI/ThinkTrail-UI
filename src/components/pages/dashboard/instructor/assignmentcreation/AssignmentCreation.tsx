@@ -12,6 +12,7 @@ import React, { useState, Fragment, useMemo, useEffect } from "react";
 import { useCreateAssignmentMutation } from "../../../../../feature/api/dashboardApi";
 import { useSingleFileUploadMutation } from "../../../../../feature/api/mediaUploadApi";
 import { useRouter } from "next/router";
+import { useGetUserQuery } from "../../../../../feature/api/authApi";
 
 type assignmentType = {
   name: string;
@@ -22,7 +23,6 @@ type assignmentType = {
   submissionAttempts: string;
   availFrom: string;
   availUntil: string;
-  key: string;
 };
 
 const assignmentData = {
@@ -34,7 +34,6 @@ const assignmentData = {
   submissionAttempts: "choose attempt",
   availFrom: "",
   availUntil: "",
-  key: "",
 };
 
 const AssignmentCreation = () => {
@@ -52,22 +51,29 @@ const AssignmentCreation = () => {
       fileUrl: formData.fileUrl,
       comment: formData.comment,
       score: formData.score,
-
+      submissionAttempts: formData.submissionAttempts,
       availFrom: formData.availFrom,
       availUntil: formData.availUntil,
-      key: formData.key,
     },
   });
 
   const [createAssignment, { error, data, isLoading, isSuccess, isError }] =
     useCreateAssignmentMutation();
+  const {
+    data: userData,
+    isSuccess: userIsSuccess,
+    isError: userIsError,
+  } = useGetUserQuery({});
 
   const assignmentHandler = (data: assignmentType) => {
     if (!data.fileUrl) {
       alert("please select assignment file");
     }
-    setFormData((prev: object) => ({ ...prev, ...data }));
-    createAssignment(data);
+    setFormData((prev: assignmentType) => ({ ...prev, ...data }));
+    console.log(data);
+    const createdAssignment = { ...data, createdBy: userData?.data._id };
+    console.log("full data", createdAssignment);
+    createAssignment(createdAssignment);
   };
 
   useEffect(() => {

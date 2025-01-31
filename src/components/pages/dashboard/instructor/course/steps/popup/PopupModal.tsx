@@ -30,7 +30,7 @@ const PopupModal = ({ setShowModal, id, index, name }: props) => {
       value === "page"
     ) {
       setactiveTab(value);
-     // console.log(activeTab);
+      // console.log(activeTab);
     }
   };
   return (
@@ -105,7 +105,7 @@ const PopupModal = ({ setShowModal, id, index, name }: props) => {
                 </select>
               </div>
               <div>
-                {activeTab == "assignment" ? (
+                {/* {activeTab == "assignment" ? (
                   <AssignmentCategory id={id} setShowModal={setShowModal} />
                 ) : activeTab == "video" ? (
                   <VideoCategory id={id} setShowModal={setShowModal} />
@@ -117,7 +117,7 @@ const PopupModal = ({ setShowModal, id, index, name }: props) => {
                   activeTab == "page" && (
                     <PageCategory id={id} setShowModal={setShowModal} />
                   )
-                )}
+                )} */}
               </div>
             </div>
           </div>
