@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import {
-  useAllAssignmentInstructorQuery,
+  useGetAllAssignmentsofAInstructorQuery,
   useGetMyEnrollmentAllQuery,
 } from "../../../../../feature/api/dashboardApi";
 import { useAppSelector } from "../../../../../app/hooks";
 import { Spinner } from "flowbite-react";
 import Link from "next/link";
 import moment from "moment";
+import { useGetUserQuery } from "../../../../../feature/api/authApi";
 
 export default function AllAssignments() {
-  const { id, roles } = useAppSelector((state) => state.auth.user);
+  const { user } = useAppSelector((state) => state.auth);
+  const { roles, id } = user;
+  const {
+    data: userData,
+    isSuccess: userIsSuccess,
+    isError: userIsError,
+  } = useGetUserQuery({});
   const { data, isSuccess, isError, isLoading } =
-    useAllAssignmentInstructorQuery(id);
+    useGetAllAssignmentsofAInstructorQuery(userData?.data?._id);
+  console.log("all-assignment", data?.data?.assignments);
   const {
     data: enrollData,
     isSuccess: enrollSuccess,
@@ -27,7 +35,7 @@ export default function AllAssignments() {
         <div>
           <h1 className="font-bold text-lg">Assignments</h1>
         </div>
-        {roles.includes("instructor") && (
+        {(roles?.includes("instructor") || roles?.includes("superAdmin")) && (
           <div className="flex justify-between items-center">
             <div className="p-[5px] border-[1px] rounded-l-full rounded-r-full border-gray-300  flex justify-between items-center">
               <Link
@@ -79,13 +87,13 @@ export default function AllAssignments() {
       </div>
       <div className="w-full flex flex-col max-w-[100vw] max-h-[100vh] overflow-y-scroll">
         <div className="">
-          {roles.includes("instructor") ? (
+          {roles?.includes("instructor") || roles?.includes("superAdmin") ? (
             isLoading ? (
               <div className="flex justify-center items-center">
                 <Spinner />
               </div>
-            ) : isSuccess && data.data.assignments.length > 0 ? (
-              data.data.assignments.map((item: any, _id: any) => (
+            ) : isSuccess && data?.data?.assignments.length > 0 ? (
+              data?.data?.assignments?.map((item: any, _id: any) => (
                 <Link
                   key={id}
                   href={"/dashboard/assignments/[singleAssignment]"}
@@ -215,15 +223,15 @@ export default function AllAssignments() {
             ) : (
               <div>No Assignment Found</div>
             )
-          ) : roles.includes("student") && enrollLoading ? (
+          ) : roles?.includes("student") && enrollLoading ? (
             <div className="flex justify-center items-center">
               <Spinner />
             </div>
-          ) : (
-            enrollSuccess &&
-            enrollData.data.enrollments.length > 0 ?  enrollData.data.enrollments.map((val1: any) => {
+          ) : enrollSuccess && enrollData.data.enrollments.length > 0 ? (
+            enrollData.data.enrollments.map((val1: any) => {
               return val1?.course?.modules?.map((val2: any) => {
-                return val2?.assignments.length > 0 && (
+                return (
+                  val2?.assignments.length > 0 &&
                   val2?.assignments?.map((val3: any) => {
                     return (
                       <div
@@ -371,12 +379,11 @@ export default function AllAssignments() {
                       </div>
                     );
                   })
-                ) ;
+                );
               });
             })
-              : (
-                 <div>No Assignment Found </div>
-              )
+          ) : (
+            <div>No Assignment Found </div>
           )}
         </div>
       </div>

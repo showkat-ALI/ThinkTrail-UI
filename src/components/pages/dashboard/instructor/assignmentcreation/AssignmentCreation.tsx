@@ -72,12 +72,12 @@ const AssignmentCreation = () => {
     setFormData((prev: assignmentType) => ({ ...prev, ...data }));
     console.log(data);
     const createdAssignment = { ...data, createdBy: userData?.data._id };
-    console.log("full data", createdAssignment);
     createAssignment(createdAssignment);
   };
 
   useEffect(() => {
     if (isError) {
+      console.log(error);
       toast.error("Assignment has added error");
     } else if (isSuccess) {
       toast.success("Assignment has Added Successfully!");

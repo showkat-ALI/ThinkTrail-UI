@@ -266,17 +266,7 @@ const dashboardApi = createApi({
     }),
     //create assignment
     createAssignment: builder.mutation({
-      query: (body: {
-        name: string;
-        description: string;
-        fileUrl: string;
-        comment: string;
-        score: number;
-        submissionAttempts: string;
-        availFrom: string;
-        availUntil: string;
-        createdBy: string;
-      }) => ({
+      query: (body) => ({
         url: "/api/v1/assignment/create-assignment",
         method: "POST",
         body: body,
@@ -284,9 +274,9 @@ const dashboardApi = createApi({
       invalidatesTags: ["assignment"],
     }),
     //Get all assignment
-    getAssignment: builder.query({
-      query: () => ({
-        url: `/api/v1/assignments`,
+    getAllAssignmentsofAInstructor: builder.query({
+      query: (ID) => ({
+        url: `api/v1/assignment/all-assignments?createdBy=${ID}`,
         method: "GET",
       }),
       providesTags: ["assignment"],
@@ -710,9 +700,9 @@ const dashboardApi = createApi({
       invalidatesTags: ["review"],
     }),
     //get all assignment in instructor
-    AllAssignmentInstructor: builder.query({
-      query: (id: any) => ({
-        url: `api/v1/assignments?createdBy=${id}`,
+    getAllCreatedAssignments: builder.query({
+      query: () => ({
+        url: `api/v1/assignment/all-assignments`,
         method: "GET",
       }),
       providesTags: ["assignment"],
@@ -1225,7 +1215,7 @@ export const {
   useCreatePageMutation,
   useUpdateModulePageMutation,
   useDeleteQuizMutation,
-  useAllAssignmentInstructorQuery,
+
   useUpdateReviewMutation,
   useAllQuizInstructorQuery,
   useSingleAssignmentQuery,
@@ -1269,7 +1259,7 @@ export const {
   useCreateAssignmentMutation,
   useCreateModuleCourseMutation,
   useGetCourseModuleQuery,
-  useGetAssignmentQuery,
+  useGetAllAssignmentsofAInstructorQuery,
   useUpdateModuleMutation,
   useUpdateVideoModuleMutation,
   useGetQuizQuery,
@@ -1319,5 +1309,6 @@ export const {
   useGetAllAcademicFacultiesQuery,
   useAssignAFacultytoAcademicFacultyMutation,
   useGetAllFacultiesQuery,
+  useGetAllCreatedAssignmentsQuery,
 } = dashboardApi;
 export default dashboardApi;

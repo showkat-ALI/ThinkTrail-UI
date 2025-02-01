@@ -82,6 +82,7 @@ export default function QuizCreation() {
   } = useForm();
 
   const onSubmit = (data: any) => {
+    console.log("quiz main", { ...data, Category: "quiz" });
     createQuiz(data);
   };
 
@@ -124,7 +125,8 @@ export default function QuizCreation() {
       // console.log(question);
       const quiz = data.data.quiz.id;
       //  console.log({ answers, question,quiz });
-      createQuizQuestion({ quiz: quiz, question: question, answers: answers });
+      console.log("quiz", { quiz: quiz, question: question, answers: answers });
+      // createQuizQuestion({ quiz: quiz, question: question, answers: answers });
       setAnswers([]);
     }
   };
@@ -296,13 +298,13 @@ export default function QuizCreation() {
           <div></div>
           <div className="bg-white flex mt-5 lg:mt-0 md:mt-0   flex-col px-5 py-3">
             <div className="w-full md:w-4/5 ">
-              <Category
+              {/* <Category
                 label="Category"
                 className="font-nunito"
                 register={register}
                 name="category"
                 options={singleCategory}
-              />
+              /> */}
             </div>
             <div className="w-full md:w-4/5 my-4">
               <SelectOptions
