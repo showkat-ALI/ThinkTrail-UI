@@ -251,6 +251,7 @@ const AsideBar = () => {
                     router.pathname === "/dashboard/academic-department" ||
                     router.pathname === "/dashboard/faculty" ||
                     router.pathname === "/dashboard/course/creation" ||
+                    router.pathname === "/dashboard/quiz/quiz-creation" ||
                     router.pathname ===
                       "/dashboard/assignments/[singleAssignment]"
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
@@ -293,6 +294,81 @@ const AsideBar = () => {
                       url: "/dashboard/semester-registration",
                       active:
                         router.pathname == "/dashboard/semester-registration"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Quiz Creation",
+                      url: "/dashboard/quiz/quiz-creation",
+                      active:
+                        router.pathname == "/dashboard/quiz/quiz-creation"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                  ],
+                },
+                {
+                  name: "All things",
+                  id: 6,
+                  url: "/dashboard/semester",
+                  icon: AiOutlineTeam,
+                  active:
+                    router.pathname == "/dashboard/semester" ||
+                    router.pathname === "/dashboard/academic-faculty" ||
+                    router.pathname === "/dashboard/academic-department" ||
+                    router.pathname === "/dashboard/faculty" ||
+                    router.pathname === "/dashboard/course/creation" ||
+                    router.pathname === "/dashboard/quiz/quiz-creation" ||
+                    router.pathname ===
+                      "/dashboard/assignments/[singleAssignment]"
+                      ? "!border-[#3A57E8] !text-[#3A57E8]"
+                      : "",
+                  children: [
+                    {
+                      name: "All quizzes of a ins",
+                      url: "/dashboard/quiz/all-quiz",
+                      active:
+                        router.pathname == "/dashboard/quiz/all-quiz"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Semester",
+                      url: "/dashboard/semester",
+                      active:
+                        router.pathname == "/dashboard/semester"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Academic department",
+                      url: "/dashboard/academic-department",
+                      active:
+                        router.pathname == "/dashboard/academic-department"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Course creation",
+                      url: "/dashboard/course/creation",
+                      active:
+                        router.pathname == "/dashboard/course/creation"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Semester Registration",
+                      url: "/dashboard/semester-registration",
+                      active:
+                        router.pathname == "/dashboard/semester-registration"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
+                      name: "Quiz Creation",
+                      url: "/dashboard/quiz/quiz-creation",
+                      active:
+                        router.pathname == "/dashboard/quiz/quiz-creation"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },

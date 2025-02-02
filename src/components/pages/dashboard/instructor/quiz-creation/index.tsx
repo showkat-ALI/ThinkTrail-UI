@@ -14,6 +14,7 @@ import Delete from "../../../../../Icon/Delete";
 import Plus from "../../../../../Icon/Plus";
 import { InputErrorMessage } from "../../../../utils/error";
 import ButtonLoader from "../../../../utils/loaders/ButtonLoader";
+import { useGetUserQuery } from "../../../../../feature/api/authApi";
 
 export default function QuizCreation() {
   const ReactQuill = useMemo(
@@ -35,6 +36,11 @@ export default function QuizCreation() {
       isError: Questioniserror,
     },
   ] = useCreateQuizQuestionMutation();
+  const {
+    data: userData,
+    isSuccess: isUserSuccess,
+    isError: isUserError,
+  } = useGetUserQuery({});
 
   const {
     data: allcategory,
@@ -80,10 +86,10 @@ export default function QuizCreation() {
     watch,
     formState: { errors },
   } = useForm();
-
+  console.log("created quiz", data);
   const onSubmit = (data: any) => {
-    console.log("quiz main", { ...data, Category: "quiz" });
-    createQuiz(data);
+    console.log("quiz main", { ...data });
+    createQuiz({ ...data, createdBy: userData?.data._id });
   };
 
   // answers
@@ -123,10 +129,10 @@ export default function QuizCreation() {
       toast.error("Quiz Not Created");
     } else {
       // console.log(question);
-      const quiz = data.data.quiz.id;
+      const quiz = data.data.savedQuiz._id;
       //  console.log({ answers, question,quiz });
-      console.log("quiz", { quiz: quiz, question: question, answers: answers });
-      // createQuizQuestion({ quiz: quiz, question: question, answers: answers });
+      console.log(data?.data.savedQuiz);
+      createQuizQuestion({ quiz: quiz, question: question, answers: answers });
       setAnswers([]);
     }
   };
@@ -460,51 +466,7 @@ export default function QuizCreation() {
     </div>
   );
 }
-const Category = ({
-  label,
-  name,
-  onChange,
-  className,
-  register,
-  options,
-}: {
-  label?: string | undefined;
-  name: string;
-  onChange?: any;
-  className?: string | undefined;
-  options: any;
-  register: any;
-}) => {
-  return (
-    <div className="">
-      <label
-        htmlFor="category"
-        className="block mb-3 font-bold  text-blue-600 font-nunito"
-      >
-        {label}
-      </label>
-      <select
-        name={name}
-        {...register(name, { required: true })}
-        id="category"
-        className=" bg-gray-50 border rounded-l-[0.25rem] rounded-r-[0.25rem]   border-blue-600 text-sm  focus:ring-blue-500 focus:border-blue-500  w-full p-2.5 flex flex-col justify-between font-nunito "
-        defaultValue={options && options?.length > 0 && options[0]._id}
-      >
-        {options &&
-          options?.length > 0 &&
-          options?.map((item: any, id: any) => (
-            <option
-              value={item.id}
-              key={id}
-              className="p-4 my-3 border border-b-2 border-black font-nunito"
-            >
-              {item.name}
-            </option>
-          ))}
-      </select>
-    </div>
-  );
-};
+
 const SelectOptions = ({
   label,
   name,

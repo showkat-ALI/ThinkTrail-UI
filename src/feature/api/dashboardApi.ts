@@ -158,20 +158,8 @@ const dashboardApi = createApi({
     }),
     //create a quiz
     createQuiz: builder.mutation({
-      query: (body: {
-        title: string;
-        category: any;
-        type: string;
-        attempts: number;
-        scorePerQuestion: number;
-        questionPerPage: number;
-        isSort: boolean;
-        isRequired: boolean;
-        startDate: string;
-        startTime: string;
-        timeAllowed: string;
-      }) => ({
-        url: "/api/v1/quiz",
+      query: (body) => ({
+        url: "/api/v1/quiz/create-quiz",
         method: "POST",
         body: body,
       }),
@@ -493,8 +481,8 @@ const dashboardApi = createApi({
     }),
     //create quiz querstion
     createQuizQuestion: builder.mutation({
-      query: (body: { quiz: string; question: string; answers: any }) => ({
-        url: "/api/v1/questions",
+      query: (body) => ({
+        url: "/api/v1/quiz/create-question",
         method: "POST",
         body: body,
       }),
