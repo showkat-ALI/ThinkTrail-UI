@@ -282,6 +282,14 @@ const AsideBar = () => {
                           : "",
                     },
                     {
+                      name: "Assignment-creation",
+                      url: "/dashboard/assignment-creation",
+                      active:
+                        router.pathname == "/dashboard/assignment-creation"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
+                    },
+                    {
                       name: "Course creation",
                       url: "/dashboard/course/creation",
                       active:
@@ -328,7 +336,7 @@ const AsideBar = () => {
                       name: "All quizzes of a ins",
                       url: "/dashboard/quiz/all-quiz",
                       active:
-                        router.pathname == "/dashboard/quiz/all-quiz"
+                        router.pathname == "/dashboard/quiz/all-quiz-ins"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
