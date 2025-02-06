@@ -105,19 +105,24 @@ const PopupModal = ({ setShowModal, id, index, name }: props) => {
                 </select>
               </div>
               <div>
-                {/* {activeTab == "assignment" ? (
-                  <AssignmentCategory id={id} setShowModal={setShowModal} />
-                ) : activeTab == "video" ? (
-                  <VideoCategory id={id} setShowModal={setShowModal} />
-                ) : activeTab == "slide" ? (
-                  <SlideCategory id={id} setShowModal={setShowModal} />
-                ) : activeTab == "quiz" ? (
-                  <QuizCategory id={id} setShowModal={setShowModal} />
-                ) : (
-                  activeTab == "page" && (
-                    <PageCategory id={id} setShowModal={setShowModal} />
+                {
+                  activeTab == "assignment" ? (
+                    <AssignmentCategory id={id} setShowModal={setShowModal} />
+                  ) : activeTab == "video" ? (
+                    <VideoCategory id={id} setShowModal={setShowModal} />
+                  ) : (
+                    activeTab == "quiz" && (
+                      <QuizCategory id={id} setShowModal={setShowModal} />
+                    )
                   )
-                )} */}
+                  // : (
+                  //   activeTab == "page" && (
+                  //     <PageCategory id={id} setShowModal={setShowModal} />
+                  //   ): (
+                  //     activeTab == "page" && (
+                  //       <PageCategory id={id} setShowModal={setShowModal} />
+                  //     )
+                }
               </div>
             </div>
           </div>

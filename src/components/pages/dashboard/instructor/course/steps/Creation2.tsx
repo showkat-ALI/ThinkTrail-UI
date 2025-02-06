@@ -4,7 +4,10 @@ import { useForm } from "react-hook-form";
 import { StepPropss } from "./Creation1";
 import { InputErrorMessage } from "../../../../../utils/error";
 import { useCreateCourseMutation } from "../../../../../../feature/api/dashboardApi";
-import { useSinglePhotoUploadMutation } from "../../../../../../feature/api/mediaUploadApi";
+import {
+  useSingleFileUploadMutation,
+  useSinglePhotoUploadMutation,
+} from "../../../../../../feature/api/mediaUploadApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../utils/loaders/ButtonLoader";
 import { useAppDispatch } from "../../../../../../app/hooks";
@@ -12,11 +15,11 @@ import { useAppSelector } from "../../../../../../app/hooks";
 import { Course } from "../../../../../../feature/course/courseSlice";
 //icon
 import DeleteIcon from "../../../../../../assets/Delete.png";
+import { useGetUserQuery } from "../../../../../../feature/api/authApi";
 
 type props = {
-  courseImage: string;
   videoUrl: string;
-  files: any;
+  fileUrl: string;
 };
 
 const Creation2 = (props: StepPropss) => {
@@ -25,7 +28,7 @@ const Creation2 = (props: StepPropss) => {
   const [picsname, setpicsname] = useState("");
   const dispatch = useAppDispatch();
   const [
-    singlePhotoUpload,
+    singleFileupload,
     {
       isLoading: uploadLoading,
       error: uploadError,
@@ -33,10 +36,11 @@ const Creation2 = (props: StepPropss) => {
       isSuccess: isUploadSuccess,
       isError: isUploadError,
     },
-  ] = useSinglePhotoUploadMutation();
+  ] = useSingleFileUploadMutation();
+
   const [
     createCourse,
-    { error, data: courseData, isLoading, isSuccess, isError },
+    { error, data: courseDataSuccess, isLoading, isSuccess, isError },
   ] = useCreateCourseMutation();
   const {
     register,
@@ -51,30 +55,33 @@ const Creation2 = (props: StepPropss) => {
     },
   });
   const {
-    course: { id, title },
+    course: { title },
   } = useAppSelector((state) => state.course);
-
+  console.log("from rdux", title);
   const onPrev = () => {
     setStep(step - 1);
   };
 
   const ImageGet = (e: any) => {
     const file = e.target.files;
-    //    console.log(file)
     setpicsname(e.target.files[0].name);
     if (file && file.length > 0 && file["0"].type.substr(0, 5) === "image") {
       const formData = new FormData();
-      formData.append("image", file["0"]);
-      singlePhotoUpload(formData);
+      formData.append("file", file["0"]);
+      singleFileupload(formData);
     } else if (
       file &&
       file.length > 0 &&
       file["0"].type.substr(0, 5) !== "image"
     ) {
       toast.error("Select a valid image.");
-      //    console.log("img", watch("courseImage"))
     }
   };
+  const {
+    data: logInInstructor,
+    isSuccess: userIsSuccess,
+    isError: isErrorUser,
+  } = useGetUserQuery({});
 
   useEffect(() => {
     if (isUploadError) {
@@ -82,43 +89,48 @@ const Creation2 = (props: StepPropss) => {
       toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
       //  console.log("upload success", uploadData);
-      setFilePreview(uploadData.data.image);
+      setFilePreview(uploadData.data.fileUrl);
       toast.success("upload success");
     }
-  }, [isUploadError, isUploadSuccess]);
+  }, [isUploadError, isUploadSuccess, uploadData?.data?.fileUrl, uploadError]);
 
   const submitSecondStep = (data: props) => {
-    // console.log(data)
-    // if (isUploadSuccess) {
-    //   setFormData((prev: object) => ({ ...prev, ...data }));
-    //   const userData = { ...formData, ...data };
-    //   if (filePreview) {
-    //     userData.courseImage = filePreview;
-    //   }
-    //   setFormData((prev: object) => ({ ...prev, ...userData }));
-    //   if (id == "") {
-    //     createCourse(userData);
-    //   }
-    // id && setStep(3);
-    // if (isSuccess) {
-    setStep(3);
-    // }
-    // }
+    if (isUploadSuccess) {
+      setFormData((prev: object) => ({ ...prev, ...data }));
+      const userData = { ...formData, ...data };
+      if (filePreview) {
+        userData.fileUrl = filePreview;
+      }
+      setFormData((prev: object) => ({ ...prev, ...userData }));
+      if (title === "") {
+        const courseData = {
+          ...userData,
+          createdBy: logInInstructor?.data?._id,
+        };
+        console.log(courseData);
+        createCourse(courseData);
+        // const { title } = courseDataSuccess;
+        // dispatch(Course({ title }));
+        // console.log("after dispatch", title);
+        console.log(courseDataSuccess);
+        toast.success("Course has Added Successfully!");
+      }
+      if (isSuccess) {
+        console.log(courseDataSuccess);
+      } else if (isError) {
+        toast.error("Course error:");
+      }
+    }
   };
 
   useEffect(() => {
-    if (isError) {
-      toast.error("Course Has Added Error");
-      //   console.log(error);
-    } else if (isSuccess) {
-      ///  console.log(courseData)
-      const { id, title } = courseData.data.course;
-      dispatch(Course({ id, title }));
-      toast.success("Course has Added Successfully!");
+    if (isSuccess && courseDataSuccess) {
+      console.log("Course creation successful:", courseDataSuccess);
+      // Handle the course creation data, e.g., navigate to the course details page
       setStep(3);
-      // console.log(data);
     }
-  }, [isError, isSuccess]);
+  }, [isSuccess, courseDataSuccess, setStep, step]);
+
   return (
     <>
       <form onSubmit={handleSubmit(submitSecondStep)}>
@@ -129,7 +141,7 @@ const Creation2 = (props: StepPropss) => {
               <label className="mb-2 text-base font-medium">
                 Upload course image
               </label>
-              {/* <div className="flex flex-col md:flex-row justify-center gap-2 items-center">
+              <div className="flex flex-col md:flex-row justify-center gap-2 items-center">
                 <label
                   className="text-white xsm:w-[7.5rem] lg:w-[9.5rem] justify-center items-center flex gap-3 bg-[#3A57E8] rounded-lg shadow-lg tracking-wide  cursor-pointer"
                   style={{ padding: "10px 0px" }}
@@ -144,7 +156,7 @@ const Creation2 = (props: StepPropss) => {
                   </svg>
                   <span className="text-base leading-normal">Upload</span>
                   <input
-                    {...register("files", { required: true })}
+                    {...register("fileUrl", { required: true })}
                     onChange={ImageGet}
                     type="file"
                     className="hidden"
@@ -153,7 +165,7 @@ const Creation2 = (props: StepPropss) => {
                 <span className="text-[#727272] text-sm">
                   {picsname ? picsname : "No file choosen"}
                 </span>
-              </div> */}
+              </div>
               <div className="text-right mt-3">
                 <button>
                   <Image src={DeleteIcon} width={24} height={27} alt="" />
@@ -166,7 +178,7 @@ const Creation2 = (props: StepPropss) => {
               {uploadLoading && "uploading..."}
               {isUploadSuccess && "Upload Completed"}
             </p>
-            {errors.files && <InputErrorMessage message={"Enter Image"} />}
+            {errors.fileUrl && <InputErrorMessage message={"Enter Image"} />}
           </div>
           <div
             className="upload_image_details flex justify-between bg-[#CDEBEC] mt-10 mb-8 flex-col sm:flex-row items-center sm:items-start"

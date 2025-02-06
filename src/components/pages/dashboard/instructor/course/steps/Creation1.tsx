@@ -17,7 +17,6 @@ export type StepPropss = {
 type RegistrationFirstStepFromData = {
   title: string;
   shortDescription: string;
-  category: string;
   language: string;
   durationInMinutes: number;
   price: number;
@@ -48,7 +47,6 @@ const Creation1 = (props: StepPropss) => {
     defaultValues: {
       title: formData.title,
       shortDescription: formData.shortDescription,
-      category: formData.category,
       language: formData.language,
       durationInMinutes: formData.durationInMinutes,
       price: formData.price,

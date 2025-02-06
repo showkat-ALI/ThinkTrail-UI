@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  useGetAssignmentQuery,
-  useAllAssignmentInstructorQuery,
-} from "../../../../../../../feature/api/dashboardApi";
+import { useGetAllAssignmentsofAInstructorQuery } from "../../../../../../../feature/api/dashboardApi";
 import { useUpdateModuleMutation } from "../../../../../../../feature/api/dashboardApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import Link from "next/link";
 import { useAppSelector } from "../../../../../../../app/hooks";
+import { useGetUserQuery } from "../../../../../../../feature/api/authApi";
 
 const AssignmentCategory = ({
   id,
@@ -17,21 +15,27 @@ const AssignmentCategory = ({
   setShowModal: any;
 }) => {
   const {
-    id: userId,
     email,
     isDeleted,
     roles,
     needsPasswordChange,
     status,
     passwordChangedAt,
-  } = useAppSelector((state) => state.auth.user);
-  const { data, isSuccess, isError, isLoading } = useGetAssignmentQuery({});
+  } = useAppSelector((state: { auth: { user: any } }) => state.auth.user);
+  const {
+    data: userData,
+    isSuccess: userIsSuccess,
+    isError: isErrorUser,
+  } = useGetUserQuery({});
+
+  console.log("me data", userData);
+
   const {
     data: instructorAssignmentData,
     isSuccess: instructorAssignmentSuccess,
     isError: instructorAssignmentIsError,
     isLoading: instructorAssignmentLoading,
-  } = useAllAssignmentInstructorQuery(userId);
+  } = useGetAllAssignmentsofAInstructorQuery(userData?.data._id);
   const [
     updateModule,
     {
@@ -54,7 +58,7 @@ const AssignmentCategory = ({
     //   console.log(assignmentId,id)
   };
   useEffect(() => {
-    if (isError) {
+    if (instructorAssignmentIsError) {
       toast.error((error as any).data.message);
       // console.log(error);
     } else if (moduleisSuccess) {
@@ -62,7 +66,7 @@ const AssignmentCategory = ({
       //  console.log(data);
       setShowModal(false);
     }
-  }, [isError, moduleisSuccess]);
+  }, [instructorAssignmentIsError, moduleisSuccess]);
   return (
     <>
       <div>
@@ -84,21 +88,21 @@ const AssignmentCategory = ({
           <div>
             <ul className="flex flex-col gap-[10px] text-[#8A92A6] text-[15px] mb-2 h-[12rem] overflow-y-scroll	">
               {roles?.includes("superAdmin") &&
-                (isLoading ? (
+                (instructorAssignmentLoading ? (
                   <div>Loading....</div>
-                ) : isError ? (
+                ) : instructorAssignmentIsError ? (
                   <div>Error....</div>
-                ) : isSuccess &&
-                  data?.data?.assignments &&
-                  data.data.assignments.length > 0 ? (
-                  data.data.assignments.map(
+                ) : instructorAssignmentSuccess &&
+                  instructorAssignmentData?.data?.assignments &&
+                  instructorAssignmentData?.data?.assignments?.length > 0 ? (
+                  instructorAssignmentData?.data?.assignments.map(
                     (
-                      { name, id }: { name: string; id: string },
+                      { name, _id }: { name: string; _id: string },
                       index: string
                     ) => (
                       <li
                         key={index}
-                        onClick={() => clickAssignment(id)}
+                        onClick={() => clickAssignment(_id)}
                         className={`${
                           activeClass == id && "text-[#3A57E8]"
                         } hover:text-[#da7b4f] cursor-pointer`}
@@ -118,8 +122,8 @@ const AssignmentCategory = ({
                   <div>Error....</div>
                 ) : instructorAssignmentSuccess &&
                   instructorAssignmentData?.data?.assignments &&
-                  instructorAssignmentData.data.assignments.length > 0 ? (
-                  instructorAssignmentData.data.assignments.map(
+                  instructorAssignmentData?.data?.assignments.length > 0 ? (
+                  instructorAssignmentData?.data?.assignments.map(
                     (
                       { name, id }: { name: string; id: string },
                       index: string

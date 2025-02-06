@@ -34,6 +34,7 @@ const AddModuleModal = ({
   });
   const router = useRouter();
   const id = router.query.editId as any;
+  console.log("course id", id);
   const [createModuleCourse, { error, data, isLoading, isSuccess, isError }] =
     useCreateModuleCourseMutation();
 

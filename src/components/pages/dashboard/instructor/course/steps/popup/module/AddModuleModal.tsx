@@ -34,6 +34,7 @@ const AddModuleModal = ({
   const {
     course: { id, title },
   } = useAppSelector((state) => state.course);
+  console.log("course id", id);
   const [createModuleCourse, { error, data, isLoading, isSuccess, isError }] =
     useCreateModuleCourseMutation();
 

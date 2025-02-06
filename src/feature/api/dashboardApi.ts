@@ -186,23 +186,8 @@ const dashboardApi = createApi({
     }),
     //create course
     createCourse: builder.mutation({
-      query: (body: {
-        title: string;
-        shortDescription: string;
-        category: string;
-        language: string;
-        durationInMinutes: number;
-        price: number;
-        level: string;
-        featured?: boolean;
-        numberOfLectures: number;
-        discountPrice: number;
-        isDiscount?: boolean;
-        description: string;
-        courseImage: string;
-        videoUrl: string;
-      }) => ({
-        url: "/api/v1/courses",
+      query: (body) => ({
+        url: "/api/v1/course/create-course",
         method: "POST",
         body: body,
       }),
