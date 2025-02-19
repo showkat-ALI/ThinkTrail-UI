@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { InputErrorMessage } from "../../../../../../utils/error";
 import { useForm, useFormContext } from "react-hook-form";
 import { useUpdateVideoModuleMutation } from "../../../../../../../feature/api/dashboardApi";
-import { useSingleVideoUploadMutation } from "../../../../../../../feature/api/mediaUploadApi";
+import { useSingleFileUploadMutation, useSingleVideoUploadMutation } from "../../../../../../../feature/api/mediaUploadApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 
@@ -43,16 +43,26 @@ const VideoCategory = ({
   const [localVideoKey, setlocalVideoKey] = useState("");
   const [updateVideoModule, { isError, error, data, isLoading, isSuccess }] =
     useUpdateVideoModuleMutation();
-  const [
-    singleVideoUpload,
-    {
-      isLoading: uploadLoading,
-      error: uploadError,
-      data: uploadData,
-      isSuccess: isUploadSuccess,
-      isError: isUploadError,
-    },
-  ] = useSingleVideoUploadMutation();
+  // const [
+  //   singleVideoUpload,
+  //   {
+  //     isLoading: uploadLoading,
+  //     error: uploadError,
+  //     data: uploadData,
+  //     isSuccess: isUploadSuccess,
+  //     isError: isUploadError,
+  //   },
+  // ] = useSingleVideoUploadMutation();
+   const [
+      singleFileupload,
+      {
+        isLoading: uploadLoading,
+        error: uploadError,
+        data: uploadData,
+        isSuccess: isUploadSuccess,
+        isError: isUploadError,
+      },
+    ] = useSingleFileUploadMutation();
   const [showVideoInputLocal, setshowVideoInputLocal] = useState(false);
   const [youtubeUrl, setyoutubeUrl] = useState("");
 
@@ -62,9 +72,9 @@ const VideoCategory = ({
     if (file && file.length > 0 && file["0"].type.substr(0, 5) === "video") {
       const formData = new FormData();
       setshowVideoInputLocal(true);
-      formData.append("video", file["0"]);
-      // console.log(file);
-      singleVideoUpload(formData);
+      formData.append("file", file["0"]);
+      console.log(formData)
+      singleFileupload(formData);
     } else if (
       file &&
       file.length > 0 &&
@@ -79,8 +89,10 @@ const VideoCategory = ({
       console.log("upload error", uploadError);
       toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
-      setlocalVideo(uploadData.data.video);
-      setlocalVideoKey(uploadData.data.key);
+      setlocalVideo(uploadData.data);
+      const randomKey = `video_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      setlocalVideoKey(randomKey);
+      // setlocalVideoKey(uploadData.data.key);
       toast.success("success");
     }
   }, [isUploadError, isUploadSuccess]);

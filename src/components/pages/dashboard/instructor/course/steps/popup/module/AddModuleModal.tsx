@@ -32,14 +32,14 @@ const AddModuleModal = ({
     resolver: zodResolver(Schema),
   });
   const {
-    course: { id, title },
+    course: { _id, title },
   } = useAppSelector((state) => state.course);
-  console.log("course id", id);
+  console.log("course id", _id);
   const [createModuleCourse, { error, data, isLoading, isSuccess, isError }] =
     useCreateModuleCourseMutation();
 
   const CreateModuleHandler = (data: FormData) => {
-    createModuleCourse({ name: data.name, course: id });
+    createModuleCourse({ name: data.name, course: _id });
     //   console.log(data);
     //   console.log(data)
   };
@@ -68,8 +68,7 @@ const AddModuleModal = ({
           </h3>
           <form
             className="space-y-6"
-            // onSubmit={handleSubmit(CreateModuleHandler)}
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit(CreateModuleHandler)}
           >
             <FormTextInput
               name="name"

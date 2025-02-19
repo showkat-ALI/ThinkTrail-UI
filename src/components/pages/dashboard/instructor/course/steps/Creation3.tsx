@@ -19,7 +19,7 @@ import EditModuleModal from "./popup/module/EditModuleModal";
 const Creation3 = (props: StepPropss) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const {
-    course: { id, title },
+    course: { _id, title },
   } = useAppSelector((state) => state.course);
   const [moduleModalShow, setmoduleModalShow] = useState<boolean>(false);
   const { setStep, setFormData, formData, step } = props;
@@ -29,7 +29,7 @@ const Creation3 = (props: StepPropss) => {
     formState: { errors },
   } = useForm<FormData>();
   const { isError, data, error, isLoading, isSuccess } =
-    useGetCourseModuleQuery(id);
+    useGetCourseModuleQuery(_id);
   const [EditshowModal, setEditShowModal] = useState<boolean>(false);
   const [ModuleId, setModuleId] = useState("");
   const [moduleName, setmoduleName] = useState("");
@@ -79,65 +79,62 @@ const Creation3 = (props: StepPropss) => {
                 <Spinner aria-label="Default status example" />
               </div>
             ) : (
-              // (
-              //   isSuccess &&
-              //   data.data.modules.map(
-              //     (
-              //       {
-              //         id,
-              //         pages,
-              //         name,
-              //         assignments,
-              //         quizzes,
-              //         videos,
-              //         slides,
-              //         duration,
-              //       }: {
-              //         pages: string[];
-              //         duration: number;
-              //         id: string;
-              //         name: string;
-              //         index: string;
-              //         assignments: string[];
-              //         quizzes: string[];
-              //         videos: string[];
-              //         slides: string[];
-              //       },
-              //       index: string
-              //     ) => (
-              //       <Module
-              //         pages={pages}
-              //         key={id}
-              //         setmoduleName={setmoduleName}
-              //         duration={duration}
-              //         setModuleId={setModuleId}
-              //         setEditShowModal={setEditShowModal}
-              //         id={id}
-              //         name={name}
-              //         index={index}
-              //         assignments={assignments}
-              //         quizzes={quizzes}
-              //         videos={videos}
-              //         slides={slides}
-              //       />
-              //     )
-              //   )
-              // )
-              <Module
-                pages={["kdjkjdk"]}
-                key={id}
-                setmoduleName={setmoduleName}
-                duration={455}
-                setModuleId={setModuleId}
-                setEditShowModal={setEditShowModal}
-                id={id}
-                name={"jkjdk"}
-                index={id}
-                assignments={["assignments"]}
-                quizzes={["quizzes"]}
-                videos={["videos"]}
-                slides={["slides"]}
-              />
+              isSuccess &&
+              data?.data?.map(
+                (
+                  {
+                    pages = [],
+                    name = "",
+                    assignments = [],
+                    quizzes = [],
+                    videos = [],
+                    slides = [],
+                    duration = 0,
+                  }: {
+                    pages?: string[];
+                    duration?: number;
+                    id: string;
+                    name?: string;
+                    index: string;
+                    assignments?: string[];
+                    quizzes?: string[];
+                    videos?: string[];
+                    slides?: string[];
+                  },
+                  index: string
+                ) => (
+                  <Module
+                    pages={pages}
+                    key={_id}
+                    setmoduleName={setmoduleName}
+                    duration={duration}
+                    setModuleId={setModuleId}
+                    setEditShowModal={setEditShowModal}
+                    _id={_id}
+                    name={name}
+                    index={index}
+                    assignments={assignments}
+                    quizzes={quizzes}
+                    videos={videos}
+                    slides={slides}
+                  />
+                )
+              )
+              // <Module
+              //   pages={["kdjkjdk"]}
+              //   key={id}
+              //   setmoduleName={setmoduleName}
+              //   duration={455}
+              //   setModuleId={setModuleId}
+              //   setEditShowModal={setEditShowModal}
+              //   id={id}
+              //   name={"jkjdk"}
+              //   index={id}
+              //   assignments={["assignments"]}
+              //   quizzes={["quizzes"]}
+              //   videos={["videos"]}
+              //   slides={["slides"]}
+              // />
             )}
 
             <div className="btn flex justify-end gap-5">

@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type Course = {
-  //   id: string;
+  _id: string;
   title: string;
+  createdBy: string;
 };
 type CourseEdit = {
   title: any;
@@ -31,8 +32,9 @@ type InitialState = {
 
 const initialState: InitialState = {
   course: {
-    // id: "",
+    _id: "",
     title: "",
+    createdBy: "",
   },
   courseEdit: {
     title: "",
@@ -80,8 +82,8 @@ const CourseSlice = createSlice({
       state.refresh = true;
     },
     SuccessCreate: (state) => {
-      // state.course.id = "",
-      state.course.title = "";
+      (state.course._id = ""), (state.course.title = "");
+      state.course.createdBy = "";
     },
     EditCourse: (state, action: PayloadAction<CourseEdit>) => {
       state.courseEdit = action.payload;

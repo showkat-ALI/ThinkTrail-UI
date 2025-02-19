@@ -68,6 +68,7 @@ const Creation2 = (props: StepPropss) => {
     if (file && file.length > 0 && file["0"].type.substr(0, 5) === "image") {
       const formData = new FormData();
       formData.append("file", file["0"]);
+      console.log(formData, "photo upload ")
       singleFileupload(formData);
     } else if (
       file &&
@@ -89,12 +90,13 @@ const Creation2 = (props: StepPropss) => {
       toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
       //  console.log("upload success", uploadData);
-      setFilePreview(uploadData.data.fileUrl);
+      setFilePreview(uploadData.data);
       toast.success("upload success");
     }
-  }, [isUploadError, isUploadSuccess, uploadData?.data?.fileUrl, uploadError]);
+  }, [isUploadError, isUploadSuccess, uploadData?.data, uploadError]);
 
   const submitSecondStep = (data: props) => {
+    console.log(data)
     if (isUploadSuccess) {
       setFormData((prev: object) => ({ ...prev, ...data }));
       const userData = { ...formData, ...data };
@@ -102,17 +104,15 @@ const Creation2 = (props: StepPropss) => {
         userData.fileUrl = filePreview;
       }
       setFormData((prev: object) => ({ ...prev, ...userData }));
-      if (title === "") {
+      const courseId = courseDataSuccess?.data?._id || "";
+      if (courseId === "") {
         const courseData = {
           ...userData,
           createdBy: logInInstructor?.data?._id,
         };
         console.log(courseData);
         createCourse(courseData);
-        // const { title } = courseDataSuccess;
-        // dispatch(Course({ title }));
-        // console.log("after dispatch", title);
-        console.log(courseDataSuccess);
+
         toast.success("Course has Added Successfully!");
       }
       if (isSuccess) {
@@ -122,11 +122,19 @@ const Creation2 = (props: StepPropss) => {
       }
     }
   };
+  const { course } = useAppSelector((state) => state.course);
+
+  console.log("Course ID:", course._id);
+  console.log("Course Title:", course.title);
 
   useEffect(() => {
     if (isSuccess && courseDataSuccess) {
       console.log("Course creation successful:", courseDataSuccess);
       // Handle the course creation data, e.g., navigate to the course details page
+      const { _id, title, createdBy } = courseDataSuccess?.data;
+      dispatch(Course({ _id, title, createdBy }));
+      console.log("after dispatch", title);
+      console.log(courseDataSuccess);
       setStep(3);
     }
   }, [isSuccess, courseDataSuccess, setStep, step]);

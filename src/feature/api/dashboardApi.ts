@@ -257,7 +257,7 @@ const dashboardApi = createApi({
     //create course Module
     createModuleCourse: builder.mutation({
       query: (body: { name: string; course: string }) => ({
-        url: "/api/v1/modules",
+        url: "/api/v1/module/create-module",
         method: "POST",
         body: body,
       }),
@@ -266,7 +266,7 @@ const dashboardApi = createApi({
     //Get  course module
     getCourseModule: builder.query({
       query: (id: string) => ({
-        url: `/api/v1/modules?course=${id}`,
+        url: `/api/v1/module/get-course-module/${id}`,
         method: "GET",
       }),
       providesTags: ["courseModule"],
