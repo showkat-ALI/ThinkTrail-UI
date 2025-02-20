@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { InputErrorMessage } from "../../../../../../utils/error";
 import { useForm, useFormContext } from "react-hook-form";
 import { useUpdateVideoModuleMutation } from "../../../../../../../feature/api/dashboardApi";
-import { useSingleFileUploadMutation, useSingleVideoUploadMutation } from "../../../../../../../feature/api/mediaUploadApi";
+import {  useSingleVideoUploadMutation } from "../../../../../../../feature/api/mediaUploadApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
+import { useAppSelector } from "../../../../../../../app/hooks";
 
 type FormData = {
   topicName: string;
@@ -43,26 +44,26 @@ const VideoCategory = ({
   const [localVideoKey, setlocalVideoKey] = useState("");
   const [updateVideoModule, { isError, error, data, isLoading, isSuccess }] =
     useUpdateVideoModuleMutation();
-  // const [
-  //   singleVideoUpload,
-  //   {
-  //     isLoading: uploadLoading,
-  //     error: uploadError,
-  //     data: uploadData,
-  //     isSuccess: isUploadSuccess,
-  //     isError: isUploadError,
-  //   },
-  // ] = useSingleVideoUploadMutation();
-   const [
-      singleFileupload,
-      {
-        isLoading: uploadLoading,
-        error: uploadError,
-        data: uploadData,
-        isSuccess: isUploadSuccess,
-        isError: isUploadError,
-      },
-    ] = useSingleFileUploadMutation();
+  const [
+    singleVideoUpload,
+    {
+      isLoading: uploadLoading,
+      error: uploadError,
+      data: uploadData,
+      isSuccess: isUploadSuccess,
+      isError: isUploadError,
+    },
+  ] = useSingleVideoUploadMutation();
+  //  const [
+  //     singleFileupload,
+  //     {
+  //       isLoading: uploadLoading,
+  //       error: uploadError,
+  //       data: uploadData,
+  //       isSuccess: isUploadSuccess,
+  //       isError: isUploadError,
+  //     },
+  //   ] = useSingleFileUploadMutation();
   const [showVideoInputLocal, setshowVideoInputLocal] = useState(false);
   const [youtubeUrl, setyoutubeUrl] = useState("");
 
@@ -74,7 +75,7 @@ const VideoCategory = ({
       setshowVideoInputLocal(true);
       formData.append("file", file["0"]);
       console.log(formData)
-      singleFileupload(formData);
+      singleVideoUpload(formData);
     } else if (
       file &&
       file.length > 0 &&
@@ -102,7 +103,8 @@ const VideoCategory = ({
     const { name, value } = e.target;
     setinputValue({ ...inputValue, [name]: value });
   }
-
+  const { module } = useAppSelector((state) => state.module);
+console.log("module id",module._id)
   const handleYoutube = (e: any) => {
     setyoutubeUrl(e);
   };

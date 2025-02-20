@@ -6,11 +6,12 @@ import userApi from "../feature/api/userApi";
 import userReducer from "../feature/auth/authSlice";
 import courseReducer from '../feature/course/courseSlice';
 import moduleVideoPlay from '../feature/course/moduleVideoplay';
-
+import moduleReducer from "../feature/module/moduleSlice"
 const store = configureStore({
     reducer: {
         auth: userReducer,
         course:courseReducer,
+        module:moduleReducer,
         playVideo:moduleVideoPlay,
         [authApi.reducerPath]: authApi.reducer,
         [userApi.reducerPath]: userApi.reducer,

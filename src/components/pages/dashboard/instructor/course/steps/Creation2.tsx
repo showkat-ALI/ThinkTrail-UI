@@ -112,14 +112,15 @@ const Creation2 = (props: StepPropss) => {
         };
         console.log(courseData);
         createCourse(courseData);
+if(isSuccess){
+  toast.success("Course has Added Successfully!");
 
-        toast.success("Course has Added Successfully!");
+}
+else if (error){
+  toast.error("Course Couldn't created")
+}
       }
-      if (isSuccess) {
-        console.log(courseDataSuccess);
-      } else if (isError) {
-        toast.error("Course error:");
-      }
+      
     }
   };
   const { course } = useAppSelector((state) => state.course);
