@@ -88,7 +88,7 @@ const VideoCategory = ({
   useEffect(() => {
     if (isUploadError) {
       console.log("upload error", uploadError);
-      toast.error((uploadError as any).data.message);
+      // toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
       setlocalVideo(uploadData.data);
       const randomKey = `video_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -104,7 +104,6 @@ const VideoCategory = ({
     setinputValue({ ...inputValue, [name]: value });
   }
   const { module } = useAppSelector((state) => state.module);
-console.log("module id",module._id)
   const handleYoutube = (e: any) => {
     setyoutubeUrl(e);
   };
@@ -121,7 +120,7 @@ console.log("module id",module._id)
     if (youtubeUrl) {
       inputValue.key = inputValue.topicName;
     }
-
+console.log({...inputValue,module:module._id})
     console.log(inputValue.topicName.trim());
 
     if (
@@ -132,15 +131,15 @@ console.log("module id",module._id)
       toast.error("Invalid Input Field");
     } else {
       if (youtubeUrl.length > 0 || inputValue.localVideo.length > 0) {
-        updateVideoModule({
-          module: id,
-          topicName: inputValue.topicName,
-          localVideo: inputValue.localVideo,
-          youtubeVideo: youtubeUrl,
-          minutes: inputValue.minutes,
-          second: inputValue.second,
-          key: inputValue.key,
-        });
+        // updateVideoModule({
+        //   module: id,
+        //   topicName: inputValue.topicName,
+        //   localVideo: inputValue.localVideo,
+        //   youtubeVideo: youtubeUrl,
+        //   minutes: inputValue.minutes,
+        //   second: inputValue.second,
+        //   key: inputValue.key,
+        // });
       } else {
         toast.error("Invalid Input Field");
       }
@@ -209,8 +208,27 @@ console.log("module id",module._id)
               </div>
             </div>
           )}
+<div className="flex">
 
-          {!showVideoInputLocal && (
+          <button
+            // disabled={isLoading}
+            onClick={()=>setshowVideoInputLocal(true)}
+            data-modal-hide="staticModal"
+            className="flex items-center justify-center text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+          >
+            { "Enable Youtube Video"}
+          </button>
+          <button
+            // disabled={isLoading}
+            onClick={()=>setshowVideoInputLocal(false)}
+            data-modal-hide="staticModal"
+            className="flex items-center justify-center text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+          >
+            { "Disable Youtube Video"}
+          </button>
+          </div>
+
+          {showVideoInputLocal && (
             <div className="flex flex-col mb-2">
               <label className="font-medium text-base mb-2">Video Link</label>
               <input

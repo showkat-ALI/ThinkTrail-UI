@@ -36,22 +36,27 @@ const AddModuleModal = ({
   const {
     course: { _id:id, title },
   } = useAppSelector((state) => state.course);
+const dispatch= useAppDispatch()
+
   const [createModuleCourse, { error, data, isLoading, isSuccess, isError }] =
     useCreateModuleCourseMutation();
-const dispatch= useAppDispatch()
-const {
-  data: logInInstructor,
-  isSuccess: userIsSuccess,
-  isError: isErrorUser,
-} = useGetUserQuery({});
-  const CreateModuleHandler = (formdata: FormData) => {
-    createModuleCourse({ name: formdata.name, course: id  });
-    const { _id, name, course } = data?.data;
+    const {
+      data: logInInstructor,
+      isSuccess: userIsSuccess,
+      isError: isErrorUser,
+    } = useGetUserQuery({});
+    if(data){
+      const { _id, name, course } = data?.data;
    
       dispatch(Module({ _id, name, course, createdBy:logInInstructor?.data?._id }));
+    }
+     
+
+  const CreateModuleHandler = (formdata: FormData) => {
+    createModuleCourse({ name: formdata.name, course: id  });
+   
     
   };
-  // console.log("module created after data ",data)
   
 
   useEffect(() => {
