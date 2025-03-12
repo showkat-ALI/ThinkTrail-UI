@@ -69,6 +69,7 @@ const Creation2 = (props: StepPropss) => {
     if (file && file.length > 0 && file["0"].type.substr(0, 5) === "image") {
       const formData = new FormData();
       formData.append("file", file["0"]);
+      console.log(formData, "photo upload ");
       singleFileupload(formData);
     } else if (
       file &&
@@ -90,12 +91,13 @@ const Creation2 = (props: StepPropss) => {
       toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
       //  console.log("upload success", uploadData);
-      setFilePreview(uploadData.data.fileUrl);
+      setFilePreview(uploadData.data);
       toast.success("upload success");
     }
-  }, [isUploadError, isUploadSuccess, uploadData?.data?.fileUrl, uploadError]);
+  }, [isUploadError, isUploadSuccess, uploadData?.data, uploadError]);
 
   const submitSecondStep = (data: props) => {
+    console.log(data);
     if (isUploadSuccess) {
       setFormData((prev: object) => ({ ...prev, ...data }));
       const userData = { ...formData, ...data };
@@ -111,13 +113,11 @@ const Creation2 = (props: StepPropss) => {
         };
         console.log(courseData);
         createCourse(courseData);
-
-        toast.success("Course has Added Successfully!");
-      }
-      if (isSuccess) {
-        console.log(courseDataSuccess);
-      } else if (isError) {
-        toast.error("Course error:");
+        if (isSuccess) {
+          toast.success("Course has Added Successfully!");
+        } else if (error) {
+          toast.error("Course Couldn't created");
+        }
       }
     }
   };

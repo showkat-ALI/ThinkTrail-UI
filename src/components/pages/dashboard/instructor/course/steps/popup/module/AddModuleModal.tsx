@@ -8,7 +8,9 @@ import * as z from "zod";
 import ButtonLoader from "../../../../../../../utils/loaders/ButtonLoader";
 import { useCreateModuleCourseMutation } from "../../../../../../../../feature/api/dashboardApi";
 import { useAppSelector } from "../../../../../../../../app/hooks";
-
+import { Module } from "../../../../../../../../feature/module/moduleSlice";
+import { useAppDispatch } from "../../../../../../../../app/hooks";
+import { useGetUserQuery } from "../../../../../../../../feature/api/authApi";
 type FormData = {
   name: string;
 };
@@ -32,17 +34,29 @@ const AddModuleModal = ({
     resolver: zodResolver(Schema),
   });
   const {
-    course: { _id, title },
+    course: { _id: id, title },
   } = useAppSelector((state) => state.course);
-  console.log("course id", _id);
+  const dispatch = useAppDispatch();
+
   const [createModuleCourse, { error, data, isLoading, isSuccess, isError }] =
     useCreateModuleCourseMutation();
+  const {
+    data: logInInstructor,
+    isSuccess: userIsSuccess,
+    isError: isErrorUser,
+  } = useGetUserQuery({});
+  if (data) {
+    const { _id, name, course } = data?.data;
 
-  const CreateModuleHandler = (data: FormData) => {
-    createModuleCourse({ name: data.name, course: _id });
-    //   console.log(data);
-    //   console.log(data)
+    dispatch(
+      Module({ _id, name, course, createdBy: logInInstructor?.data?._id })
+    );
+  }
+
+  const CreateModuleHandler = (formdata: FormData) => {
+    createModuleCourse({ name: formdata.name, course: id });
   };
+
   useEffect(() => {
     if (isError) {
       toast.error((error as any).data.message);
