@@ -60,12 +60,12 @@ const Creation2 = (props: StepPropss) => {
 
   const ImageGet = (e: any) => {
     const file = e.target.files;
-    //console.log(file)
+    console.log(file);
     setpicsname(e.target.files[0].name);
     if (file && file.length > 0 && file["0"].type.substr(0, 5) === "image") {
       const formData = new FormData();
       formData.append("image", file["0"]);
-      singlePhotoUpload(formData);
+      // singlePhotoUpload(formData);
     } else if (
       file &&
       file.length > 0 &&
