@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { useForm, useFormContext } from "react-hook-form";
 import { InputErrorMessage } from "../../../../../utils/error";
@@ -35,6 +35,16 @@ const Creation3 = (props: StepPropss) => {
   const [moduleName, setmoduleName] = useState("");
   //console.log(data);
 
+  React.useEffect(() => {
+    const currentStep = localStorage.getItem("currentStep");
+    if (currentStep) {
+      setStep(Number(currentStep));
+    }
+  }, [setStep]);
+
+  React.useEffect(() => {
+    localStorage.setItem("currentStep", step.toString());
+  }, [step]);
   const submitThirdStep = () => {
     setStep(4);
   };
@@ -90,6 +100,7 @@ const Creation3 = (props: StepPropss) => {
                     videos = [],
                     slides = [],
                     duration = 0,
+                    _id,
                   }: {
                     pages?: string[];
                     duration?: number;
@@ -100,12 +111,13 @@ const Creation3 = (props: StepPropss) => {
                     quizzes?: string[];
                     videos?: string[];
                     slides?: string[];
+                    _id: string;
                   },
                   index: string
                 ) => (
                   <Module
                     pages={pages}
-                    key={_id}
+                    key={index}
                     setmoduleName={setmoduleName}
                     duration={duration}
                     setModuleId={setModuleId}
@@ -120,21 +132,6 @@ const Creation3 = (props: StepPropss) => {
                   />
                 )
               )
-              // <Module
-              //   pages={["kdjkjdk"]}
-              //   key={id}
-              //   setmoduleName={setmoduleName}
-              //   duration={455}
-              //   setModuleId={setModuleId}
-              //   setEditShowModal={setEditShowModal}
-              //   id={id}
-              //   name={"jkjdk"}
-              //   index={id}
-              //   assignments={["assignments"]}
-              //   quizzes={["quizzes"]}
-              //   videos={["videos"]}
-              //   slides={["slides"]}
-              // />
             )}
 
             <div className="btn flex justify-end gap-5">

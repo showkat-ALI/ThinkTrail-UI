@@ -1154,6 +1154,30 @@ const dashboardApi = createApi({
       }),
       invalidatesTags: [],
     }),
+    addModuleVideo: builder.mutation({
+      query: (body: any) => ({
+        url: `api/v1/module-video/upload-module-video`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: [],
+    }),
+    addModuleAssignment: builder.mutation({
+      query: (body: any) => ({
+        url: `api/v1/module-video/upload-module-assignment`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: [],
+    }),
+    getModuleAssignments: builder.query({
+      query: (_id: string) => ({
+        url: `api/v1/module-video/get-single-module-assignments/${_id}`,
+        method: "GET",
+      }),
+      // Add this to force a refetch
+      providesTags: (result, error, _id) => [{ type: "assignment", id: _id }],
+    }),
   }),
 });
 
@@ -1283,5 +1307,8 @@ export const {
   useAssignAFacultytoAcademicFacultyMutation,
   useGetAllFacultiesQuery,
   useGetAllCreatedAssignmentsQuery,
+  useAddModuleVideoMutation,
+  useAddModuleAssignmentMutation,
+  useGetModuleAssignmentsQuery,
 } = dashboardApi;
 export default dashboardApi;

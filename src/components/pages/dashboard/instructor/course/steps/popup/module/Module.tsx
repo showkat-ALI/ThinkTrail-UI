@@ -10,7 +10,7 @@ import plusIconBg from "../../../../../../../../assets/Group34917.png";
 import PopupModal from ".././PopupModal";
 import EditModuleModal from "./EditModuleModal";
 import DeleteModule from "./deleteModule";
-
+import { useGetModuleAssignmentsQuery } from "../../../../../../../../feature/api/dashboardApi";
 const Module = ({
   setmoduleName,
   setModuleId,
@@ -42,18 +42,19 @@ const Module = ({
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showDeleteModal, setshowDeleteModal] = useState<boolean>(false);
   const [seletedModule, setseletedModule] = useState("");
-
   const handleClose = () => {
     setshowDeleteModal(false);
     setseletedModule("");
   };
-
+  const { error, data, isLoading, isSuccess, isError } =
+    useGetModuleAssignmentsQuery(_id);
+  console.log(_id);
+  console.log(data);
   const handleEdit = () => {
     setEditShowModal(true);
     setModuleId(_id);
     setmoduleName(name);
   };
-
   const handleDeleteModule = (id: string) => {
     //console.log("delete course");
     setshowDeleteModal(true);
@@ -81,7 +82,7 @@ const Module = ({
         style={{ boxShadow: "0px 1px 15px rgba(0, 0, 0, 0.15)" }}
       >
         <h2 className="text-[15px] font-medium">
-          Module {index + 1}: {name}
+          Module {index + 1}: {name}-{_id}
         </h2>
         <div className="flex items-center">
           <button
@@ -106,7 +107,7 @@ const Module = ({
             <div className="flex justify-between bg-[#F9F9F9] p-3">
               <div>
                 <h3 className="text-base font-medium">
-                  Module {index + 1}: {name}
+                  Module {index + 1}: {name}=
                 </h3>
                 <span className="text-sm font-normal text-[#8A92A6]">
                   {videos.length} videos
@@ -136,7 +137,7 @@ const Module = ({
             </div>
 
             <div className="p-4">
-              {/* {assignments.map((item: any) => (
+              {data?.data.map((item: any) => (
                 <div className="mb-5" key={item._id}>
                   <div className="flex items-center mb-1">
                     <input
@@ -152,7 +153,7 @@ const Module = ({
                   </div>
                 </div>
               ))}
-              {quizzes.map((item: any, i) => (
+              {/* {quizzes.map((item: any, i) => (
                 <div className="mb-5" key={item._id}>
                   <div className="flex items-center mb-1">
                     <input
@@ -215,7 +216,7 @@ const Module = ({
                     </label>
                   </div>
                 </div>
-              ))} */}
+              ))}  */}
             </div>
           </div>
 

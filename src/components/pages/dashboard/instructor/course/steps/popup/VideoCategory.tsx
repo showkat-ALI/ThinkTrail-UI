@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { InputErrorMessage } from "../../../../../../utils/error";
 import { useForm, useFormContext } from "react-hook-form";
 import { useUpdateVideoModuleMutation } from "../../../../../../../feature/api/dashboardApi";
-import {  useSingleVideoUploadMutation } from "../../../../../../../feature/api/mediaUploadApi";
+import { useSingleVideoUploadMutation } from "../../../../../../../feature/api/mediaUploadApi";
+import { useAddModuleVideoMutation } from "../../../../../../../feature/api/dashboardApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import { useAppSelector } from "../../../../../../../app/hooks";
@@ -45,6 +46,17 @@ const VideoCategory = ({
   const [updateVideoModule, { isError, error, data, isLoading, isSuccess }] =
     useUpdateVideoModuleMutation();
   const [
+    moduleVideoUpload,
+    {
+      isLoading: moduleVideoLoading,
+      error: moduleVideoError,
+      data: moduleVideoData,
+      isSuccess: moduleVideoSuccess,
+      isError: moduleVideoIsError,
+    },
+  ] = useAddModuleVideoMutation();
+
+  const [
     singleVideoUpload,
     {
       isLoading: uploadLoading,
@@ -74,7 +86,7 @@ const VideoCategory = ({
       const formData = new FormData();
       setshowVideoInputLocal(true);
       formData.append("file", file["0"]);
-      console.log(formData)
+      console.log(formData);
       singleVideoUpload(formData);
     } else if (
       file &&
@@ -91,7 +103,9 @@ const VideoCategory = ({
       // toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
       setlocalVideo(uploadData.data);
-      const randomKey = `video_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const randomKey = `video_${Date.now()}_${Math.random()
+        .toString(36)
+        .substr(2, 9)}`;
       setlocalVideoKey(randomKey);
       // setlocalVideoKey(uploadData.data.key);
       toast.success("success");
@@ -104,6 +118,7 @@ const VideoCategory = ({
     setinputValue({ ...inputValue, [name]: value });
   }
   const { module } = useAppSelector((state) => state.module);
+  console.log(module);
   const handleYoutube = (e: any) => {
     setyoutubeUrl(e);
   };
@@ -120,7 +135,7 @@ const VideoCategory = ({
     if (youtubeUrl) {
       inputValue.key = inputValue.topicName;
     }
-console.log({...inputValue,module:module._id})
+    moduleVideoUpload({ ...inputValue, module: module._id });
     console.log(inputValue.topicName.trim());
 
     if (
@@ -146,16 +161,15 @@ console.log({...inputValue,module:module._id})
     }
   };
   useEffect(() => {
-    if (isError) {
-      toast.error("Video Moudle has added error");
-      // console.log(error);
-    } else if (isSuccess) {
+    if (moduleVideoIsError) {
+      toast.error(`Video Moudle has added error ${moduleVideoError}`);
+    } else if (moduleVideoSuccess) {
       // console.log(data);
       setShowModal(false);
       toast.success("Video Module has Added Successfully!");
       // console.log(data);
     }
-  }, [isError, isSuccess]);
+  }, [moduleVideoIsError, moduleVideoSuccess, setShowModal, moduleVideoError]);
   return (
     <>
       <form>
@@ -208,24 +222,23 @@ console.log({...inputValue,module:module._id})
               </div>
             </div>
           )}
-<div className="flex">
-
-          <button
-            // disabled={isLoading}
-            onClick={()=>setshowVideoInputLocal(true)}
-            data-modal-hide="staticModal"
-            className="flex items-center justify-center text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-          >
-            { "Enable Youtube Video"}
-          </button>
-          <button
-            // disabled={isLoading}
-            onClick={()=>setshowVideoInputLocal(false)}
-            data-modal-hide="staticModal"
-            className="flex items-center justify-center text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-          >
-            { "Disable Youtube Video"}
-          </button>
+          <div className="flex">
+            <button
+              // disabled={isLoading}
+              onClick={() => setshowVideoInputLocal(true)}
+              data-modal-hide="staticModal"
+              className="flex items-center justify-center text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+            >
+              {"Enable Youtube Video"}
+            </button>
+            <button
+              // disabled={isLoading}
+              onClick={() => setshowVideoInputLocal(false)}
+              data-modal-hide="staticModal"
+              className="flex items-center justify-center text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+            >
+              {"Disable Youtube Video"}
+            </button>
           </div>
 
           {showVideoInputLocal && (

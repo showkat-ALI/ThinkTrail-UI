@@ -11,6 +11,7 @@ import { useAppSelector } from "../../../../../../../../app/hooks";
 import { Module } from "../../../../../../../../feature/module/moduleSlice";
 import { useAppDispatch } from "../../../../../../../../app/hooks";
 import { useGetUserQuery } from "../../../../../../../../feature/api/authApi";
+
 type FormData = {
   name: string;
 };
@@ -45,13 +46,16 @@ const AddModuleModal = ({
     isSuccess: userIsSuccess,
     isError: isErrorUser,
   } = useGetUserQuery({});
-  if (data) {
-    const { _id, name, course } = data?.data;
 
-    dispatch(
-      Module({ _id, name, course, createdBy: logInInstructor?.data?._id })
-    );
-  }
+  useEffect(() => {
+    if (data) {
+      const { _id, name, course } = data?.data;
+      // Set the moduleID in the context
+      dispatch(
+        Module({ _id, name, course, createdBy: logInInstructor?.data?._id })
+      );
+    }
+  }, [data, dispatch, logInInstructor]);
 
   const CreateModuleHandler = (formdata: FormData) => {
     createModuleCourse({ name: formdata.name, course: id });
@@ -60,13 +64,12 @@ const AddModuleModal = ({
   useEffect(() => {
     if (isError) {
       toast.error((error as any).data.message);
-      // console.log(error);
     } else if (isSuccess) {
       setShowModal(false);
-      toast.success("course Module has Added Successfully!");
-      // console.log(data);
+      toast.success("Course Module has been added successfully!");
     }
-  }, [isError, isSuccess]);
+  }, [isError, isSuccess, setShowModal]);
+
   return (
     <Modal
       show={show}

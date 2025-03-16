@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetAllAssignmentsofAInstructorQuery } from "../../../../../../../feature/api/dashboardApi";
-import { useUpdateModuleMutation } from "../../../../../../../feature/api/dashboardApi";
+import { useAddModuleAssignmentMutation } from "../../../../../../../feature/api/dashboardApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import Link from "next/link";
@@ -28,7 +28,7 @@ const AssignmentCategory = ({
     isError: isErrorUser,
   } = useGetUserQuery({});
 
-  console.log("me data", userData);
+  // console.log("me data", userData);
 
   const {
     data: instructorAssignmentData,
@@ -44,7 +44,7 @@ const AssignmentCategory = ({
       isLoading: loadingModule,
       isSuccess: moduleisSuccess,
     },
-  ] = useUpdateModuleMutation();
+  ] = useAddModuleAssignmentMutation();
   const [assignmentId, setassignmentId] = useState("");
   const [activeClass, setactiveClass] = useState("");
 
@@ -52,9 +52,9 @@ const AssignmentCategory = ({
     setassignmentId(id);
     setactiveClass(id);
   };
-
+  const { module } = useAppSelector((state) => state.module);
   const update = () => {
-    updateModule({ id, assignments: assignmentId });
+    updateModule({ module: id, assignment: assignmentId });
     //   console.log(assignmentId,id)
   };
   useEffect(() => {
@@ -87,7 +87,7 @@ const AssignmentCategory = ({
           </Link>
           <div>
             <ul className="flex flex-col gap-[10px] text-[#8A92A6] text-[15px] mb-2 h-[12rem] overflow-y-scroll	">
-              {roles?.includes("superAdmin") &&
+              {/* {roles?.includes("superAdmin") &&
                 (instructorAssignmentLoading ? (
                   <div>Loading....</div>
                 ) : instructorAssignmentIsError ? (
@@ -113,7 +113,7 @@ const AssignmentCategory = ({
                   )
                 ) : (
                   <div>No assignment found</div>
-                ))}
+                ))} */}
               {(roles?.includes("instructor") ||
                 roles?.includes("superAdmin")) &&
                 (instructorAssignmentLoading ? (
@@ -125,14 +125,14 @@ const AssignmentCategory = ({
                   instructorAssignmentData?.data?.assignments.length > 0 ? (
                   instructorAssignmentData?.data?.assignments.map(
                     (
-                      { name, id }: { name: string; id: string },
+                      { name, _id }: { name: string; _id: string },
                       index: string
                     ) => (
                       <li
                         key={index}
-                        onClick={() => clickAssignment(id)}
+                        onClick={() => clickAssignment(_id)}
                         className={`${
-                          activeClass == id && "text-[#3A57E8]"
+                          activeClass === _id ? "text-[#3A57E8]" : ""
                         } hover:text-[#da7b4f] cursor-pointer`}
                       >
                         Assignment {index + 1} - {name}
@@ -146,17 +146,7 @@ const AssignmentCategory = ({
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-3 p-4">
-        <label className="font-medium text-base mb-2">Indentation</label>
-        <select
-          className="w-[16rem] h-[3rem] mb-2 border-none"
-          style={{ boxShadow: "0px 1px 15px rgba(0, 0, 0, 0.15)" }}
-        >
-          <option>Indent 1 Level</option>
-          <option>Indent 2 Level</option>
-          <option>Indent 4 Level</option>
-        </select>
-      </div>
+
       <div className="flex items-center justify-end p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
         <button
           onClick={() => setShowModal(false)}

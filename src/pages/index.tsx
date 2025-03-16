@@ -9,7 +9,6 @@ const Home: NextPage = () => {
       <Head>
         <title>Home | Fourth IT Academy</title>
       </Head>
-
       <HomeLayout>
         <HomeComponent />
       </HomeLayout>

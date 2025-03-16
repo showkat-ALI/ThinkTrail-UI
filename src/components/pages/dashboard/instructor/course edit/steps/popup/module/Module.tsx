@@ -10,6 +10,7 @@ import plusIconBg from "../../../../../../../../assets/Group34917.png";
 import PopupModal from ".././PopupModal";
 import EditModuleModal from "./EditModuleModal";
 import DeleteModule from "./deleteModule";
+import { useAppSelector } from "../../../../../../../../app/hooks";
 
 const Module = ({
   setmoduleName,
@@ -42,7 +43,7 @@ const Module = ({
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showDeleteModal, setshowDeleteModal] = useState<boolean>(false);
   const [seletedModule, setseletedModule] = useState("");
-
+  const { module } = useAppSelector((state) => state.module);
   const handleClose = () => {
     setshowDeleteModal(false);
     setseletedModule("");
@@ -64,7 +65,7 @@ const Module = ({
         <PopupModal
           name={name}
           index={index}
-          id={id}
+          id={module._id}
           setShowModal={setShowModal}
         />
       )}
