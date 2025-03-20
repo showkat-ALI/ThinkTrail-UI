@@ -32,6 +32,8 @@ const dashboardApi = createApi({
     "department",
     "academicFaculty",
     "academicDepartment",
+    "courseModule",
+    "moduleVideos",
   ],
 
   endpoints: (builder) => ({
@@ -1168,16 +1170,26 @@ const dashboardApi = createApi({
         method: "POST",
         body: body,
       }),
-      invalidatesTags: [],
+      invalidatesTags: ["moduleVideos"],
     }),
     getModuleAssignments: builder.query({
-      query: (_id: string) => ({
-        url: `api/v1/module-video/get-single-module-assignments/${_id}`,
+      query: (id: string) => {
+        return {
+          url: `api/v1/module-video/get-single-module-assignments/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["courseModule"], // Add this to force a refetch
+    }),
+    getModuleVideos: builder.query({
+      query: (id: string) => ({
+        url: `api/v1/module-video/get-single-module-video/${id}`,
         method: "GET",
       }),
-      // Add this to force a refetch
-      providesTags: (result, error, _id) => [{ type: "assignment", id: _id }],
+      providesTags: ["moduleVideos"], // Add this to force a refetch
     }),
+
+    // Add this to force a refetch
   }),
 });
 
@@ -1310,5 +1322,6 @@ export const {
   useAddModuleVideoMutation,
   useAddModuleAssignmentMutation,
   useGetModuleAssignmentsQuery,
+  useGetModuleVideosQuery,
 } = dashboardApi;
 export default dashboardApi;

@@ -51,7 +51,7 @@ const PopupModal = ({ setShowModal, id, index, name }: props) => {
             }
             <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Add item to Introduction of {name} Module {index + 1}
+                Add item to Introduction of {name} Module {index + 1}-{id}
               </h3>
               <button
                 type="button"

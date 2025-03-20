@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 //icon
@@ -10,7 +10,11 @@ import plusIconBg from "../../../../../../../../assets/Group34917.png";
 import PopupModal from ".././PopupModal";
 import EditModuleModal from "./EditModuleModal";
 import DeleteModule from "./deleteModule";
-import { useGetModuleAssignmentsQuery } from "../../../../../../../../feature/api/dashboardApi";
+import {
+  useGetModuleAssignmentsQuery,
+  useGetModuleVideosQuery,
+} from "../../../../../../../../feature/api/dashboardApi";
+import Link from "next/link";
 const Module = ({
   setmoduleName,
   setModuleId,
@@ -46,10 +50,23 @@ const Module = ({
     setshowDeleteModal(false);
     setseletedModule("");
   };
-  const { error, data, isLoading, isSuccess, isError } =
+
+  const { error, data, isLoading, isSuccess, isError, refetch } =
     useGetModuleAssignmentsQuery(_id);
-  console.log(_id);
-  console.log(data);
+  if (isSuccess) {
+    console.log(data);
+  }
+  const {
+    error: vidsErr,
+    data: vidsData,
+    isLoading: vidsLoading,
+    isSuccess: vidsIsSuccess,
+    isError: vidsIsError,
+  } = useGetModuleVideosQuery(_id);
+  console.log("module vids;;;;;;; ", vidsData);
+  useEffect(() => {
+    refetch(); // Force a refetch when the component mounts or _id changes
+  }, [_id, refetch]);
   const handleEdit = () => {
     setEditShowModal(true);
     setModuleId(_id);
@@ -137,7 +154,7 @@ const Module = ({
             </div>
 
             <div className="p-4">
-              {data?.data.map((item: any) => (
+              {data?.data?.map((item: any) => (
                 <div className="mb-5" key={item._id}>
                   <div className="flex items-center mb-1">
                     <input
@@ -148,7 +165,7 @@ const Module = ({
                       className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      Assignment - {item.name}
+                      Assignment - {item?.assignment?.name}
                     </label>
                   </div>
                 </div>
@@ -168,24 +185,31 @@ const Module = ({
                     </label>
                   </div>
                 </div>
-              ))}
-              {videos.map((item: any, i) => (
-                <div className="mb-5" key={item._id}>
-                  <div className="flex items-center mb-1">
-                    <input
-                      checked
-                      id="default-checkbox"
-                      type="checkbox"
-                      value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      video - {item.topicName}
-                    </label>
+              ))} */}
+              {vidsData?.data?.length > 0 ? (
+                vidsData?.data?.map((item: any) => (
+                  <div className="mb-5" key={item._id}>
+                    <div className="flex items-center mb-1">
+                      <input
+                        checked
+                        id="default-checkbox"
+                        type="checkbox"
+                        value=""
+                        className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <Link
+                        className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300"
+                        href={`${item?.localVideo}`}
+                      >
+                        video - {item?.localVideo}
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
-              {slides.map((item: any, i) => (
+                ))
+              ) : (
+                <p>No videos found.</p>
+              )}
+              {/* {slides.map((item: any, i) => (
                 <div className="mb-5" key={item._id}>
                   <div className="flex items-center mb-1">
                     <input

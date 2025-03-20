@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllAssignmentsofAInstructorQuery } from "../../../../../../../feature/api/dashboardApi";
+import {
+  useGetAllAssignmentsofAInstructorQuery,
+  useGetModuleAssignmentsQuery,
+} from "../../../../../../../feature/api/dashboardApi";
 import { useAddModuleAssignmentMutation } from "../../../../../../../feature/api/dashboardApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import Link from "next/link";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../../../app/hooks";
 import { useGetUserQuery } from "../../../../../../../feature/api/authApi";
+import { moduleAssignments } from "../../../../../../../feature/moduleAssignment/moduleAssignment";
 
 const AssignmentCategory = ({
   id,
@@ -27,6 +31,7 @@ const AssignmentCategory = ({
     isSuccess: userIsSuccess,
     isError: isErrorUser,
   } = useGetUserQuery({});
+  const dispatch = useAppDispatch();
 
   // console.log("me data", userData);
 
@@ -52,9 +57,21 @@ const AssignmentCategory = ({
     setassignmentId(id);
     setactiveClass(id);
   };
-  const { module } = useAppSelector((state) => state.module);
-  const update = () => {
+  // const { data: moduleAssignmentData, isLoading: moduleAssgnmntIsLoading, isSuccess: moduleAssgnmntIsSuccess, isError: moduleAssgnmntIsError } = useGetModuleAssignmentsQuery(id, {
+  //   skip: !moduleisSuccess, // Skip the query if moduleisSuccess is false
+  // });
+  // useEffect(() => {
+  //     if (moduleAssignmentData) {
+
+  //       dispatch(
+  //         moduleAssignments(moduleAssignmentData )
+  //       );
+  //     }
+  //   }, [moduleAssignmentData, dispatch, moduleisSuccess]);
+  // const { module } = useAppSelector((state) => state.module);
+  const Update = () => {
     updateModule({ module: id, assignment: assignmentId });
+
     //   console.log(assignmentId,id)
   };
   useEffect(() => {
@@ -157,7 +174,7 @@ const AssignmentCategory = ({
           Cancel
         </button>
         <button
-          onClick={update}
+          onClick={Update}
           data-modal-hide="staticModal"
           type="button"
           disabled={loadingModule}
