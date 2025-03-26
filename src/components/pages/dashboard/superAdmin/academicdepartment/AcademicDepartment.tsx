@@ -51,6 +51,7 @@ const AcademicDepartment = () => {
     "CIVIL",
     "ManageMent",
     "Accounting",
+    "Software Engineering",
   ];
   return (
     <>

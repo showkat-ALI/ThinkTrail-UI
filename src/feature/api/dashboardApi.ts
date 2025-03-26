@@ -1188,6 +1188,12 @@ const dashboardApi = createApi({
       }),
       providesTags: ["moduleVideos"], // Add this to force a refetch
     }),
+    getAllDepartments: builder.query({
+      query: () => ({
+        url: `api/v1/academic-departments`,
+        method: "GET",
+      }),
+    }),
 
     // Add this to force a refetch
   }),
@@ -1323,5 +1329,6 @@ export const {
   useAddModuleAssignmentMutation,
   useGetModuleAssignmentsQuery,
   useGetModuleVideosQuery,
+  useGetAllDepartmentsQuery,
 } = dashboardApi;
 export default dashboardApi;
