@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
+  useCreateAdmissionRequestMutation,
   useGetAllAcademicDepartmentsQuery,
   useGetAllAcademicSemestersQuery,
 } from "../../../../../feature/api/dashboardApi";
@@ -37,10 +38,21 @@ export default function TakeAdmission() {
   } = useGetAllAcademicSemestersQuery({});
   const { data, error, isLoading, isError, isSuccess } =
     useGetAllAcademicDepartmentsQuery({});
+  const [
+    createAdmission,
+    {
+      data: admissionData,
+      error: admissionError,
+      isLoading: isAdmissionLoading,
+      isError: isAdmissionError,
+      isSuccess: isAdmissionSuccess,
+    },
+  ] = useCreateAdmissionRequestMutation({});
   const onSubmit = async (data: FormValues) => {
     try {
-      console.log({ ...data, email: email, id: id, roles: roles });
+      createAdmission({ ...data, email: email, id: id, roles: roles });
       await new Promise((resolve) => setTimeout(resolve, 1500));
+
       setSuccess(true);
       reset();
       setTimeout(() => setSuccess(false), 3000);
@@ -79,7 +91,7 @@ export default function TakeAdmission() {
 
           {/* Form Content */}
           <div className="px-6 py-8">
-            {success && (
+            {isAdmissionSuccess && (
               <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
                 <p className="font-bold">Success!</p>
                 <p>
@@ -88,7 +100,14 @@ export default function TakeAdmission() {
                 </p>
               </div>
             )}
-
+            {isAdmissionError && (
+              <div className="mb-6 p-4 bg-amber-500-100 border border-green-400 text-red-700 rounded">
+                <p>
+                  Your admission request has been submitted. We&apos;ll review
+                  your application and contact you soon.
+                </p>
+              </div>
+            )}
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 {/* Program Selection */}

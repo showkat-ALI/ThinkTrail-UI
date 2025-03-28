@@ -34,6 +34,7 @@ const dashboardApi = createApi({
     "academicDepartment",
     "courseModule",
     "moduleVideos",
+    "admission",
   ],
 
   endpoints: (builder) => ({
@@ -1194,7 +1195,20 @@ const dashboardApi = createApi({
         method: "GET",
       }),
     }),
-
+    createAdmissionRequest: builder.mutation({
+      query: (body: any) => ({
+        url: `api/v1/admission/create-admission-request`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["admission"],
+    }),
+    getAdmissionRequest: builder.query({
+      query: () => ({
+        url: `api/v1/admission/get-all-admission-request`,
+        method: "GET",
+      }),
+    }),
     // Add this to force a refetch
   }),
 });
@@ -1330,5 +1344,7 @@ export const {
   useGetModuleAssignmentsQuery,
   useGetModuleVideosQuery,
   useGetAllDepartmentsQuery,
+  useCreateAdmissionRequestMutation,
+  useGetAdmissionRequestQuery,
 } = dashboardApi;
 export default dashboardApi;

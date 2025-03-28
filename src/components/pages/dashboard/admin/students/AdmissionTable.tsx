@@ -29,12 +29,8 @@ function Table(props: IStudentProps) {
   const {
     profile: { avatar, firstName, lastName, userName, studentType },
     id,
-    contact,
     email,
     status,
-    country,
-    createdAt,
-    currentJob,
   } = props;
 
   const [showAcceptStudentModal, setShowAcceptStudentModal] = useState(false);
@@ -86,10 +82,7 @@ function Table(props: IStudentProps) {
         </div>
       </td>
       <td className="py-4 px-6">{email}</td>
-      <td className="py-4 px-6">{new Date(createdAt).toLocaleDateString()}</td>
-      <td className="py-4 px-6">
-        <div className="flex items-center space-x-2">{currentJob}</div>
-      </td>
+     
       <td className="py-4 px-6">{studentType}</td>
       <td className="py-4 px-6">
         <div className="flex justify-center space-x-6">
