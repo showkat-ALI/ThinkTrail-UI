@@ -46,10 +46,10 @@ const dashboardApi = createApi({
     // DELETE A USER BY USER ID
     deleteUser: builder.mutation({
       query: (id: string) => ({
-        url: `/api/v1/users/${id}`,
-        method: "DELETE",
+        url: `api/v1/admission/reject-all-admission-request/${id}`,
+        method: "POST",
       }),
-      invalidatesTags: ["users", "instructors"],
+      invalidatesTags: ["users"],
     }),
     // UPDATE A USER BY ID
     updateUser: builder.mutation({
@@ -178,8 +178,8 @@ const dashboardApi = createApi({
     // ACCEPT STUDENT ADMISSION REQUEST
     acceptStudentAdmissionRequest: builder.mutation({
       query: (id: string) => ({
-        url: `/api/v1/users/acceptStudent/${id}`,
-        method: "PATCH",
+        url: `api/v1/admission/accept-all-admission-request/${id}`,
+        method: "Post",
         body: {
           isActive: true,
           status: "active",

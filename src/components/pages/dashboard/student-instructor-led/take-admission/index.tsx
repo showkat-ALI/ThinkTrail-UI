@@ -50,7 +50,7 @@ export default function TakeAdmission() {
   ] = useCreateAdmissionRequestMutation({});
   const onSubmit = async (data: FormValues) => {
     try {
-      createAdmission({ ...data, email: email, id: id, roles: roles });
+      createAdmission({ ...data, email: email, id: id, roles: roles, status: "pending", isDeleted: false });
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       setSuccess(true);

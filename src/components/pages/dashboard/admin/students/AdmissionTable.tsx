@@ -1,43 +1,41 @@
-import { useState } from "react";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 import responsiveStyle from "../../../../../styles/ContactStyle.module.css";
 import {
   useAcceptStudentAdmissionRequestMutation,
   useDeleteUserMutation,
-  useGetAllAdmissionRequestQuery,
+  useGetAdmissionRequestQuery,
 } from "../../../../../feature/api/dashboardApi";
 import ActionConfirmModal from "../../../../utils/modals/ActionConfirmModal";
 
 interface IStudentProps {
-  profile: {
-    avatar: string;
-    firstName: string;
-    lastName: string;
-    userName: string;
-    studentType: string;
-  };
   id: string;
-  contact: string;
   email: string;
-  country: string;
   status: string;
-  createdAt: Date;
-  currentJob: string;
+  refetch: () => void;
+  onStatusChange: (id: string, newStatus: string) => void;
 }
 
-function Table(props: IStudentProps) {
-  const {
-    profile: { avatar, firstName, lastName, userName, studentType },
-    id,
-    email,
-    status,
-  } = props;
-
+function Table({ id, email, status, refetch, onStatusChange }: IStudentProps) {
   const [showAcceptStudentModal, setShowAcceptStudentModal] = useState(false);
   const [showRejectStudentModal, setShowRejectStudentModal] = useState(false);
+  const [optimisticStatus, setOptimisticStatus] = useState<string | null>(null);
 
   const handleCloseAcceptStudentModal = () => setShowAcceptStudentModal(false);
   const handleCloseRejectStudentModal = () => setShowRejectStudentModal(false);
+
+  const handleAcceptSuccess = () => {
+    setOptimisticStatus(null);
+    onStatusChange(id, "accepted");
+    refetch();
+  };
+
+  const handleRejectSuccess = () => {
+    setOptimisticStatus(null);
+    onStatusChange(id, "rejected");
+    refetch();
+  };
+
+  const displayStatus = optimisticStatus || status;
 
   return (
     <tr className="border-b">
@@ -51,6 +49,8 @@ function Table(props: IStudentProps) {
           mutationHook={useAcceptStudentAdmissionRequestMutation}
           sureButtonColor="success"
           cancelButtonColor="failure"
+          setOptimisticStatus={(status) => setOptimisticStatus(status)}
+          onSuccess={handleAcceptSuccess}
         />
       )}
       {showRejectStudentModal && (
@@ -61,64 +61,46 @@ function Table(props: IStudentProps) {
           title="Are you sure you want to reject this student admission?"
           successMessage="Student admission rejected Successfully!"
           mutationHook={useDeleteUserMutation}
+          setOptimisticStatus={(status) => setOptimisticStatus(status)}
+          onSuccess={handleRejectSuccess}
         />
       )}
       <td scope="row" className="py-4 px-6">
         <div className="flex space-x-2">
-          <div className="lg:w-[60px] relative w-[40px] lg:h-[60px] h-[40px] ">
-            <Image
-              // className="w-[15px] h-[15px] rounded-md"
-              src={avatar}
-              alt="avatar"
-              width={40}
-              height={40}
-            />
+          <div className="lg:w-[60px] relative w-[40px] lg:h-[60px] h-[40px]">
+            {/* Placeholder for avatar image */}
           </div>
           <div>
-            <h2 className="text-[16px] md:text-[18px] text-[#232D42] font-medium">
-              {firstName} {lastName}
-            </h2>
+            {/* Placeholder for student name */}
           </div>
         </div>
       </td>
       <td className="py-4 px-6">{email}</td>
-     
-      <td className="py-4 px-6">{studentType}</td>
+      <td className="py-4 px-6">
+        {displayStatus === "accepted" ? (
+          <span className="text-[#1AA053]">Accepted</span>
+        ) : displayStatus === "rejected" ? (
+          <span className="text-[#C03221]">Rejected</span>
+        ) : (
+          <span className="text-[#ADB5BD]">Pending</span>
+        )}
+      </td>
       <td className="py-4 px-6">
         <div className="flex justify-center space-x-6">
-          {(status === "" || status === "Accept") && (
-            <button
-              className={`text-[16px] px-4 py-1.5 rounded
-              ${status === "Accept" ? "text-[#1AA053]" : "text-white"}
-               ${status === "Accept" ? "bg-[#D5EBDF]" : "bg-[#1AA053]"} `}
-            >
-              Accept
-            </button>
-          )}
-          {(status === "" || status === "Reject") && (
-            <button
-              className={`text-[16px] px-4 py-1.5 rounded
-              text-white
-               ${status === "Reject" ? "bg-[#ADB5BD]" : "bg-[#C03221]"} `}
-            >
-              Reject
-            </button>
-          )}
           <button
             onClick={() => setShowAcceptStudentModal(true)}
-            className="bg-[#3A57E8] rounded text-white px-3 lg:px-5 py-1 lg:py-2 "
+            className={`text-[16px] px-4 py-1.5 rounded text-white bg-[#1AA053] hover:bg-[#168a48] transition-colors`}
+            disabled={displayStatus === "accepted"}
           >
             Accept
           </button>
           <button
             onClick={() => setShowRejectStudentModal(true)}
-            className="bg-[#C03221] rounded text-white px-3 lg:px-5 py-1 lg:py-2 "
+            className={`text-[16px] px-4 py-1.5 rounded text-white bg-[#C03221] hover:bg-[#a82b1d] transition-colors`}
+            disabled={displayStatus === "rejected"}
           >
             Reject
           </button>
-          {/* <button className="text-[16px] text-white px-4 py-1.5 rounded bg-[#3A57E8] ">
-            View
-          </button> */}
         </div>
       </td>
     </tr>
@@ -126,36 +108,56 @@ function Table(props: IStudentProps) {
 }
 
 function AdmissionTable() {
-  const { data, isLoading, isError, isSuccess, error } =
-    useGetAllAdmissionRequestQuery({});
+  const { 
+    data, 
+    isLoading, 
+    isError, 
+    isSuccess, 
+    error, 
+    refetch 
+  } = useGetAdmissionRequestQuery({});
+
+  const [localData, setLocalData] = useState(data?.data || []);
+
+  useEffect(() => {
+    if (isSuccess && data?.data) {
+      setLocalData(data.data);
+    }
+  }, [isSuccess, data]);
+
+  const handleStatusChange = (id: string, newStatus: string) => {
+    setLocalData(prevData => 
+      prevData.map(item => 
+        item._id === id ? { ...item, status: newStatus } : item
+      )
+    );
+  };
 
   return (
-    <>
+    <div className="p-4">
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
       ) : isError ? (
-        <div>Error...</div>
-      ) : isSuccess && data?.data?.users && data.data.users.length > 0 ? (
+        <div className="text-red-500 text-center p-4">
+          Error loading admission requests: {(error as any)?.data?.message || "Unknown error"}
+        </div>
+      ) : isSuccess && localData?.length > 0 ? (
         <div
-          className={` ${responsiveStyle.responsiveTable} overflow-x-scroll lg:overflow-x-auto md:w-full mx-auto shadow-md sm:rounded-lg mt-12 font-nunito`}
+          className={`${responsiveStyle.responsiveTable} overflow-x-scroll lg:overflow-x-auto md:w-full mx-auto shadow-md sm:rounded-lg mt-4 font-nunito`}
         >
           <table className="w-full text-[16px] md:text-[18px] text-left">
-            <thead className="text-[#ADB5BD] font-normal">
+            <thead className="text-[#ADB5BD] font-normal bg-gray-50">
               <tr>
                 <th scope="col" className="py-3 px-6">
                   Profiles
                 </th>
-                <th scope="col" className="py-3 px-6 ">
+                <th scope="col" className="py-3 px-6">
                   Email
                 </th>
-                <th scope="col" className="py-3 px-6 ">
-                  Enrolled Date
-                </th>
                 <th scope="col" className="py-3 px-6">
-                  Job Title
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Learning Preference
+                  Status
                 </th>
                 <th scope="col" className="py-3 px-6 text-center">
                   Action
@@ -163,60 +165,25 @@ function AdmissionTable() {
               </tr>
             </thead>
             <tbody className="text-[#232D42]">
-              {data.data.users.map(
-                ({
-                  _id,
-                  firstName,
-                  lastName,
-                  avatar,
-                  email,
-                  phone,
-                  country,
-                  status,
-                  userName = "",
-                  studentType,
-                  createdAt,
-                  currentJob,
-                }: {
-                  _id: string;
-                  firstName: string;
-                  lastName: string;
-                  avatar: string;
-                  email: string;
-                  studentType: string;
-                  phone: string;
-                  country: string;
-                  status: string;
-                  userName: string;
-                  createdAt: Date;
-                  currentJob: string;
-                }) => (
-                  <Table
-                    key={_id}
-                    profile={{
-                      avatar,
-                      firstName,
-                      lastName,
-                      userName,
-                      studentType,
-                    }}
-                    id={_id}
-                    contact={phone}
-                    country={country}
-                    email={email}
-                    status={status}
-                    createdAt={createdAt}
-                    currentJob={currentJob}
-                  />
-                )
-              )}
+              {localData.map((user: {id: string, _id: string, email: string, status: string}) => (
+                <Table
+                  key={user._id}
+                  id={user._id}
+                  email={user.email}
+                  status={user.status}
+                  refetch={refetch}
+                  onStatusChange={handleStatusChange}
+                />
+              ))}
             </tbody>
           </table>
         </div>
       ) : (
-        <div>No student Found</div>
+        <div className="text-center p-8 text-gray-500">
+          No admission requests found
+        </div>
       )}
-    </>
+    </div>
   );
 }
 

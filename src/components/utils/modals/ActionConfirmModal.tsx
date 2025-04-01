@@ -1,42 +1,65 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Modal } from 'flowbite-react';
 import { useEffect } from 'react';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import ButtonLoader from '../loaders/ButtonLoader';
+import { useAcceptStudentAdmissionRequestMutation } from '../../../feature/api/dashboardApi';
 
 type Props = {
-    show: boolean
-    handleClose: () => void
-    id: string,
-    mutationHook: any
-    body?: any
-    title?: string
-    sureButtonColor?: string,
-    cancelButtonColor?: string,
-    successMessage: string
-}
+    show: boolean;
+    handleClose: () => void;
+    id: string;
+    mutationHook: any;
+    title?: string;
+    sureButtonColor?: string;
+    cancelButtonColor?: string;
+    successMessage: string;
+    setOptimisticStatus?: (status: string) => void;
+    onSuccess: () => void;
+};
 
 const ActionConfirmModal = (props: Props) => {
-    const { show, handleClose, id, mutationHook, title = "Are you sure you want to perform this action?", sureButtonColor = "failure", cancelButtonColor = "gray", successMessage } = props;
+    const { 
+        show, 
+        handleClose, 
+        id, 
+        mutationHook, 
+        setOptimisticStatus, 
+        title = "Are you sure you want to perform this action?", 
+        sureButtonColor = "failure", 
+        cancelButtonColor = "gray", 
+        successMessage,
+        onSuccess
+    } = props;
 
     const [action, { isError, error, isLoading, isSuccess }] = mutationHook();
+    
+    // Determine status based on mutation type
+    const getActionStatus = () => {
+        return mutationHook === useAcceptStudentAdmissionRequestMutation 
+            ? "accepted" 
+            : "rejected";
+    };
 
-    // HANDLE USER DELETE
     const actionHandler = () => {
+        const status = getActionStatus();
+        // Set optimistic status before API call
+        if (setOptimisticStatus) {
+            setOptimisticStatus(status);
+        }
         action(id);
-    }
+    };
 
     useEffect(() => {
         if (isError) {
             toast.error((error as any).data.message);
-            // console.log(error);
+            handleClose();
         } else if (isSuccess) {
             toast.success(successMessage);
-            // console.log(data);
+            onSuccess();
             handleClose();
         }
-    }, [isError, isSuccess])
+    }, [isError, isSuccess]);
 
     return (
         <Modal
@@ -56,15 +79,14 @@ const ActionConfirmModal = (props: Props) => {
                         <Button
                             color={sureButtonColor}
                             onClick={actionHandler}
+                            disabled={isLoading}
                         >
-                            {isLoading ?
-                                <ButtonLoader />
-                                : "Yes, I'm sure"
-                            }
+                            {isLoading ? <ButtonLoader /> : "Yes, I'm sure"}
                         </Button>
                         <Button
                             color={cancelButtonColor}
                             onClick={handleClose}
+                            disabled={isLoading}
                         >
                             No, cancel
                         </Button>
