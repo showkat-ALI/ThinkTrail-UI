@@ -7,6 +7,7 @@ import {
   useGetAllAcademicSemestersQuery,
 } from "../../../../../feature/api/dashboardApi";
 import { useAppSelector } from "../../../../../app/hooks";
+import { useGetUserQuery } from "../../../../../feature/api/authApi";
 
 type FormValues = {
   program: string;
@@ -26,8 +27,7 @@ export default function TakeAdmission() {
 
   const {
     refresh,
-
-    user: { email, roles, id },
+    user: { email, roles, id, },
   } = useAppSelector((state) => state.auth);
   const {
     data: allAcademicSemesterData,
@@ -48,9 +48,15 @@ export default function TakeAdmission() {
       isSuccess: isAdmissionSuccess,
     },
   ] = useCreateAdmissionRequestMutation({});
+   const {
+      data: userData,
+      isSuccess: userIsSuccess,
+      isError: isErrorUser,
+    } = useGetUserQuery({});
+  
   const onSubmit = async (data: FormValues) => {
     try {
-      createAdmission({ ...data, email: email, id: id, roles: roles, status: "pending", isDeleted: false });
+      createAdmission({ ...data, email: email, id: userData?.data?._id, roles: roles, status: "pending", isDeleted: false });
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       setSuccess(true);
