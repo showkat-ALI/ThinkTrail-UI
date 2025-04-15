@@ -53,7 +53,7 @@ export default function TakeAdmission() {
       isSuccess: userIsSuccess,
       isError: isErrorUser,
     } = useGetUserQuery({});
-  
+  console.log(userData, "userData");
   const onSubmit = async (data: FormValues) => {
     try {
       createAdmission({ ...data, email: email, id: userData?.data?._id, roles: roles, status: "pending", isDeleted: false });

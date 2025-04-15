@@ -454,7 +454,15 @@ const AsideBar = () => {
                         router.pathname == "/dashboard/quiz/quiz-creation"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
+                    },{
+                      name: "Admission Requests",
+                      url: "/dashboard/admission-request",
+                      active:
+                        router.pathname == "/dashboard/admission-request"
+                          ? "!border-[#3A57E8] !text-[#3A57E8]"
+                          : "",
                     },
+                    
                   ],
                 },
                 {

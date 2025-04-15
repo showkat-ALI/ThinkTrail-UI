@@ -382,8 +382,8 @@ const dashboardApi = createApi({
     }),
     //Get my enrollmentsall course
     getMyEnrollmentAll: builder.query({
-      query: () => ({
-        url: `/api/v1/enrollments/myEnroll/mine`,
+      query: (id:string) => ({
+        url: `api/v1/admission/my-admission/${id}`,
         method: "GET",
       }),
       providesTags: ["enrollment"],
