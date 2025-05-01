@@ -12,8 +12,9 @@ import ButtonLoader from "../../../../utils/loaders/ButtonLoader";
 import { StepProps } from "../firstStep/FirstStep";
 import Link from "next/link";
 type RegistrationFirstStepFromData = {
-  phone: string;
+  contactNo: string;
   agree?: boolean;
+  password:string;
 };
 
 const FourthStep = (props: StepProps) => {
@@ -24,7 +25,8 @@ const FourthStep = (props: StepProps) => {
     formState: { errors },
   } = useForm<RegistrationFirstStepFromData>({
     defaultValues: {
-      phone: formData.phone,
+      contactNo: formData.contactNo,
+      password:formData.password,
       agree: formData.agree,
     },
   });
@@ -61,7 +63,7 @@ const FourthStep = (props: StepProps) => {
     <form onSubmit={handleSubmit(HandleRegistration)} className="font-nunito">
       <div
         className={`lg:w-full xl:w-full md:w-full sm:w-full xsm:w-64 mt-3 xl:mx-0 lg:mx-0 md:mx-0 sm:mx-0 xsm:mx-auto ${
-          errors.phone && "border-t-2 border-red-500"
+          errors.contactNo && "border-t-2 border-red-500"
         }`}
       >
         <div className=" lg:w-full xl:w-full md:w-full sm:w-full xsm:w-auto flex items-end  bg-slate-100  xsm:px-1 xsm:py-1 lg:px-3 xl:px-3 md:px-3 sm:px-3 lg:py-2 xl:py-2 md:py-2 sm:py-2">
@@ -71,11 +73,30 @@ const FourthStep = (props: StepProps) => {
             className={` lg:w-full xl:w-full md:w-full sm:w-full  xsm:w-auto outline-none bg-slate-100 lg:ml-2 md:ml-2 sm:ml-2 xl:ml-2 xsm:ml-1  `}
             type={"tel"}
             placeholder="Phone"
-            {...register("phone", { required: true })}
+            {...register("contactNo", { required: true })}
           />
         </div>
-        {errors.phone && (
+        {errors.contactNo && (
           <InputErrorMessage message={"Enter your phone number"} />
+        )}
+      </div>
+      <div
+        className={`lg:w-full xl:w-full md:w-full sm:w-full xsm:w-64 mt-3 xl:mx-0 lg:mx-0 md:mx-0 sm:mx-0 xsm:mx-auto ${
+          errors.password && "border-t-2 border-red-500"
+        }`}
+      >
+        <div className=" lg:w-full xl:w-full md:w-full sm:w-full xsm:w-auto flex items-end  bg-slate-100  xsm:px-1 xsm:py-1 lg:px-3 xl:px-3 md:px-3 sm:px-3 lg:py-2 xl:py-2 md:py-2 sm:py-2">
+          {/* <BsFillTelephoneFill className="w-6 h-6 my-auto" /> */}
+          {}
+          <input
+            className={` lg:w-full xl:w-full md:w-full sm:w-full  xsm:w-auto outline-none bg-slate-100 lg:ml-2 md:ml-2 sm:ml-2 xl:ml-2 xsm:ml-1  `}
+            // type={""}
+            placeholder="Password"
+            {...register("contactNo", { required: true })}
+          />
+        </div>
+        {errors.password && (
+          <InputErrorMessage message={"Enter your Password"} />
         )}
       </div>
 

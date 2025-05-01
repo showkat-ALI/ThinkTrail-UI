@@ -9,20 +9,8 @@ const authApi = createApi({
   endpoints: (builder) => ({
     // REGISTRATION
     register: builder.mutation({
-      query: (body: {
-        title: string;
-        firstName: string;
-        lastName: string;
-        email: string;
-        phone: string;
-        state: string;
-        country: string;
-        currentJob: string;
-        studentType: string;
-        highestStudy: string;
-        knowFrom: string;
-      }) => ({
-        url: "/api/v1/auth/register",
+      query: (body) => ({
+        url: "/api/v1/users/create-student",
         method: "POST",
         body: body,
       }),

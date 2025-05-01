@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import SecondStep from "./formSteps/secondStep/SecondStep";
-import { BsFillPersonFill } from "react-icons/bs";
-import { BsFillEnvelopeFill } from "react-icons/bs";
-import { BsFillTelephoneFill } from "react-icons/bs";
+
 import ThirdStep from "./formSteps/thirdStep/ThirdStep";
 
 import {
@@ -11,39 +9,39 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
-import { SelectOptions } from "./BottomRegisForm";
+// import { SelectOptions } from "./BottomRegisForm";
 import Textfield from "../../common/forms/Textfield";
 import FirstStep from "./formSteps/firstStep/FirstStep";
 import FourthStep from "./formSteps/fourthStep/FourthStep";
 
 export type InitialFormData = {
-  title: string;
+  
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
-  state: string;
-  country: string;
-  currentJob: string;
-  studentType: string;
-  highestStudy: string;
-  knowFrom: string;
+  contactNo: string;
+  dateOfBirth:string;
+  bloodGroup:string;
+  permanentAddress:string;
+  presentAddress:string;
+gender:string;
   agree?: boolean;
+  password:string;
 };
 
 const initialFormData = {
-  title: "",
+  
   firstName: "",
   lastName: "",
   email: "",
-  phone: "",
-  state: "",
-  country: "",
-  currentJob: "",
-  studentType: "",
-  highestStudy: "",
-  knowFrom: "",
+  contactNo: "",
+  dateOfBirth:"",
+  bloodGroup:"",
+  permanentAddress:"",
+  presentAddress:"",
+  gender:"",
   agree: false,
+  password:""
 };
 
 const TopFormRegistration = () => {
@@ -96,6 +94,7 @@ const TopFormRegistration = () => {
           setStep={setShowOpt}
           setFormData={setFormData}
           formData={formData}
+
         />
       );
     } else if (showOpt === 1) {

@@ -21,8 +21,11 @@ export type StepProps = {
 // type RegistrationFirstStepFromData = z.infer<typeof registrationFirstStepFromSchema>
 type RegistrationFirstStepFromData = {
   title: string;
-  firstName: string;
-  lastName: string;
+  name:{
+    firstName: string;
+    lastName: string;
+  }
+
 };
 
 const FirstStep = (props: StepProps) => {
@@ -33,9 +36,12 @@ const FirstStep = (props: StepProps) => {
     formState: { errors },
   } = useForm<RegistrationFirstStepFromData>({
     defaultValues: {
-      title: formData.title,
-      firstName: formData.firstName,
-      lastName: formData.lastName,
+      name:{
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+      }
+      // title: formData.title,
+     
     },
     // resolver: zodResolver(registrationFirstStepFromSchema)
   });
@@ -51,7 +57,7 @@ const FirstStep = (props: StepProps) => {
       <div
         className={`flex flex-col w-full  gap-7 mt-3 font-nunito xl:items-baseline lg:items-baseline md:items-baseline sm:items-baseline xsm:items-center`}
       >
-        <div className=" font-bold flex mt-1 xl:justify-start lg:justify-start md:justify-start sm:justify-start xsm:justify-center">
+        {/* <div className=" font-bold flex mt-1 xl:justify-start lg:justify-start md:justify-start sm:justify-start xsm:justify-center">
           <div className="">
             <p className="font-bold"> Title:</p>
           </div>
@@ -94,11 +100,11 @@ const FirstStep = (props: StepProps) => {
             </div>
           </div>
         </div>
-        {errors.title && <InputErrorMessage message={"Select your title"} />}
+        {errors.title && <InputErrorMessage message={"Select your title"} />} */}
 
         <div
           className={`lg:w-full xl:w-full md:w-full sm:w-full xsm:w-60 ${
-            errors.firstName && "border-t-2 border-red-500"
+            errors?.name?.firstName && "border-t-2 border-red-500"
           }`}
         >
           <div
@@ -109,17 +115,17 @@ const FirstStep = (props: StepProps) => {
               className={`lg:w-full xl:w-full md:w-full sm:w-full  xsm:w-auto outline-none bg-slate-100 lg:ml-2 md:ml-2 sm:ml-2 xl:ml-2 xsm:ml-0 `}
               type={"text"}
               placeholder="First Name"
-              {...register("firstName", { required: true })}
+              {...register("name.firstName", { required: true })}
             />
           </div>
-          {errors.firstName && (
+          {errors?.name?.firstName && (
             <InputErrorMessage message={"Enter your first name"} />
           )}
         </div>
 
         <div
           className={`lg:w-full xl:w-full md:w-full sm:w-full xsm:w-60 ${
-            errors.lastName && "border-t-2 border-red-500"
+            errors?.name?.lastName && "border-t-2 border-red-500"
           }`}
         >
           <div className=" lg:w-full xl:w-full md:w-full sm:w-full xsm:w-auto  flex items-end bg-slate-100 xsm:px-0 xsm:py-1 lg:px-3 xl:px-3 md:px-3 sm:px-3 lg:py-2 xl:py-2 md:py-2 sm:py-2 ">
@@ -128,10 +134,10 @@ const FirstStep = (props: StepProps) => {
               className="lg:w-full xl:w-full md:w-full sm:w-full  xsm:w-auto outline-none bg-slate-100 lg:ml-2 md:ml-2 sm:ml-2 xl:ml-2 xsm:ml-0"
               type={"text"}
               placeholder="Last Name"
-              {...register("lastName", { required: true })}
+              {...register("name.lastName", { required: true })}
             />
           </div>
-          {errors.lastName && (
+          {errors?.name?.lastName && (
             <InputErrorMessage message={"Enter your last name"} />
           )}
         </div>
