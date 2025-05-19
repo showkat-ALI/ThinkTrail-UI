@@ -26,7 +26,7 @@ const FourthStep = (props: StepProps) => {
   } = useForm<RegistrationFirstStepFromData>({
     defaultValues: {
       contactNo: formData.contactNo,
-      password:formData.password,
+      password: formData.password,
       agree: formData.agree,
     },
   });
@@ -40,21 +40,20 @@ const FourthStep = (props: StepProps) => {
     delete userData.agree;
     setFormData((prev) => ({ ...prev, ...data }));
     console.log("userData", userData);
-    registration(userData);
+    registration({ student: userData });
   };
 
   useEffect(() => {
     if (isError) {
-      // toast.error((error as any).data.message);
-      // toast.error((error as any).data.error[Object.keys((error as any).data.error)[0]]);
-
-      console.log("error", error);
+      toast.error(
+        (error as any)?.data?.message || "An error occurred during registration."
+      );
     } else if (isSuccess) {
       toast.success(
-        "Registration successful. You will get next instructions via a email soon."
+        "Registration successful. You will get next instructions via an email soon."
       );
       setTimeout(() => {
-        Router.push("/");
+        Router.push("/departments");
       }, 1500);
     }
   }, [isError, isSuccess]);
@@ -86,13 +85,11 @@ const FourthStep = (props: StepProps) => {
         }`}
       >
         <div className=" lg:w-full xl:w-full md:w-full sm:w-full xsm:w-auto flex items-end  bg-slate-100  xsm:px-1 xsm:py-1 lg:px-3 xl:px-3 md:px-3 sm:px-3 lg:py-2 xl:py-2 md:py-2 sm:py-2">
-          {/* <BsFillTelephoneFill className="w-6 h-6 my-auto" /> */}
           {}
           <input
             className={` lg:w-full xl:w-full md:w-full sm:w-full  xsm:w-auto outline-none bg-slate-100 lg:ml-2 md:ml-2 sm:ml-2 xl:ml-2 xsm:ml-1  `}
-            // type={""}
             placeholder="Password"
-            {...register("contactNo", { required: true })}
+            {...register("password", { required: true })}
           />
         </div>
         {errors.password && (

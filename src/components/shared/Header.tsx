@@ -40,6 +40,10 @@ const menu: {
     name: "Bootcamps",
     url: "/bootcamps",
   },
+  {
+    name: "Departments",
+    url: "/departments",
+  },
 
   {
     name: "Consulting",

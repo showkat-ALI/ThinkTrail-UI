@@ -71,9 +71,9 @@ const SecondStep = (props: StepProps) => {
         >
           <option value={""}>{"Select Your Gender"}</option>
           {[
-           "Female",
-           "Male",
-           "Others"
+           "female",
+           "male",
+           "other"
           ].map((item, id) => (
             <option value={item} key={id}>
               {item}
