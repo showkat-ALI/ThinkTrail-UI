@@ -5,6 +5,7 @@ import {
   useCreateAdmissionRequestMutation,
   useGetAllAcademicDepartmentsQuery,
   useGetAllAcademicSemestersQuery,
+  useGetCurrentSemesterQuery,
 } from "../../../../../feature/api/dashboardApi";
 import { useAppSelector } from "../../../../../app/hooks";
 import { useGetUserQuery } from "../../../../../feature/api/authApi";
@@ -35,7 +36,7 @@ export default function TakeAdmission() {
     isLoading: semesterLoading,
     isError: semesterError,
     isSuccess: semesterSuccess,
-  } = useGetAllAcademicSemestersQuery({});
+  } = useGetCurrentSemesterQuery({});
   const { data, error, isLoading, isError, isSuccess } =
     useGetAllAcademicDepartmentsQuery({});
   const [
@@ -56,7 +57,7 @@ export default function TakeAdmission() {
   console.log(userData, "userData");
   const onSubmit = async (data: FormValues) => {
     try {
-      createAdmission({ ...data, email: email, id: userData?.data?._id, roles: roles, status: "pending", isDeleted: false });
+      createAdmission({ ...data, email: email, id: id, roles: roles, status: "pending", isDeleted: false });
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       setSuccess(true);
@@ -165,11 +166,11 @@ export default function TakeAdmission() {
                     }`}
                   >
                     <option value="">-- Select semester --</option>
-                    {allAcademicSemesterData?.data?.map((semester: any) => (
-                      <option value={semester?._id} key={semester._id}>
-                        {semester.name} - {semester.year}
+                    {
+                      <option value={allAcademicSemesterData?.data?._id} >
+                        {allAcademicSemesterData?.data?.name} - {allAcademicSemesterData?.data?.year}
                       </option>
-                    ))}
+                    }
                   </select>
                   {errors.semester && (
                     <p className="mt-1 text-sm text-red-600">

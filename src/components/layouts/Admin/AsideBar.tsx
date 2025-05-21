@@ -701,6 +701,17 @@ const AsideBar = () => {
               ].map((single, idx) => <Item key={idx} item={single} />)
             : roles?.includes("student") && studentType === "self-pace"
             ? [
+              {
+                name: "Take Admission",
+                url: "/dashboard/take-admission",
+                id:0,
+                icon: AiOutlineAppstore,
+
+                active:
+                  router.pathname == "/dashboard/take-admission"
+                    ? "!border-[#3A57E8] !text-[#3A57E8]"
+                    : "",
+              },
                 {
                   name: "Dashboard",
                   id: 1,
@@ -756,8 +767,19 @@ const AsideBar = () => {
               ].map((single, idx) => <Item key={idx} item={single} />)
             : roles &&
               roles.includes("student") &&
-              studentType === "instructor-led" &&
+              
               [
+                {
+                  name: "Take Admission",
+                  url: "/dashboard/take-admission",
+                  id:0,
+                  icon: AiOutlineAppstore,
+
+                  active:
+                    router.pathname == "/dashboard/take-admission"
+                      ? "!border-[#3A57E8] !text-[#3A57E8]"
+                      : "",
+                },
                 {
                   name: "Dashboard",
                   id: 1,

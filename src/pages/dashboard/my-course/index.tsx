@@ -14,7 +14,7 @@ const Student = () => {
     <PrivateTemplate>
       <AccessTemplate accessRoles={["student", "superAdmin"]}>
         <Head>
-          <title> {data?.data?.name?.firstName}| My Courses</title>
+          <title> {data?.data?.name?.firstName} | My Courses</title>
         </Head>
         <DashboardLayout>
           <MyCourses />

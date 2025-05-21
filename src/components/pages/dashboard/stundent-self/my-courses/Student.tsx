@@ -6,18 +6,25 @@ import HourSpent from "./HourSpent";
 import Progress from "./Progress";
 import CalendarIcon from "../../../../../assets/Calender.png";
 import icon from "../../../../../assets/b.png";
-import { useGetMyEnrollmentAllQuery } from "../../../../../feature/api/dashboardApi";
+import { useGetAllMyCourseQuery, useGetMyEnrollmentAllQuery } from "../../../../../feature/api/dashboardApi";
+import { useAppSelector } from "../../../../../app/hooks";
 
 const Student = () => {
+  const {
+      refresh,
+      user
+    } = useAppSelector((state) => state.auth);
+    // console.log(user)
   const { isError, data, error, isLoading, isSuccess } =
-    useGetMyEnrollmentAllQuery({});
+    useGetAllMyCourseQuery(user?.id);
+    // console.log(data)
   return (
     <>
       <div className="grid grid-cols-12 gap-8 font-nunito bg-gray-bg">
         <div className="col-span-12 xl:col-span-8">
           <div className="">
             <div className="flex justify-between mb-8">
-              <h3 className="font-semibold text-xl">Your Courses</h3>
+              <h3 className="font-semibold text-xl">Your Course</h3>
               <button className="bg-[#3A57E8] py-2 px-4 text-white rounded">
                 View all
               </button>
@@ -32,10 +39,10 @@ const Student = () => {
               ) : isError ? (
                 <div>Error...</div>
               ) : isSuccess &&
-                data?.data?.enrollments &&
-                data.data.enrollments.length > 0 ? (
+                data?.data?.courses &&
+                data.data.courses.length > 0 ? (
                 <>
-                  {data.data.enrollments.map((item: any, i: any) => (
+                  {data.data.courses.map((item: any, i: any) => (
                     <CourseCard key={i} item={item} />
                   ))}
                 </>

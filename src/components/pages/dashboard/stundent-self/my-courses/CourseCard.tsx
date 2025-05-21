@@ -11,7 +11,7 @@ const CourseCard = ({item}:{item:any}) => {
     <div className='w-[275px] h-[406px] cursor-pointer overflow-hidden'>
         <div className='test bg-[#FFFFFF] h-full'>
          <div className='!w-full bg-[#FFFFFF]'>
-           <Image src={item.course ? item.course.courseImage : img} className='!w-full h-auto' 
+           <Image src={item?.fileUrl ? item?.fileUrl : img} className='!w-full h-auto' 
               width={500}
               height={400}
               objectFit="cover"

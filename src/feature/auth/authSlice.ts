@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type User = {
+  _id:string;
   id: string;
   email: string;
   passwordChangedAt?: Date;
@@ -22,6 +23,7 @@ type InitialState = {
 const initialState: InitialState = {
   data: null,
   user: {
+  _id:"",
     id: "",
     email: "",
     needsPasswordChange: false,
@@ -57,6 +59,7 @@ const authSlice = createSlice({
       state.refresh = true;
     },
     logout: (state) => {
+      state.user._id="";
       state.user.id = "";
       state.user.email = "";
       state.user.needsPasswordChange = false;

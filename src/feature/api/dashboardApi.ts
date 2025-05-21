@@ -1209,6 +1209,18 @@ const dashboardApi = createApi({
         method: "GET",
       }),
     }),
+    getCurrentSemester: builder.query({
+      query: () => ({
+        url: `api/v1/academic-semesters/semester/current-semester`,
+        method: "GET",
+      }),
+    }),
+    getAllMyCourse: builder.query({
+      query: (id) => ({
+        url: `api/v1/course/my-courses/${id}`,
+        method: "GET",
+      }),
+    }),
     // Add this to force a refetch
   }),
 });
@@ -1346,5 +1358,7 @@ export const {
   useGetAllDepartmentsQuery,
   useCreateAdmissionRequestMutation,
   useGetAdmissionRequestQuery,
+  useGetCurrentSemesterQuery,
+  useGetAllMyCourseQuery
 } = dashboardApi;
 export default dashboardApi;
