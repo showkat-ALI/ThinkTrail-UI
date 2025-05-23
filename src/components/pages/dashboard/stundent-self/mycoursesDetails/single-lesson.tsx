@@ -18,14 +18,14 @@ export default function Singlelesson({
   const {
     playVideo: { localVideo },
   } = useAppSelector((state) => state.playVideo);
-
+console.log(localVideo)
   //console.log("this",enrollmentData.course)
   const config = {};
 
   return (
     <div className="flex flex-col ">
       <div>
-        <h1 className="font-bold text-2xl ">{enrollmentData.course.title}</h1>
+        <h1 className="font-bold text-2xl ">{enrollmentData?.course?.title}</h1>
       </div>
       <div>
         {" "}
@@ -34,7 +34,7 @@ export default function Singlelesson({
           style={{
             backgroundImage: localVideo
               ? ""
-              : `url(${enrollmentData.course.courseImage})`,
+              : `url(${enrollmentData.course?.fileUrl})`,
             backgroundSize: "100% 100%",
           }}
         >

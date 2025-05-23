@@ -2,14 +2,13 @@ import React from "react";
 import AllLessons from "./all-lessons";
 import Singlelesson from "./single-lesson";
 import {useRouter} from "next/router";
-import {useGetEnrollmentQuery} from "../../../../../feature/api/dashboardApi";
+import {useGetEnrollmentQuery, useGetMyCourseDetailsQuery} from "../../../../../feature/api/dashboardApi";
 
 
 export default function Courselayout() {
   const router = useRouter();
-  const id = router.query.id as any;
-
-  const { isError,data, error, isLoading, isSuccess } =  useGetEnrollmentQuery(id)
+  const id = router?.query?.id as any;
+  const { isError,data, error, isLoading, isSuccess } =  useGetMyCourseDetailsQuery(id)
   return (
     <div className="grid grid-cols-12 gap-4 font-nunito bg-gray-bg">
       <div className="col-span-12 lg:col-span-8">
@@ -18,9 +17,9 @@ export default function Courselayout() {
            <div>Loading...</div> 
            : isError ?
               <div>Error...</div>
-                 : isSuccess && data.data.enrollment.course ?
+                 : isSuccess && data?.data?
                    <>          
-                      <Singlelesson enrollmentData={data.data.enrollment}/>
+                      <Singlelesson enrollmentData={data?.data}/>
                    </>: 
                      <div>Not found</div>
          }
@@ -33,9 +32,9 @@ export default function Courselayout() {
                 <div>Loading...</div> 
                  : isError ?
                    <div>Error...</div>
-                     : isSuccess && data.data.enrollment.course ?
+                     : isSuccess && data?.data ?
                         <>          
-                         <AllLessons enrollmentData={data.data.enrollment}/>
+                         <AllLessons enrollmentData={data?.data}/>
                         </>: 
                                <div>Not found</div>
             }

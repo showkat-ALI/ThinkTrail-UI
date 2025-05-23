@@ -1,39 +1,77 @@
 import React from 'react'
 import Image from 'next/image'
-import img  from '../../../../../assets/No_image_.png';
-import star  from '../../../../../assets/star.png';
+
 import Link from 'next/link'
 
 
-const CourseCard = ({item}:{item:any}) => {
-  return (
-   <Link href={"/dashboard/my-course/[id]"} as={`/dashboard/my-course/${item.id}`}>
-    <div className='w-[275px] h-[406px] cursor-pointer overflow-hidden'>
-        <div className='test bg-[#FFFFFF] h-full'>
-         <div className='!w-full bg-[#FFFFFF]'>
-           <Image src={item?.fileUrl ? item?.fileUrl : img} className='!w-full h-auto' 
-              width={500}
-              height={400}
-              objectFit="cover"
-              alt='courseImage'
-              />
-         </div>
-            <div className='bg-[#FFFFFF] p-3'>
-                           <h4 className='text-lg font-medium h-[4.5rem] overflow-auto'>{item.course == null ? "Empty":item.course.title}</h4>
-                         <div>
-                           <div className='flex justify-between pt-3 pb-2'>
-                               <span className='text-[#8A92A6]'><Image src={star}/>{item.course == null ? 0 : item.course.ratingsAverage}</span>
-                           </div>
-                           <div className="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700">
-                                 <div className="bg-[#1AA053] h-1.5 rounded-full dark:bg-blue-500" style={{width: item.completed}}></div>
-                           </div>
-                           <span className='text-[#8A92A6]'>{item.completed}% Completed</span>
-                         </div>    
-            </div>
-         </div> 
-    </div>
-  </Link>  
-  )
-}
 
-export default CourseCard
+const CourseCard = ({ item }: { item: any }) => {
+  
+  return (
+    <Link href={`/dashboard/my-course/${item?._id}`} passHref>
+      <div className='w-[275px] h-[406px] cursor-pointer overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white hover:scale-[1.02]'>
+        <div className='flex flex-col h-full'>
+          {/* Course Image */}
+          <div className='relative h-[180px] w-full overflow-hidden'>
+            <Image 
+              src={item?.fileUrl || '/default-course-image.jpg'} 
+              layout='fill'
+              objectFit='cover'
+              alt={item?.title || 'Course image'}
+              className='hover:scale-105 transition-transform duration-500'
+            />
+            {item.isDiscount && (
+              <div className='absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-bold'>
+                SALE
+              </div>
+            )}
+          </div>
+          
+          {/* Course Content */}
+          <div className='p-4 flex-1 flex flex-col'>
+            <h3 className='text-lg font-semibold text-gray-800 mb-2 line-clamp-2'>
+              {item?.title || 'Untitled Course'}
+            </h3>
+            
+            <div className='flex items-center text-sm text-gray-600 mb-3'>
+              <span className='mr-3'>{item?.language || 'English'}</span>
+              <span>•</span>
+              <span className='ml-3'>{item?.durationInMinutes || '0'} min</span>
+            </div>
+            
+            <div className='mb-3'>
+              <span className={`px-2 py-1 text-xs rounded-full ${
+                item?.level === 'Beginner' ? 'bg-blue-100 text-blue-800' :
+                item?.level === 'Intermediate' ? 'bg-purple-100 text-purple-800' :
+                'bg-orange-100 text-orange-800'
+              }`}>
+                {item?.level || 'All Levels'}
+              </span>
+            </div>
+            
+            <div className='mt-auto pt-2'>
+              {/* <div className='flex items-center'>
+                {item.isDiscount ? (
+                  <>
+                    <span className='text-lg font-bold text-gray-900'>
+                      ${item.discountPrice}
+                    </span>
+                    <span className='ml-2 text-sm text-gray-500 line-through'>
+                      ${item.price}
+                    </span>
+                  </>
+                ) : (
+                  <span className='text-lg font-bold text-gray-900'>
+                    ${item.price || 'Free'}
+                  </span>
+                )}
+              </div> */}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+export default CourseCard;

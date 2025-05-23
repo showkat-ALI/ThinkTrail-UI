@@ -11,12 +11,12 @@ import moment from "moment";
 import play from "../../../../../../../assets/lessonplay.png";
 import Image from "next/image";
 
-export default function index({ enrollmentData }: { enrollmentData: any }) {
-  const { data, isSuccess, isError, isLoading } =
-    useGetAllSubmitAssignmentQuery({});
+export default function Index({ enrollmentData }: { enrollmentData: any }) {
+  // const { data, isSuccess, isError, isLoading } =
+  //   useGetAllSubmitAssignmentQuery({});
   const [click, setClick] = useState("");
-  const { id: studentId,studentType } = useAppSelector((state) => state.auth.user);
-  const router = useRouter();
+  // const { id: studentId,studentType } = useAppSelector((state) => state.auth.user);
+  // const router = useRouter();
   const dispatch = useAppDispatch();
 
   const clickVideo = (youtubeVideo:string,localVideo: string, topicName: any, _id: any) => {
@@ -37,28 +37,28 @@ export default function index({ enrollmentData }: { enrollmentData: any }) {
   }
   return (
     <Accordion alwaysOpen={true} className="border-none p-0">
-      {enrollmentData.course.modules.map(
+      {enrollmentData?.module.map(
         (
           {
             name,
-            assignments,
-            quizzes,
-            slides,
-            videos,
-            numberOfVideos,
-            pages,
-            duration,
+            // assignments,
+            // quizzes,
+            // slides,
+            // videos,
+            // numberOfVideos,
+            // pages,
+            // duration,
             _id
           }: {
             name: string;
             _id:any;
-            assignments: any;
-            pages:any;
-            quizzes: any;
-            slides: any;
-            videos: any;
-            numberOfVideos: number;
-            duration: number;
+            // assignments: any;
+            // pages:any;
+            // quizzes: any;
+            // slides: any;
+            // videos: any;
+            // numberOfVideos: number;
+            // duration: number;
           },
           index: number
         ) => (
@@ -66,55 +66,12 @@ export default function index({ enrollmentData }: { enrollmentData: any }) {
             <Accordion.Title className="py-10 px-3 bg-none border-0 border-none ">
               <p className="text-lg font-bold ">{name}</p>
               <p className="text-sm text-small-text-color">
-                {numberOfVideos} videos | {duration} minutes
+                {/* {numberOfVideos} videos | {duration} minutes */}
               </p>
             </Accordion.Title>
             <Accordion.Content className="bg-white">
-            {
-             !studentType.includes("self-pace") && ( assignments &&
-                assignments.map(
-                  ({
-                    name,
-                    id,
-                    score,
-                  }: {
-                    name: string;
-                    id: string;
-                    score: number;
-                  }) => (
-                    //   <Link href={"/dashboard/student-instructor-led/assignment-submission/[courseId]/[assignmentId]"} as={`/dashboard/student-instructor-led/assignment-submission/${enrollmentData.course.id}/${id}`}>
-                    <div className="flex my-5" key={id}>
-                      <div className="flex items-center h-5 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          value=""
-                          checked={true}
-                          className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                        />
-                      </div>
-                      <div className="ml-2 text-sm cursor-pointer">
-                       <Link href={"/dashboard/assignment/[courseId]/[id]"} as={`/dashboard/assignment/${enrollmentData.course._id}/${id}`}> 
-                         <a target="_blank">
-                             <label
-                               className="font-medium text-gray-900 dark:text-gray-300 cursor-pointer"
-                             >
-                               Assignment - {name}
-                             </label>
-                         </a>
-                       </Link>
-                        <p
-                          id="helper-checkbox-text"
-                          className="text-xs font-normal text-gray-500 dark:text-gray-300"
-                        >
-                          {score} pts . Submit
-                        </p>
-                      </div>
-                    </div>
-                    // </Link>
-                  )
-                )
-                  ) }
-              {
+           
+              {/* {
                 !studentType.includes("self-pace") && (quizzes &&
                 quizzes.map(
                   ({
@@ -161,9 +118,9 @@ export default function index({ enrollmentData }: { enrollmentData: any }) {
                     </Link>
                   )
                 )
-               )}
+               )} */}
 
-              {slides &&
+              {/* {slides &&
                 slides.map(({ title,fileUrl,_id }: { title: string;fileUrl:string;_id:string }) => (
                   <div className="flex my-5 " key={_id}>
                     <div className="flex items-center h-5">
@@ -189,9 +146,9 @@ export default function index({ enrollmentData }: { enrollmentData: any }) {
                       </p>
                     </div>
                   </div>
-                ))}
+                ))} */}
 
-                {pages &&
+                {/* {pages &&
                 pages.map(({ title,description,_id }: { title: string;description:string,_id:string }) => (
                   <div className="flex my-5 " key={_id}>
                     <div className="flex items-center h-5">
@@ -222,9 +179,9 @@ export default function index({ enrollmentData }: { enrollmentData: any }) {
                       </Link>
                     </div>
                   </div>
-                ))}
-              {videos &&
-                videos.map(
+                ))} */}
+              {
+               enrollmentData?.moduleVideo.map(
                   ({
                     topicName,
                     youtubeVideo,

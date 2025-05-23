@@ -17,7 +17,7 @@ const Student = () => {
     // console.log(user)
   const { isError, data, error, isLoading, isSuccess } =
     useGetAllMyCourseQuery(user?.id);
-    // console.log(data)
+    console.log(data)
   return (
     <>
       <div className="grid grid-cols-12 gap-8 font-nunito bg-gray-bg">

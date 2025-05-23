@@ -7,7 +7,7 @@ import Notes from "./tab-options/notes/index";
 import Overview from "./tab-options/overview/index";
 
 
-export default function CourseTab({ enrollmentData }: { enrollmentData: string[] }) {
+export default function CourseTab({ enrollmentData }: { enrollmentData: any }) {
   const [activeTab, setActiveTab] = useState<number>(0);
   const tabsRef = useRef(null);
 
@@ -25,10 +25,10 @@ export default function CourseTab({ enrollmentData }: { enrollmentData: string[]
           </div>
         </Tabs.Item>
         <Tabs.Item title="Overview" className="p-0">
-          <Overview enrollmentData={enrollmentData} />
+          {/* <Overview enrollmentData={enrollmentData} /> */}
         </Tabs.Item>
         <Tabs.Item title="Q&A" className="p-0">
-          <QuestionAndAnswer enrollmentData={enrollmentData} />
+          {/* <QuestionAndAnswer enrollmentData={enrollmentData} /> */}
         </Tabs.Item>
         <Tabs.Item title="Notes" className="p-0">
           <Notes />
