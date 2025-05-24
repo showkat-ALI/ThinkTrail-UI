@@ -117,7 +117,6 @@ const VideoCategory = ({
     const { name, value } = e.target;
     setinputValue({ ...inputValue, [name]: value });
   }
-  const { module } = useAppSelector((state) => state.module);
   console.log(module);
   const handleYoutube = (e: any) => {
     setyoutubeUrl(e);

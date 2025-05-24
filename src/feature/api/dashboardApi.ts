@@ -691,6 +691,7 @@ const dashboardApi = createApi({
       }),
       providesTags: ["assignment"],
     }),
+    
     //get all quiz in instructor
     AllQuizInstructor: builder.query({
       query: (id: any) => ({
@@ -1228,6 +1229,14 @@ const dashboardApi = createApi({
       }),
     }),
     // Add this to force a refetch
+    //get single assignment in instructor
+    singleStudentAssignment: builder.query({
+      query: (id: any) => ({
+        url: `api/v1/assignment/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["assignment"],
+    }),
   }),
 });
 
@@ -1366,6 +1375,7 @@ export const {
   useGetAdmissionRequestQuery,
   useGetCurrentSemesterQuery,
   useGetAllMyCourseQuery,
-  useGetMyCourseDetailsQuery
+  useGetMyCourseDetailsQuery,
+  useSingleStudentAssignmentQuery
 } = dashboardApi;
 export default dashboardApi;
