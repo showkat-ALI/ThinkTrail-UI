@@ -2,7 +2,7 @@ import React from "react";
 import { MdEdit } from "react-icons/md";
 import AssignmentPhoto from "../../../../../assets/admin/pexels-flo-dahm-699459 1.png";
 import Image from "next/image";
-import {useSingleAssignmentQuery} from "../../../../../feature/api/dashboardApi";
+import {useSingleAssignmentQuery, useSingleStudentAssignmentQuery} from "../../../../../feature/api/dashboardApi";
 import { useRouter } from "next/router";
 import {Spinner} from "flowbite-react";
 import moment from "moment";
@@ -16,10 +16,12 @@ export default function OnePageAssignment() {
  /// useGetAllSubmitAssignmentQuery({});
   const { roles,id:studentId } =
   useAppSelector((state) => state.auth.user);
+  console.log(roles)
   const router = useRouter();
   const {id,courseId} = router.query;
-  const { data, isSuccess, isError, isLoading } = useSingleAssignmentQuery(id);
-
+  console.log(id)
+  const { data, isSuccess, isError, isLoading } = useSingleStudentAssignmentQuery(id);
+  console.log(data)
 
   const assignmentSubmitHandle = async () => {
    try {
@@ -63,11 +65,11 @@ export default function OnePageAssignment() {
       <div className="flex justify-between items-center mb-[20px] xsm:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row">
         <div>
           <h1 className="font-bold text-lg">
-             {data.data.assignment.name}
+             {data.data.assignments.name}
           </h1>
         </div>
      {
-       roles.includes("instructor") &&   
+       roles?.includes("instructor") &&   
         <div className="flex justify-between items-center">
           <div>
             <button
@@ -122,19 +124,19 @@ export default function OnePageAssignment() {
       </div>
       <div className="bg-white p-6">
         <div className="border-2 border-gray-400 rounded-l-md rounded-r-md p-5">
-              <p className="text-[#8A92A6]"  dangerouslySetInnerHTML={{
-                           __html: data?.data.assignment.description,
+              <p className="text-[black]"  dangerouslySetInnerHTML={{
+                           __html: data?.data?.assignments?.description,
                       }}>
               </p>
-              <a target="_blank" href={data.data.assignment.fileUrl} className="cursor-pointer flex items-center">
+              <a target="_blank" rel="noreferrer" href={data?.data?.assignments?.fileUrl} className="cursor-pointer flex items-center">
                  <GoFile  className="text-[3rem] text-blue-500 mt-2"/>
-                 <span className="text-sm text-[#8A92A6]">{data.data.assignment.key}</span>
+                 {/* <span className="text-sm text-[#8A92A6]">{data.data.assignment.key}</span> */}
               </a>
         </div>
         <div className="flex w-[60%] justify-between mt-[20px] mb-[40px] xl:flex-row lg:flex-row md:flex-row sm:flex-col xsm:flex-col">
           <p>
             <span className="font-bold">Points:</span>
-            {data.data.assignment.score}
+            {data.data.assignments?.score}
           </p>
           <p>
             <span className="font-bold">Submitting:</span>a website url or a
@@ -150,14 +152,14 @@ export default function OnePageAssignment() {
           </div>
           <div className="h-[2px] w-full bg-slate-400 my-[5px]"></div>
           <div className="flex justify-around xsm:items-start sm:items-start md:items-end lg:items-end xl:items-end  xl:flex-row lg:flex-row md:flex-row sm:flex-col xsm:flex-col">
-            <p>{moment(data.data.assignment.createdAt).format('MM/DD/YYYY')}</p>
+            <p>{moment(data.data.assignments?.createdAt).format('MM/DD/YYYY')}</p>
             <p>Everyone</p>
-            <p>{moment(data.data.assignment.availFrom).format('MM/DD/YYYY')}</p>
-            <p>{moment(data.data.assignment.availUntil).format('MM/DD/YYYY')}</p>
+            <p>{moment(data.data.assignments?.availFrom).format('MM/DD/YYYY')}</p>
+            <p>{moment(data.data.assignments?.availUntil).format('MM/DD/YYYY')}</p>
           </div>
         </div>
         {
-          roles.includes("student") &&
+          roles?.includes("student") &&
            <div className="flex justify-end">
              <button className="text-[#FFFFFF] bg-[#3A57E8] py-3 my-3 px-2"  onClick={() => assignmentSubmitHandle()}>Submit Assignment</button>
           </div>
