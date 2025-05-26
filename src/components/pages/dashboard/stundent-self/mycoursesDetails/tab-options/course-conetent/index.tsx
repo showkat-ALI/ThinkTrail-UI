@@ -28,7 +28,7 @@ export default function Index({ enrollmentData }: { enrollmentData: any }) {
     }
   };
  
- 
+ console.log(enrollmentData)
   //onClick={() => assignmentSubmitHandle(id)}
  // console.log(moment("2021-07-14T00:00:00.000Z").utc().format("YYYY-MM-DD"));
   const openSlide = (fileUrl:string) => {
@@ -52,6 +52,7 @@ export default function Index({ enrollmentData }: { enrollmentData: any }) {
         <Accordion.Title className="py-10 px-3 bg-none border-0 border-none ">
           <p className="text-lg font-bold ">{name}</p>
           <p className="text-lg font-bold ">{_id}</p>
+          <p className="text-lg font-bold "></p>
           <p className="text-sm text-small-text-color">
           {/* Additional module details can go here */}
           </p>
@@ -128,8 +129,8 @@ export default function Index({ enrollmentData }: { enrollmentData: any }) {
               }) => (
                 <Link
                 key={_id}
-                href={"/dashboard/assignment/[singleAssignment]"}
-                as={`/dashboard/assignment/${_id}`}
+                href={"/dashboard/assignment/[courseId]/[id]"}
+                as={`/dashboard/assignment/${enrollmentData?.course?._id}}/${_id}`}
               >
               <div className="flex my-5" >
                 <div className="flex items-center h-5">

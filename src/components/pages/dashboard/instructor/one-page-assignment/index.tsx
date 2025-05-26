@@ -14,7 +14,7 @@ import {GoFile} from "react-icons/go";
 export default function OnePageAssignment() {
  // const { data:submitData, isSuccess:submitDataSuccess, isError:submitDataIsError, isLoading:submitDataLoading } =
  /// useGetAllSubmitAssignmentQuery({});
-  const { roles,id:studentId } =
+  const { roles,id:studentId,_id } =
   useAppSelector((state) => state.auth.user);
   console.log(roles)
   const router = useRouter();

@@ -40,6 +40,7 @@ export default function AssignmentSubmission() {
     isError: AllSubmitAssignmentIsError,
     isLoading: AllSubmitAssignmentIsLoading,
   } = useGetAllSubmitAssignmentQuery({});
+  console.log(filePreview)
   const [submitAssignment, { error, data, isLoading, isSuccess, isError }] =
     useSubmitAssignmentMutation();
   const [
@@ -66,6 +67,8 @@ export default function AssignmentSubmission() {
   };
 
   const onQuestionSubmit = (data: any) => {
+    console.log({...data, course: courseId,
+      assignment: assignmentId,})
     data.fileUrl = filePreview;
     submitAssignment({
       course: courseId,
@@ -73,6 +76,7 @@ export default function AssignmentSubmission() {
       text: data.text,
       comment: data.comment,
       fileUrl: data.fileUrl,
+      submittedBy:studentId
     });
   };
   // console.log({ ...inputs, value });
@@ -102,7 +106,7 @@ export default function AssignmentSubmission() {
       toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
       // console.log("upload success", uploadData);
-      setFilePreview(uploadData.data.fileUrl);
+      setFilePreview(uploadData?.data);
       toast.success("upload success");
       // console.log(serviceList)
     }
@@ -128,7 +132,7 @@ export default function AssignmentSubmission() {
   useEffect(() => {
     const test = async () => {
       try {
-        const a = AllSubmitAssignment.data.subAssignments
+        const a = AllSubmitAssignment.data?.assignments
           .filter(
             (student: any) =>
               student.assignment === assignmentId &&
