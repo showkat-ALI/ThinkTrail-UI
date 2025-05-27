@@ -746,7 +746,7 @@ const dashboardApi = createApi({
     //get all submit assignment in instructor
     getAllSubmitAssignmentInstructor: builder.query({
       query: (id: string) => ({
-        url: `api/v1/assignment/studentSubAssignments/${id}`,
+        url: `/api/v1/assignment/studentSubAssignments/${id}`,
         method: "GET",
       }),
       providesTags: [],

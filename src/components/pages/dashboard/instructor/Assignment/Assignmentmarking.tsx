@@ -5,6 +5,7 @@ import rightIcon from "../../../../../assets/RightIcon.png";
 import Image from "next/image";
 import {
   useGetOneSubmitAssignmentInstructorQuery,
+  useGetOneSubmitAssignmentQuery,
   useSubmitAssignmentUdpateMutation,
 } from "../../../../../feature/api/dashboardApi";
 import { useRouter } from "next/router";
@@ -14,7 +15,7 @@ import { Spinner } from "flowbite-react";
 import moment from "moment";
 const Assignment = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id,assignmentId } = router.query;
   const {
     register,
     handleSubmit,
@@ -22,7 +23,7 @@ const Assignment = () => {
     formState: { errors },
   } = useForm();
   const { data, isSuccess, isError, isLoading } =
-    useGetOneSubmitAssignmentInstructorQuery(id);
+    useGetOneSubmitAssignmentQuery({assignmentId,id});
   const [
     submitAssignmentUdpate,
     {
@@ -78,7 +79,7 @@ const Assignment = () => {
                       color: " #232D42",
                     }}
                   >
-                    {data?.data?.subAssignment?.assignment?.name}
+                    {data?.data?.assignment?.name}
                   </h2>
                   <div className="assignment_grade_heading_bottom_content flex gap-5">
                     <span
@@ -91,7 +92,7 @@ const Assignment = () => {
                       }}
                     >
                       {moment(
-                        data?.data?.subAssignment?.assignment?.availUntil
+                        data?.data?.assignment?.availUntil
                       ).format("MM/DD/YYYY")}
                     </span>
                     <span
@@ -103,7 +104,7 @@ const Assignment = () => {
                         color: " #3A57E8",
                       }}
                     >
-                      Score {data?.data?.subAssignment?.assignment?.score}
+                      Score {data?.data?.assignment?.score}
                     </span>
                   </div>
                 </div>
@@ -144,8 +145,8 @@ const Assignment = () => {
                     }}
                   >
                     Name of Single Student{" "}
-                    {data?.data?.subAssignment?.student.firstName}{" "}
-                    {data?.data?.subAssignment?.student.lastName}
+                    {data?.data?.enrichedAssignment?.submittedBy?.name?.firstName}{" "}
+                    {data?.data?.enrichedAssignment?.submittedBy?.name?.lastName}
                   </h2>
                   {/* <button
                     className="rounded xsm:!w-full md:!w-[119px]"
