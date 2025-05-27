@@ -263,7 +263,7 @@ const Assignment = () => {
                     </button>
 
                     <div
-                      className={`${InstructorCss.submitted_filesss} flex xsm:items-left md:items-center xsm:gap-2 md:gap-8 md:flex-row xsm:flex-col `}
+                      // className={`${InstructorCss.submitted_filesss} flex xsm:items-left md:items-center xsm:gap-2 md:gap-8 md:flex-row xsm:flex-col `}
                       style={{
                         borderBottom: "1px solid #ADB5BD",
                         paddingBottom: "2.1rem",
@@ -291,9 +291,9 @@ const Assignment = () => {
                           color: "#3A57E8",
                         }}
                       >
-                        <a
+                        {/* <a
                           target="_blank"
-                          href={`${data.data.subAssignment.fileUrl[0]}`}
+                          href={`${data?.data?.submittedAssignment?.fileUrl[0]}`}
                           className="flex justify-between gap-2 items-center"
                           rel="noreferrer"
                         >
@@ -304,10 +304,10 @@ const Assignment = () => {
                             alt=""
                           />
                           History Survey
-                        </a>
+                        </a> */}
                       </button>
                     </div>
-                    <div
+                    {/* <div
                       className={`${InstructorCss.assingment_comment_input} flex flex-col`}
                     >
                       <label
@@ -344,7 +344,7 @@ const Assignment = () => {
                           "Update"
                         )}
                       </button>
-                    </div>
+                    </div> */}
                   </form>
                 </div>
               </div>
