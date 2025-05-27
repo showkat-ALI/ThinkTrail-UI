@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default function AllAssignments() {
   const { user } = useAppSelector((state) => state.auth);
-  console.log(user._id)
+  console.log(user)
   const { data, isSuccess, isError, isLoading } =
     useGetAllSubmitAssignmentInstructorQuery(user?._id);
 
