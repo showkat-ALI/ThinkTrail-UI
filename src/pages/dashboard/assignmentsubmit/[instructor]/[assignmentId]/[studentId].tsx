@@ -1,9 +1,9 @@
 import Head from "next/head";
 import React from "react";
-import DashboardLayout from "../../../../components/layouts/DashboardLayout";
-import AssignmentSubmitted from "../../../../components/pages/dashboard/instructor/others/student/AssignmentSubmit";
-import PrivateTemplate from "../../../../templates/PrivateTemplate";
-import AccessTemplate from "../../../../templates/AccessTemplate";
+import PrivateTemplate from "../../../../../templates/PrivateTemplate";
+import AccessTemplate from "../../../../../templates/AccessTemplate";
+import DashboardLayout from "../../../../../components/layouts/DashboardLayout";
+import AssignmentSubmitted from "../../../../../components/pages/dashboard/instructor/others/student/AssignmentSubmit";
 
 const assignmentsubmit = () => {
   return (

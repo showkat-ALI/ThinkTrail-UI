@@ -18,7 +18,7 @@ export default function OnePageAssignment() {
   useAppSelector((state) => state.auth.user);
   console.log(roles)
   const router = useRouter();
-  const {id,courseId} = router.query;
+  const {id,courseId,instructor} = router.query;
   console.log(id)
   const { data, isSuccess, isError, isLoading } = useSingleStudentAssignmentQuery(id);
   console.log(data)
@@ -38,11 +38,11 @@ export default function OnePageAssignment() {
           setTimeout(() => {
             if(a?.length > 0 ) {
               router.push(
-                `/dashboard/assignmentsubmit/${id}/${studentId}`
+                `/dashboard/assignmentsubmit/${instructor}/${id}/${studentId}`
               );
             }else{
               router.push(
-                `/dashboard/assignment-submission/${courseId}/${id}`
+                `/dashboard/assignment-submission/${instructor}/${courseId}/${id}`
               );
             }
           }, 5);
@@ -50,7 +50,7 @@ export default function OnePageAssignment() {
          // console.log(a)
     }else{
       router.push(
-        `/dashboard/assignment-submission/${courseId}/${id}`
+        `/dashboard/assignment-submission/${instructor}/${courseId}/${id}`
       );
     }
   } catch (err) {

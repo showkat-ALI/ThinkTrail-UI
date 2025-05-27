@@ -417,9 +417,9 @@ const AsideBar = () => {
                     },
                     {
                       name: "All assignments",
-                      url: "/dashboard/instructor/all-assignments",
+                      url: "/dashboard/assignment/all-assignments",
                       active:
-                        router.pathname == "/dashboard/instructor/all-assignments"
+                        router.pathname == "/dashboard/assignment/all-assignments"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },

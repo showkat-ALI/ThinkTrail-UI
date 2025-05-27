@@ -28,7 +28,7 @@ export default function AssignmentSubmission() {
   const router = useRouter();
   const [serviceList, setserviceList] = useState<any>([]);
   const { id: studentId } = useAppSelector((state) => state.auth.user);
-  const { assignmentId, courseId } = router.query;
+  const { assignmentId, courseId,instructor} = router.query;
   const [filePreview, setFilePreview] = useState([]);
   const [Filename, setFilename] = useState("");
   const [showFileUpload, setshowFileUpload] = useState(false);
@@ -41,7 +41,7 @@ export default function AssignmentSubmission() {
     isError: AllSubmitAssignmentIsError,
     isLoading: AllSubmitAssignmentIsLoading,
   } = useGetAllSubmitAssignmentQuery({});
-  console.log(courseId,assignmentId)
+  console.log(courseId,assignmentId,instructor)
   const [submitAssignment, { error, data, isLoading, isSuccess, isError }] =
     useSubmitAssignmentMutation();
   const [
@@ -68,14 +68,14 @@ export default function AssignmentSubmission() {
   };
 
   const onQuestionSubmit = (data: any) => {
-  
     submitAssignment({
       course: courseId,
       assignment: assignmentId,
       text: data.text,
       comment: data.comment,
       fileUrl: uploadedFiles, // Use the accumulated files
-      submittedBy: studentId
+      submittedBy: studentId,
+      createdBy: instructor 
     });
   };
   // console.log({ ...inputs, value });
@@ -127,7 +127,7 @@ export default function AssignmentSubmission() {
       console.log(error);
     } else if (isSuccess) {
       router.push(
-        `/dashboard/assignmentsubmit/${assignmentId}/${studentId}`
+        `/dashboard/assignmentsubmit/${instructor}/${assignmentId}/${studentId}`
       );
       toast.success("assignment submit Successfully!");
       // console.log(data);

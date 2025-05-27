@@ -444,7 +444,8 @@ const dashboardApi = createApi({
         text: string;
         fileUrl: string[];
         comment: string;
-        submittedBy:string
+        submittedBy:string;
+        createdBy:any;
       }) => ({
         url: "/api/v1/assignment/submit-assignment",
         method: "POST",
@@ -745,7 +746,7 @@ const dashboardApi = createApi({
     //get all submit assignment in instructor
     getAllSubmitAssignmentInstructor: builder.query({
       query: (id: string) => ({
-        url: `api/v1/subAssignments?instructors=${id}`,
+        url: `api/v1/assignment/studentSubAssignments/${id}`,
         method: "GET",
       }),
       providesTags: [],

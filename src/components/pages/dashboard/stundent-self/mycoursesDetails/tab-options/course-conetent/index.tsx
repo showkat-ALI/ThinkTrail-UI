@@ -129,8 +129,8 @@ export default function Index({ enrollmentData }: { enrollmentData: any }) {
               }) => (
                 <Link
                 key={_id}
-                href={"/dashboard/assignment/[courseId]/[id]"}
-                as={`/dashboard/assignment/${enrollmentData?.course?._id}}/${_id}`}
+                href={"/dashboard/assignment/[instructor]/[courseId]/[id]"}
+                as={`/dashboard/assignment/${enrollmentData?.course?.createdBy}/${enrollmentData?.course?._id}}/${_id}`}
               >
               <div className="flex my-5" >
                 <div className="flex items-center h-5">

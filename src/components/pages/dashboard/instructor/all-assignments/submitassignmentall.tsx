@@ -7,9 +7,9 @@ import moment from "moment";
 import Image from "next/image";
 
 export default function AllAssignments() {
-  const { id } = useAppSelector((state) => state.auth.user);
+  const { user } = useAppSelector((state) => state.auth);
   const { data, isSuccess, isError, isLoading } =
-    useGetAllSubmitAssignmentInstructorQuery(id);
+    useGetAllSubmitAssignmentInstructorQuery(user?._id);
 
   return (
     <div className="xsm:p-1 sm:p-1 lg:p-4 md:p-3 xl:p-5 font-nunito h-[100vh]">
@@ -24,8 +24,8 @@ export default function AllAssignments() {
             <div className="flex justify-center items-center">
               <Spinner />
             </div>
-          ) : isSuccess && data.data.subAssignments.length > 0 ? (
-            data.data.subAssignments.map((item: any, idx: number) => (
+          ) : isSuccess && data.data.length > 0 ? (
+            data.data.map((item: any, idx: number) => (
               <Link
                 key={idx}
                 href={"/dashboard/assignmentmarking/[id]"}
@@ -37,20 +37,20 @@ export default function AllAssignments() {
                 >
                   <div className="w-full flex xsm:items-start sm:items-start md:items-start lg:items-center xl:items-center gap-3">
                     <div className="xl:mx-[15px] md:mx-[5px] xsm:[mx-5px] lg:[mx-5px] sm:[mx-5px] flex justify-center flex-col items-center w-[7rem]">
-                      <img
+                      {/* <img
                         src={item?.student?.avatar}
                         className="w-[50px] h-[50px] rounded-full"
                         alt=""
-                      />
+                      /> */}
                       <div>
                         <h4 className="font-nunito text-sm mt-1 ">
-                          {item?.student?.firstName} {item?.student?.lastName}
+                          {item?.submittedBy?.id} 
                         </h4>
                       </div>
                     </div>
                     <div className="">
                       <h1 className="font-bold text-2xl">
-                        {item?.assignment?.name}
+                        {item?.submittedBy?.email}
                       </h1>
                       {/*
                   <div className="flex xsm:flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row justify-between xsm:items-start sm:items-start md:items-start lg:items-center xl:items-center md:text-sm sm:text-sm xsm:text-sm xl:text-sm lg:text-xs ">
