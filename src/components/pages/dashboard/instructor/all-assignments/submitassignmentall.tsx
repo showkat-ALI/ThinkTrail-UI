@@ -13,10 +13,10 @@ export default function AllAssignments() {
       isSuccess: userIsSuccess,
       isError: isErrorUser,
     } = useGetUserQuery({});
-  
+  console.log(userData?.data?._id)
   const { data, isSuccess, isError, isLoading } =
     useGetAllSubmitAssignmentInstructorQuery(userData?.data?._id);
-
+console.log(data)
   return (
     <div className="xsm:p-1 sm:p-1 lg:p-4 md:p-3 xl:p-5 font-nunito h-[100vh]">
       <div className="flex justify-between items-center mb-[20px] xsm:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row">
