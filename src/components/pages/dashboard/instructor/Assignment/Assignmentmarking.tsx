@@ -144,7 +144,7 @@ const Assignment = () => {
                       color: " #232D42",
                     }}
                   >
-                    Name of Single Student{" "}
+                    Name of Single Student{" "}: 
                     {data?.data?.enrichedAssignment?.submittedBy?.name?.firstName}{" "}
                     {data?.data?.enrichedAssignment?.submittedBy?.name?.lastName}
                   </h2>
@@ -247,23 +247,10 @@ const Assignment = () => {
                       </div>
                     </div>
 
-                    <button
-                      className="flex text-xs rounded md:!w-[16rem] xsm:!w-full font-medium justify-center items-center gap-3"
-                      style={{
-                        background: "#EBEEFD",
-                        border: "1px solid #3A57E8",
-                        padding: "5px 20px",
-                        marginBottom: "1.6rem",
-                        lineHeight: "175%",
-                        letterSpacing: "0.02em",
-                        color: "#3A57E8",
-                      }}
-                    >
-                      More Details in the sppedd grader
-                    </button>
+                    
 
                     <div
-                      // className={`${InstructorCss.submitted_filesss} flex xsm:items-left md:items-center xsm:gap-2 md:gap-8 md:flex-row xsm:flex-col `}
+                      className={`${InstructorCss.submitted_filesss} flex xsm:items-left md:items-center xsm:gap-2 md:gap-8 md:flex-row xsm:flex-col `}
                       style={{
                         borderBottom: "1px solid #ADB5BD",
                         paddingBottom: "2.1rem",
@@ -291,7 +278,7 @@ const Assignment = () => {
                           color: "#3A57E8",
                         }}
                       >
-                        {/* <a
+                        <a
                           target="_blank"
                           href={`${data?.data?.submittedAssignment?.fileUrl[0]}`}
                           className="flex justify-between gap-2 items-center"
@@ -304,10 +291,10 @@ const Assignment = () => {
                             alt=""
                           />
                           History Survey
-                        </a> */}
+                        </a>
                       </button>
                     </div>
-                    {/* <div
+                    <div
                       className={`${InstructorCss.assingment_comment_input} flex flex-col`}
                     >
                       <label
@@ -344,7 +331,7 @@ const Assignment = () => {
                           "Update"
                         )}
                       </button>
-                    </div> */}
+                    </div>
                   </form>
                 </div>
               </div>
