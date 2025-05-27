@@ -16,7 +16,6 @@ import Link from "next/link";
 import { useAppSelector } from "../../../../../app/hooks";
 
 type props = {
-  fileUrl: string[];
   comment: string;
   text: any;
 };
@@ -33,6 +32,8 @@ export default function AssignmentSubmission() {
   const [filePreview, setFilePreview] = useState([]);
   const [Filename, setFilename] = useState("");
   const [showFileUpload, setshowFileUpload] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
+
   const [quillText, setQuillText] = useState("");
   const {
     data: AllSubmitAssignment,
@@ -40,7 +41,7 @@ export default function AssignmentSubmission() {
     isError: AllSubmitAssignmentIsError,
     isLoading: AllSubmitAssignmentIsLoading,
   } = useGetAllSubmitAssignmentQuery({});
-  console.log(filePreview)
+  console.log(courseId,assignmentId)
   const [submitAssignment, { error, data, isLoading, isSuccess, isError }] =
     useSubmitAssignmentMutation();
   const [
@@ -67,36 +68,40 @@ export default function AssignmentSubmission() {
   };
 
   const onQuestionSubmit = (data: any) => {
-    console.log({...data, course: courseId,
-      assignment: assignmentId,})
-    data.fileUrl = filePreview;
+  
     submitAssignment({
       course: courseId,
       assignment: assignmentId,
       text: data.text,
       comment: data.comment,
-      fileUrl: data.fileUrl,
-      submittedBy:studentId
+      fileUrl: uploadedFiles, // Use the accumulated files
+      submittedBy: studentId
     });
   };
   // console.log({ ...inputs, value });
 
-  const fileGet = (e: any) => {
-    const file = e.target.files;
-    // console.log(file)
 
-    if (file && file.length > 0 && file["0"]) {
-      const formData = new FormData();
-      setshowFileUpload(true);
-      formData.append("file", file["0"]);
-      singleFileUpload(formData);
-      setFilename(e.target.files[0].name);
-    } else if (
-      file &&
-      file.length > 0 &&
-      file["0"].type.substr(0, 5) !== "file"
-    ) {
-      toast.error("Select a valid File.");
+  const fileGet = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    
+    if (!file) {
+      toast.error("No file selected");
+      return;
+    }
+  
+    setshowFileUpload(true);
+    setFilename(file.name);
+  
+    const formData = new FormData();
+    formData.append("file", file);
+    
+    try {
+      const response = await singleFileUpload(formData).unwrap();
+      setUploadedFiles(prev => [...prev, response.data]);
+      toast.success("File uploaded successfully");
+    } catch (err) {
+      toast.error((err as any).data?.message || "File upload failed");
+      console.error("Upload error:", err);
     }
   };
 
@@ -105,10 +110,10 @@ export default function AssignmentSubmission() {
       console.log("upload error", uploadError);
       toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
-      // console.log("upload success", uploadData);
+      console.log("upload success", uploadData);
       setFilePreview(uploadData?.data);
       toast.success("upload success");
-      // console.log(serviceList)
+      // console.log("file-list",serviceList)
     }
   }, [isUploadError, isUploadSuccess]);
 
@@ -122,7 +127,7 @@ export default function AssignmentSubmission() {
       console.log(error);
     } else if (isSuccess) {
       router.push(
-        `/dashboard/assignmentsubmit/${data.data.subAssignment.assignment}/${data.data.subAssignment.student}`
+        `/dashboard/assignmentsubmit/${assignmentId}/${studentId}`
       );
       toast.success("assignment submit Successfully!");
       // console.log(data);
@@ -152,6 +157,7 @@ export default function AssignmentSubmission() {
   }, [AllSubmitAssignmentIsSuccess]);
   const [activeTab, setactiveTab] = useState("assignment");
 
+
   return (
     <>
       {AllSubmitAssignmentIsLoading ? (
@@ -162,7 +168,7 @@ export default function AssignmentSubmission() {
         AllSubmitAssignmentIsSuccess && (
           <div className="grid  lg:grid-cols-12 w-full justify-between gap-x-8 font-nunito">
             <div className="lg:col-span-8 md:col-span-12 col-span-12">
-              <form onSubmit={handleSubmit(onQuestionSubmit)}>
+              <form onSubmit={handleSubmit((data)=>onQuestionSubmit(data))}>
                 <div className="my-5">
                   <div>
                     <div className="flex justify-between w-full">
@@ -224,14 +230,11 @@ export default function AssignmentSubmission() {
                                           Upload
                                         </span>
                                         <input
-                                          {...register("fileUrl", {
-                                            required: true,
-                                          })}
-                                          onChange={fileGet}
-                                          type="file"
-                                          className="hidden"
-                                          name="filess"
-                                        />
+  onChange={fileGet}
+  type="file"
+  className="hidden"
+  name="filess"
+/>
                                       </label>
                                       <span className="ml-2 text-[#727272] text-sm">
                                         {Filename
@@ -244,11 +247,11 @@ export default function AssignmentSubmission() {
                                         {uploadLoading && "uploading..."}
                                         {isUploadSuccess && "Upload Completed"}
                                       </p>
-                                      {errors.fileUrl && (
+                                      {/* {errors.fileUrl && (
                                         <InputErrorMessage
                                           message={"Enter file"}
                                         />
-                                      )}
+                                      )} */}
                                     </div>
                                   </div>
                                   {/* <div>

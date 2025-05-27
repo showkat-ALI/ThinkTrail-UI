@@ -462,8 +462,8 @@ const dashboardApi = createApi({
     }),
     //Get  one submit assignment
     getOneSubmitAssignment: builder.query({
-      query: (body: any) => ({
-        url: `/api/v1/subAssignments/?student=${body.id}&assignment=${body.assignmentId}`,
+      query: ({assignmentId,id}) => ({
+        url: `/api/v1/assignment/submit-assignment/single-assignment/${assignmentId}/${id}`,
         method: "GET",
       }),
       providesTags: ["assignment"],

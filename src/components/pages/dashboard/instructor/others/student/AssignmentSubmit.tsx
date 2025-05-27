@@ -31,18 +31,18 @@ function AssignmentSubmitted() {
               <h3
                 className=" mb-2"
                 dangerouslySetInnerHTML={{
-                  __html: data?.data?.subAssignments[0]?.text,
+                  __html: data?.data?.submittedAssignment?.text,
                 }}
               ></h3>
               <div className="flex text-[14px] font-medium text-[#3A57E8] gap-5">
                 <span>
                   Due{" "}
                   {moment(
-                    data?.data?.subAssignments[0]?.assignment?.availUntil
+                    data?.data?.assignment?.availUntil
                   ).format("MMMM Do YYYY")}
                 </span>
                 <span>
-                  Score {data?.data?.subAssignments[0]?.assignment?.score}
+                  Score {data?.data?.assignment?.score}
                 </span>
               </div>
             </div>
@@ -55,7 +55,7 @@ function AssignmentSubmitted() {
                         <h3 className="font-semibold text-xl">Due</h3>
                         <span className="font-normal text-[16px]">
                           {moment(
-                            data?.data?.subAssignments[0]?.assignment
+                            data?.data?.assignment
                               ?.availUntil
                           ).format("MMMM Do YYYY")}
                         </span>
@@ -65,7 +65,7 @@ function AssignmentSubmitted() {
                       <div className="flex gap-3 items-baseline">
                         <h3 className="font-semibold text-xl">Points</h3>
                         <span className="font-normal text-[16px]">
-                          {data?.data?.subAssignments[0]?.mark}
+                            {data?.data?.submittedAssignment?.mark || "NA"}
                         </span>
                       </div>
                     </div>
@@ -81,23 +81,23 @@ function AssignmentSubmitted() {
                     <h3 className="font-semibold text-xl">Available</h3>
                     <span className="font-normal text-[16px]">
                       {moment(
-                        data?.data?.subAssignments[0]?.assignment?.availFrom
+                        data?.data?.assignment?.availFrom
                       ).format("MMMM Do YYYY")}{" "}
                       -{" "}
                       {moment(
-                        data?.data?.subAssignments[0]?.assignment?.availUntil
+                        data?.data?.assignment?.availUntil
                       ).format("MMMM Do YYYY")}{" "}
                       about{" "}
                       {moment(
-                        data?.data?.subAssignments[0]?.assignment?.availFrom,
+                        data?.data?.assignment?.availFrom,
                         "YYYYMMDD"
                       ).from(
-                        data?.data?.subAssignments[0]?.assignment?.availUntil
+                        data?.data?.assignment?.availUntil
                       )}
                     </span>
                   </div>
                   <div className="mb-4">
-                    <span>{data?.data?.subAssignments[0]?.comment}</span>
+                    <span>{data?.data?.submittedAssignment?.comment}</span>
                   </div>
                   <div className="mb-6">
                     <span></span>
@@ -117,23 +117,28 @@ function AssignmentSubmitted() {
                     </button>
                     <br />
                     <span className="font-medium">
-                      {moment(data?.data?.subAssignments[0]?.createdAt).format(
+                      {moment(data?.data?.submittedAssignment?.createdAt).format(
                         "LLLL"
                       )}
                     </span>
                     <br />
-                    <button className="mt-5 flex text-xs rounded lg:!w-[80%] xsm:!w-full font-medium justify-center items-center gap-3 bg-[#EBEEFD] text-[#3A57E8]      border-[1px] h-[2.6rem] text-[14px] border-[#3A57E8] border-solid">
+                    <p className="mt-5 flex text-xs rounded w-full font-medium justify-center items-center gap-3 bg-[#EBEEFD] text-[#3A57E8]      border-[1px] h-[2.6rem] text-[14px] border-[#3A57E8] border-solid">
                       Submission Details
-                    </button>
+                    </p>
                     <br />
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={data?.data?.subAssignments[0]?.fileUrl[0]}
-                      className="flex text-xs rounded lg:!w-[80%] xsm:!w-full font-medium justify-center items-center gap-3 bg-[#EBEEFD] text-[#3A57E8] border-[1px] h-[2.6rem] text-[14px] border-[#3A57E8] border-solid"
-                    >
-                      Download Assignment.PDF
-                    </a>
+                    {data?.data?.submittedAssignment?.fileUrl?.[0] ? (
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={data.data.submittedAssignment.fileUrl[0]}
+                        download
+                        className="cursor-pointer flex text-xs rounded lg:!w-[80%] xsm:!w-full font-medium justify-center items-center gap-3 bg-[#EBEEFD] text-[#3A57E8] border-[1px] h-[2.6rem] text-[14px] border-[#3A57E8] border-solid"
+                      >
+                        Download Assignment.PDF
+                      </a>
+                    ) : (
+                      <span className="text-red-500">File not available</span>
+                    )}
                     <br />
                   </div>
                   <div className="mb-5">
