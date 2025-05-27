@@ -35,7 +35,7 @@ console.log(data)
               <Link
                 key={idx}
                 href={"/dashboard/assignmentmarking/[assignmentId]/[id]"}
-                as={`/dashboard/assignmentmarking/${item?.assignment}/${item._id}`}
+                as={`/dashboard/assignmentmarking/${item?.assignment}/${item?.submittedBy}`}
               >
                 <div
                   key={item._id}
