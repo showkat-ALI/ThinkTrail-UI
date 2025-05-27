@@ -5,12 +5,17 @@ import { Spinner } from "flowbite-react";
 import Link from "next/link";
 import moment from "moment";
 import Image from "next/image";
+import { useGetUserQuery } from "../../../../../feature/api/authApi";
 
 export default function AllAssignments() {
-  const { user } = useAppSelector((state) => state.auth);
-  console.log(user)
+  const {
+      data: userData,
+      isSuccess: userIsSuccess,
+      isError: isErrorUser,
+    } = useGetUserQuery({});
+  
   const { data, isSuccess, isError, isLoading } =
-    useGetAllSubmitAssignmentInstructorQuery(user?._id);
+    useGetAllSubmitAssignmentInstructorQuery(userData?.data?._id);
 
   return (
     <div className="xsm:p-1 sm:p-1 lg:p-4 md:p-3 xl:p-5 font-nunito h-[100vh]">
