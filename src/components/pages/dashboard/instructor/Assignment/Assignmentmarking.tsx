@@ -15,7 +15,7 @@ import { Spinner } from "flowbite-react";
 import moment from "moment";
 const Assignment = () => {
   const router = useRouter();
-  const { id,assignmentId } = router.query;
+  const { id,assignmentId,submissionId } = router.query;
   const {
     register,
     handleSubmit,
@@ -37,8 +37,8 @@ const Assignment = () => {
 
   const onSubmit = (data: any) => {
     submitAssignmentUdpate({
-      id: id,
-      comment: data.comment,
+      id: submissionId,
+      inscomment: data.comment,
       grade: data.grade,
       mark: data.mark,
     });

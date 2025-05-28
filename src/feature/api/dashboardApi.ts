@@ -764,17 +764,17 @@ const dashboardApi = createApi({
       query: ({
         mark,
         grade,
-        comment,
+        inscomment,
         id,
       }: {
         mark: string;
         grade: string;
-        comment: string;
+        inscomment: string;
         id: any;
       }) => ({
-        url: `api/v1/subAssignments/${id}`,
+        url: `api/v1/assignment-marking/${id}`,
         method: "PATCH",
-        body: { mark: mark, grade: grade, comment: comment },
+        body: { mark: mark, grade: grade, inscomment: inscomment },
       }),
       invalidatesTags: [],
     }),

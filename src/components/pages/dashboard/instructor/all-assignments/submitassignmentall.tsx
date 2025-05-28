@@ -34,8 +34,8 @@ console.log(data)
             data.data.map((item: any, idx: number) => (
               <Link
                 key={idx}
-                href={"/dashboard/assignmentmarking/[assignmentId]/[id]"}
-                as={`/dashboard/assignmentmarking/${item?.assignment}/${item?.submittedBy?.id}`}
+                href={"/dashboard/assignmentmarking/[submissionId]/[assignmentId]/[id]"}
+                as={`/dashboard/assignmentmarking/${item?._id}/${item?.assignment}/${item?.submittedBy?.id}`}
               >
                 <div
                   key={item._id}

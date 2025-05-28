@@ -24,7 +24,7 @@ const AssignmentFile = (props: typefun) => {
       isError: isUploadError,
     },
   ] = useSingleFileUploadMutation();
-
+console.log(uploadData)
   const FileGet = (e: any) => {
     const file = e.target.files;
     if (file && file.length > 0 && file["0"]) {
@@ -50,6 +50,7 @@ const AssignmentFile = (props: typefun) => {
       setFilePreview(uploadData.data.fileUrl);
       setValue("fileUrl", uploadData.data.fileUrl);
       toast.success("upload file success");
+      console.log(uploadData?.data?.fileUrl)
     }
   }, [isUploadError, isUploadSuccess]);
 
