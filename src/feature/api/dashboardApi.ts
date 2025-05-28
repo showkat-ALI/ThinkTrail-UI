@@ -772,7 +772,7 @@ const dashboardApi = createApi({
         inscomment: string;
         id: any;
       }) => ({
-        url: `/api/v1/assignment-marking/${id}`,
+        url: `/api/v1/assignment/assignment-marking/${id}`,
         method: "POST",
         body: { mark: mark, grade: grade, inscomment: inscomment },
       }),
