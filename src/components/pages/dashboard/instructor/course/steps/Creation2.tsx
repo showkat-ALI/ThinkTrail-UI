@@ -91,7 +91,7 @@ const Creation2 = (props: StepPropss) => {
       toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
       //  console.log("upload success", uploadData);
-      setFilePreview(uploadData.data);
+      setFilePreview(uploadData?.data?.fileUrl);
       toast.success("upload success");
     }
   }, [isUploadError, isUploadSuccess, uploadData?.data, uploadError]);
