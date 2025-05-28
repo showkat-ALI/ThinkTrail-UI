@@ -773,7 +773,7 @@ const dashboardApi = createApi({
         id: any;
       }) => ({
         url: `api/v1/assignment-marking/${id}`,
-        method: "PATCH",
+        method: "POST",
         body: { mark: mark, grade: grade, inscomment: inscomment },
       }),
       invalidatesTags: [],
