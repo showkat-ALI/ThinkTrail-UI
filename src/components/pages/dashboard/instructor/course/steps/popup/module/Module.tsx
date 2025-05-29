@@ -13,6 +13,7 @@ import DeleteModule from "./deleteModule";
 import {
   useGetModuleAssignmentsQuery,
   useGetModuleVideosQuery,
+  useGetSingleModuleQuizesQuery,
 } from "../../../../../../../../feature/api/dashboardApi";
 import Link from "next/link";
 const Module = ({
@@ -63,7 +64,13 @@ const Module = ({
     isSuccess: vidsIsSuccess,
     isError: vidsIsError,
   } = useGetModuleVideosQuery(_id);
-  console.log("module vids;;;;;;; ", vidsData);
+  const {
+    error: quizErr,
+    data: quizDat,
+    isLoading: quizIsLoading,
+    isSuccess: quizIsSuccess,
+    isError: quizIsError,
+  } = useGetSingleModuleQuizesQuery(_id);
   useEffect(() => {
     refetch(); // Force a refetch when the component mounts or _id changes
   }, [_id, refetch]);
@@ -170,7 +177,7 @@ const Module = ({
                   </div>
                 </div>
               ))}
-              {/* {quizzes.map((item: any, i) => (
+              {/* {quizDat.map((item: any, i) => (
                 <div className="mb-5" key={item._id}>
                   <div className="flex items-center mb-1">
                     <input

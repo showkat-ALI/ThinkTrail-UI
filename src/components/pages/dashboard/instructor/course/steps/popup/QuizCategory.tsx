@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import Link from "next/link";
 import { useAppSelector } from "../../../../../../../app/hooks";
+import { useGetUserQuery } from "../../../../../../../feature/api/authApi";
 
 const QuizCategory = ({
   id,
@@ -17,13 +18,19 @@ const QuizCategory = ({
   setShowModal: any;
 }) => {
   const { id: userId, roles } = useAppSelector((state) => state.auth.user);
-  const { data, isSuccess, isError, isLoading } = useGetQuizQuery({});
+   const {
+        data: userData,
+        isSuccess: userIsSuccess,
+        isError: isErrorUser,
+      } = useGetUserQuery({});
+    const insId =userData?.data?._id
+  // const { data, isSuccess, isError, isLoading } = useGetQuizQuery({});
   const {
     data: instructorAllQuiz,
     isSuccess: instructorQuizSuccess,
     isError: instructorQuizIsError,
     isLoading: instructorQuizLoading,
-  } = useAllQuizInstructorQuery({});
+  } = useAllQuizInstructorQuery(insId);
   const [
     updateModuleQuiz,
     {
@@ -31,6 +38,7 @@ const QuizCategory = ({
       data: moduleData,
       isLoading: loadingModule,
       isSuccess: moduleisSuccess,
+      isError:quizIsError
     },
   ] = useUpdateModuleQuizMutation();
   const [QuizId, setQuizId] = useState("");
@@ -44,10 +52,10 @@ const QuizCategory = ({
   };
 
   const update = () => {
-    updateModuleQuiz({ id, quizzes: QuizId });
+    updateModuleQuiz({ module:id, quiz: QuizId });
   };
   useEffect(() => {
-    if (isError) {
+    if (quizIsError) {
       toast.error((error as any).data.message);
       // console.log(error);
     } else if (moduleisSuccess) {
@@ -55,7 +63,7 @@ const QuizCategory = ({
       // console.log(data);
       setShowModal(false);
     }
-  }, [isError, moduleisSuccess]);
+  }, [quizIsError, moduleisSuccess]);
   return (
     <div>
       <div className="mb-2">
@@ -76,7 +84,7 @@ const QuizCategory = ({
           </Link>
           <div>
             <ul className="flex flex-col gap-[10px] text-[#8A92A6] text-[15px] mb-2 h-[12rem] overflow-y-scroll">
-              {roles.includes("admin") &&
+              {/* {(roles ?? []).includes("admin"|"superAdmin") &&
                 (isLoading ? (
                   <div>Loading....</div>
                 ) : isError ? (
@@ -102,29 +110,29 @@ const QuizCategory = ({
                   )
                 ) : (
                   <div>No quiz found</div>
-                ))}
+                ))} */}
 
-              {roles.includes("instructor") &&
+              {roles?.includes("instructor") &&
                 (instructorQuizLoading ? (
                   <div>Loading....</div>
                 ) : instructorQuizIsError ? (
                   <div>Error....</div>
                 ) : instructorQuizSuccess &&
-                  instructorAllQuiz?.data?.quazes &&
-                  instructorAllQuiz.data.quazes.length > 0 ? (
-                  instructorAllQuiz.data.quazes.map(
+                  instructorAllQuiz?.data?.groupedQuestions &&
+                  instructorAllQuiz.data?.groupedQuestions.length > 0 ? (
+                  instructorAllQuiz.data?.groupedQuestions.map(
                     (
-                      { title, id }: { title: string; id: string },
+                     question:any,
                       index: string
                     ) => (
                       <li
-                        key={id}
-                        onClick={() => clickQuiz(id)}
+                        key={index}
+                        onClick={() => clickQuiz(question?.questions[0]?.quiz?._id)}
                         className={`${
-                          activeClass == id && "text-[#3A57E8]"
+                          activeClass == index && "text-[#3A57E8]"
                         } hover:text-[#da7b4f] cursor-pointer`}
                       >
-                        Quiz {index + 1} - {title}
+                        Quiz {index + 1} - {question?.title}
                       </li>
                     )
                   )

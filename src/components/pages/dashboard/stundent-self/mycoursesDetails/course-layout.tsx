@@ -9,6 +9,7 @@ export default function Courselayout() {
   const router = useRouter();
   const id = router?.query?.id as any;
   const { isError,data, error, isLoading, isSuccess } =  useGetMyCourseDetailsQuery(id)
+  console.log(data)
   return (
     <div className="grid grid-cols-12 gap-4 font-nunito bg-gray-bg">
       <div className="col-span-12 lg:col-span-8">

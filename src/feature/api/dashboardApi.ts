@@ -35,6 +35,7 @@ const dashboardApi = createApi({
     "courseModule",
     "moduleVideos",
     "admission",
+    "moduleQuiz"
   ],
 
   endpoints: (builder) => ({
@@ -347,11 +348,10 @@ const dashboardApi = createApi({
     }),
     // UPDATE A module BY ID
     updateModuleQuiz: builder.mutation({
-      query: (body: { id: string; quizzes: any }) => {
-        console.log(body);
+      query: (body: { module: string; quiz: any }) => {
         return {
-          url: `/api/v1/modules/${body.id}`,
-          method: "PATCH",
+          url: `/api/v1/module-video/add-module-quiz`,
+          method: "POST",
           body: body,
         };
       },
@@ -481,7 +481,7 @@ const dashboardApi = createApi({
     //Get one quiz
     getOneQuiz: builder.query({
       query: (quiz: any) => ({
-        url: `/api/v1/quiz/${quiz}`,
+        url: `/api/v1/quiz/single-quiz-question/${quiz}`,
         method: "GET",
       }),
       providesTags: ["quiz"],
@@ -696,8 +696,8 @@ const dashboardApi = createApi({
     
     //get all quiz in instructor
     AllQuizInstructor: builder.query({
-      query: (id: any) => ({
-        url: `/api/v1/quiz/getQuiz/mine`,
+      query: (insId: any) => ({
+        url: `/api/v1/quiz/all-question/${insId}`,
         method: "GET",
       }),
       providesTags: ["quiz"],
@@ -1192,6 +1192,7 @@ const dashboardApi = createApi({
       }),
       providesTags: ["moduleVideos"], // Add this to force a refetch
     }),
+    
     getAllDepartments: builder.query({
       query: () => ({
         url: `api/v1/academic-departments`,
@@ -1238,6 +1239,13 @@ const dashboardApi = createApi({
         method: "GET",
       }),
       providesTags: ["assignment"],
+    }),
+    getSingleModuleQuizes: builder.query({
+      query: (id: string) => ({
+        url: `api/v1/module-video/get-single-module-quiz/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["moduleQuiz"], // Add this to force a refetch
     }),
   }),
 });
@@ -1378,6 +1386,7 @@ export const {
   useGetCurrentSemesterQuery,
   useGetAllMyCourseQuery,
   useGetMyCourseDetailsQuery,
-  useSingleStudentAssignmentQuery
+  useSingleStudentAssignmentQuery,
+  useGetSingleModuleQuizesQuery
 } = dashboardApi;
 export default dashboardApi;
