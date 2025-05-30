@@ -7,7 +7,7 @@ import { InputErrorMessage } from "../../utils/error";
 import { useResetPasswordMutation } from "../../../feature/api/authApi";
 import ButtonLoader from "../../utils/loaders/ButtonLoader";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "../../../redux-hook/hooks";
 import { useEffect } from "react";
 import Router from "next/router";
 import Link from "next/link";

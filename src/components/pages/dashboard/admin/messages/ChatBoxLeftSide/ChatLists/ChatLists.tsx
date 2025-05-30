@@ -4,7 +4,7 @@ import SingleUser from './SingleUser/SingleUser';
 import {useGetChatPeopleQuery,useGetChatGroupQuery} from "../../../../../../../feature/api/dashboardApi";
 import {Spinner} from "flowbite-react";
 import _ from "lodash";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
 
 const ChatLists = ({setmsg,
     setuserIdforchat,

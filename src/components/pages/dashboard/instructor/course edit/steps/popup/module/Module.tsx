@@ -10,7 +10,7 @@ import plusIconBg from "../../../../../../../../assets/Group34917.png";
 import PopupModal from ".././PopupModal";
 import EditModuleModal from "./EditModuleModal";
 import DeleteModule from "./deleteModule";
-import { useAppSelector } from "../../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../../redux-hook/hooks";
 
 const Module = ({
   setmoduleName,

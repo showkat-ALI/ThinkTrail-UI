@@ -7,7 +7,7 @@ import {
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import Link from "next/link";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
 
 const QuizCategory = ({
   id,

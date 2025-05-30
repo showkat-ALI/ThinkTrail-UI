@@ -6,7 +6,7 @@ import { useSingleVideoUploadMutation } from "../../../../../../../feature/api/m
 import { useAddModuleVideoMutation } from "../../../../../../../feature/api/dashboardApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
 
 type FormData = {
   topicName: string;

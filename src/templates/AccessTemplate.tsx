@@ -1,4 +1,4 @@
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../redux-hook/hooks";
 import NotFound from "../components/pages/404";
 
 type Roles =

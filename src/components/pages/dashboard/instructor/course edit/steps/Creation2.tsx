@@ -7,8 +7,8 @@ import { useCreateCourseMutation } from "../../../../../../feature/api/dashboard
 import { useSinglePhotoUploadMutation } from "../../../../../../feature/api/mediaUploadApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../utils/loaders/ButtonLoader";
-import { useAppDispatch } from "../../../../../../app/hooks";
-import { useAppSelector } from "../../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../redux-hook/hooks";
+import { useAppSelector } from "../../../../../../redux-hook/hooks";
 import { Course } from "../../../../../../feature/course/courseSlice";
 //icon
 import DeleteIcon from "../../../../../../assets/Delete.png";

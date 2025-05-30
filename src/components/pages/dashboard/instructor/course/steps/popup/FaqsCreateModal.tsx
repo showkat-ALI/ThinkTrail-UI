@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import { useCreateFaqsMutation } from "../../../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
 
 type FormData = {
   question: string;

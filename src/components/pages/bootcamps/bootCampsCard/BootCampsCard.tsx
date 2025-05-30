@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useAppSelector } from "../../../../app/hooks";
+import { useAppSelector } from "../../../../redux-hook/hooks";
 import { useEnrollMutation } from "../../../../feature/api/dashboardApi";
 import ActionConfirmModal from "../../../utils/modals/ActionConfirmModal";
 

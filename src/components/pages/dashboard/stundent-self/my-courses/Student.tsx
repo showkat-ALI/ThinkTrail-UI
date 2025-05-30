@@ -7,7 +7,7 @@ import Progress from "./Progress";
 import CalendarIcon from "../../../../../assets/Calender.png";
 import icon from "../../../../../assets/b.png";
 import { useGetAllMyCourseQuery, useGetMyEnrollmentAllQuery } from "../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 
 const Student = () => {
   const {

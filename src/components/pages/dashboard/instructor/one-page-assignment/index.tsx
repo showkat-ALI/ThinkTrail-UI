@@ -6,7 +6,7 @@ import {useSingleAssignmentQuery, useSingleStudentAssignmentQuery} from "../../.
 import { useRouter } from "next/router";
 import {Spinner} from "flowbite-react";
 import moment from "moment";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import { useGetAllSubmitAssignmentQuery } from "../../../../../feature/api/dashboardApi";
 import {GoFile} from "react-icons/go";
 

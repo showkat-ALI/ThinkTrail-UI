@@ -8,7 +8,7 @@ import {BsThreeDots} from "react-icons/bs"
 import * as z from "zod";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import { useGetUserQuery,useCreateChatMutation } from "../../../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
 import {useRouter}  from "next/router";
 import Image from "next/image";
 import Addmember from "./AddMember";

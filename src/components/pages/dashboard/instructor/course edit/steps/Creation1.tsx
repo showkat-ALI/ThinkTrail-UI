@@ -6,8 +6,8 @@ import { InputErrorMessage } from '../../../../../utils/error';
 import dynamic from "next/dynamic";
 import 'react-quill/dist/quill.snow.css';
 import {useGetCategoriesQuery} from '../../../../../../feature/api/dashboardApi'
-import { useAppDispatch } from "../../../../../../app/hooks";
-import { useAppSelector } from "../../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../redux-hook/hooks";
+import { useAppSelector } from "../../../../../../redux-hook/hooks";
 
 export type StepPropss = {
   setStep: (step: number) => void

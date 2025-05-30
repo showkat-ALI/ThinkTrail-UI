@@ -6,7 +6,7 @@ import { Menu, Transition } from '@headlessui/react';
 import {AiOutlineDelete,AiOutlineUserAdd} from "react-icons/ai";
 import {useDeleteChatMutation} from '../../../../../../../feature/api/dashboardApi';
 import Member from "./Member";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
 import moment from "moment"
 
 const ChatRightHeader = ({setopenConversation,isGroupChat,userIdforchat,socket,members,name,avatar,chatid}:{setopenConversation:any;isGroupChat:any;userIdforchat:any;socket:any;members:any;name:string;avatar:string;chatid:string}) => {

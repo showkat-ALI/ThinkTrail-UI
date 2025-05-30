@@ -2,7 +2,7 @@ import responsiveStyle from "../../../../../styles/ContactStyle.module.css";
 import Image from "next/image";
 import ellicps from "../../../../../assets/Ellipse 782.png";
 import {useGetAllEnrollmentInstructorQuery} from "../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import {Spinner} from "flowbite-react";
 import Link from "next/link";
 

@@ -10,7 +10,7 @@ import {
   useAllEnrollmentQuery,
 } from "../../../../../feature/api/dashboardApi";
 import { Spinner } from "flowbite-react";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 
 const OverView = () => {
   const { id, roles } = useAppSelector((state) => state.auth.user);

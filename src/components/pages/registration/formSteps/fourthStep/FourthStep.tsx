@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../redux-hook/hooks";
 import { useRegisterMutation } from "../../../../../feature/api/authApi";
 import { InputErrorMessage } from "../../../../utils/error";
 import ButtonLoader from "../../../../utils/loaders/ButtonLoader";

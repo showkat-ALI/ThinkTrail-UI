@@ -1,8 +1,8 @@
 import React,{useEffect,useState} from 'react';
 import Message from './Message/Message';
 import {useGetMessageQuery} from "../../../../../../../feature/api/dashboardApi"
-import { useAppSelector } from "../../../../../../../app/hooks";
-import { useAppDispatch } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
+import { useAppDispatch } from "../../../../../../../redux-hook/hooks";
 import {Spinner} from "flowbite-react"
 import _ from "lodash";
 import dashboardApi from "../../../../../../../feature/api/dashboardApi";

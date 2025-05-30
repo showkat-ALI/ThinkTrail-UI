@@ -5,7 +5,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdEdit } from "react-icons/md";
 import { toast } from "react-toastify";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import { useSinglePhotoUploadMutation } from "../../../../../feature/api/mediaUploadApi";
 import { useUpdateUserMutation } from "../../../../../feature/api/userApi";
 import { InputErrorMessage } from "../../../../utils/error";

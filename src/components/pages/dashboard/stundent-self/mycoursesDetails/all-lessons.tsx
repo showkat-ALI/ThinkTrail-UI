@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import style from "../../../../../styles/GeneralStyles.module.css";
 import { TbChevronRight } from "react-icons/tb";
 import { useGetAllLessonCourseQuery } from "../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../app/hooks";
-import { useAppDispatch } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
+import { useAppDispatch } from "../../../../../redux-hook/hooks";
 import { playVideo } from "../../../../../feature/course/moduleVideoplay";
 import imgJPG from "../../../../../assets/01.jpg";
 

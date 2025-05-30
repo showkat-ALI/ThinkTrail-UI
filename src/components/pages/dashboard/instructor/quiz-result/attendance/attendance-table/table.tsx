@@ -1,7 +1,7 @@
 import responsiveStyle from "../../../../../../../styles/ContactStyle.module.css";
 import Table from "./attendance-table-row";
 import { useGetAllSubmitQuizInstructorQuery } from "../../../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
 import { Spinner } from "flowbite-react";
 // fake data
 let courses = [

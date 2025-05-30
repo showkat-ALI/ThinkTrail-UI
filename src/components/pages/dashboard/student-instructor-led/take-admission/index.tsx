@@ -7,7 +7,7 @@ import {
   useGetAllAcademicSemestersQuery,
   useGetCurrentSemesterQuery,
 } from "../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import { useGetUserQuery } from "../../../../../feature/api/authApi";
 
 type FormValues = {

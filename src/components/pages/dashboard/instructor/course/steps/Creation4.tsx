@@ -11,9 +11,9 @@ import {
   useGetFaqsQuery,
 } from "../../../../../../feature/api/dashboardApi";
 import { TagsInput } from "react-tag-input-component";
-import { useAppSelector } from "../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../redux-hook/hooks";
 import ButtonLoader from "../../../../../utils/loaders/ButtonLoader";
-import { useAppDispatch } from "../../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../redux-hook/hooks";
 import { SuccessCreate } from "../../../../../../feature/course/courseSlice";
 //icon
 import editIcon from "../../../../../../assets/editIcon.png";

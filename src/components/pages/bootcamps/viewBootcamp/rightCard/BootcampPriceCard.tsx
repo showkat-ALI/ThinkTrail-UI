@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import imgJPG from "../../../../../assets/01.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import {AiFillPlayCircle} from "react-icons/ai"
 import ActionConfirmModal from "../../../../utils/modals/ActionConfirmModal";
 import { useEnrollMutation } from "../../../../../feature/api/dashboardApi";

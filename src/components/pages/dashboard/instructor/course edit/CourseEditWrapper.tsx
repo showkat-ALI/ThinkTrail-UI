@@ -3,7 +3,7 @@ import Creation1 from './steps/Creation1'
 import Creation2 from './steps/Creation2';
 import Creation3 from './steps/Creation3';
 import Creation4 from './steps/Creation4';
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 
 export type InitialFormDataCourse = {
     title: string,

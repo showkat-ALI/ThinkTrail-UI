@@ -3,7 +3,7 @@ import { Button, Modal } from "flowbite-react";
 import { useEffect } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../redux-hook/hooks";
 import { useDeleteUserMutation } from "../../../../../feature/api/dashboardApi";
 import ButtonLoader from "../../../../utils/loaders/ButtonLoader";
 

@@ -10,12 +10,12 @@ import {
   useGetAllReviewPublishQuery,
 } from "../../../../../feature/api/dashboardApi";
 import { useRouter } from "next/router";
-import { useAppDispatch } from "../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../redux-hook/hooks";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../utils/loaders/ButtonLoader";
 import { Button, Modal, Avatar, Spinner } from "flowbite-react";
 import { isAuthorized } from "../../../../../utils/auth";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 
 const Review = ({ rating }: { rating: number }) => {
   const {

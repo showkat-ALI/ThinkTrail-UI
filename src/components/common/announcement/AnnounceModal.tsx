@@ -7,7 +7,7 @@ import { useDeleteOneAnnouncementMutation } from "../../../feature/api/dashboard
 import Image from "next/image";
 import Delete from "../../../Icon/Delete";
 import ActionConfirmModal from "../../utils/modals/ActionConfirmModal";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "../../../redux-hook/hooks";
 
 interface IModalProps {
   show: boolean;

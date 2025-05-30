@@ -25,12 +25,12 @@ import {
 import { VscDeviceCameraVideo } from "react-icons/vsc";
 import { MdQuiz } from "react-icons/md";
 import { BsFillChatLeftDotsFill, BsMenuButton } from "react-icons/bs";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "../../../redux-hook/hooks";
 import logo from "../../../assets/logo.png";
 import user from "../../../assets/user.png";
 import MobileAsideBar from "./MobileAsideBar";
 import { useLogoutMutation } from "../../../feature/api/authApi";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "../../../redux-hook/hooks";
 import { logout as logoutAction } from "../../../feature/auth/authSlice";
 import { toast } from "react-toastify";
 import Router from "next/router";

@@ -21,7 +21,7 @@ import {
 } from "../../../../../feature/api/dashboardApi";
 import { useSingleFileUploadMutation } from "../../../../../feature/api/mediaUploadApi";
 // import PlusIcon from "../../../../../assets/plusIcon.png";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import moment from "moment";
 import ModalVideo from "react-modal-video";
 import "react-modal-video/css/modal-video.css";

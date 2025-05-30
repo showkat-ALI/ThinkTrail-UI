@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useUpdateCourseStatusMutation } from "../../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../redux-hook/hooks";
 
 type ITable = {
   title: string;

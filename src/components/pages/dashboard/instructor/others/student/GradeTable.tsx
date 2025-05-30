@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {Spinner} from "flowbite-react";
 import moment from "moment";
-import { useAppSelector } from "../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../redux-hook/hooks";
 
 const GradeTable = ( {setasD,courseData,courseLoading}:any) => {
   const { firstName,lastName,_id } =

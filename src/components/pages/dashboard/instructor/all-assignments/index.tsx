@@ -3,7 +3,7 @@ import {
   useGetAllAssignmentsofAInstructorQuery,
   useGetMyEnrollmentAllQuery,
 } from "../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import { Spinner } from "flowbite-react";
 import Link from "next/link";
 import moment from "moment";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useAppSelector } from "../../../../app/hooks";
+import { useAppSelector } from "../../../../redux-hook/hooks";
 const Hero = () => {
   const { firstName } = useAppSelector((state) => state.auth.user);
   return (

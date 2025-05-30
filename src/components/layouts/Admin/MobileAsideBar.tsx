@@ -11,7 +11,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import logo from "../../../assets/logo.png";
 import user from "../../../assets/user.png";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "../../../redux-hook/hooks";
 import Router from "next/router";
 import { useRouter } from "next/router";
 
@@ -32,7 +32,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { VscPreview } from "react-icons/vsc";
 import { BiGroup } from "react-icons/bi";
 import { useLogoutMutation } from "../../../feature/api/authApi";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "../../../redux-hook/hooks";
 import { BsFillChatLeftDotsFill, BsMenuButton } from "react-icons/bs";
 import { Disclosure } from "@headlessui/react";
 import { SiPagekit } from "react-icons/si";

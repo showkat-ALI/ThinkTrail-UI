@@ -1,12 +1,12 @@
 import { Accordion } from "flowbite-react";
 import React, { useState } from "react";
 import AccordionOptions from "../../../../../../common/accordion/accordion-general";
-import { useAppDispatch } from "../../../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../../redux-hook/hooks";
 import { playVideo } from "../../../../../../../feature/course/moduleVideoplay";
 import Link from "next/link";
 import { useGetAllSubmitAssignmentQuery } from "../../../../../../../feature/api/dashboardApi";
 import { useRouter } from "next/router";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
 import moment from "moment";
 import play from "../../../../../../../assets/lessonplay.png";
 import Image from "next/image";

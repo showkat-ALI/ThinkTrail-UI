@@ -7,9 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import ButtonLoader from "../../../../../../../utils/loaders/ButtonLoader";
 import { useCreateModuleCourseMutation } from "../../../../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../../redux-hook/hooks";
 import { Module } from "../../../../../../../../feature/module/moduleSlice";
-import { useAppDispatch } from "../../../../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../../../redux-hook/hooks";
 import { useGetUserQuery } from "../../../../../../../../feature/api/authApi";
 
 type FormData = {

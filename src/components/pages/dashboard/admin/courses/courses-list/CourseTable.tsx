@@ -6,9 +6,9 @@ import {
   useGetAllCourseQuery,
   useGetAllInstructorCourseQuery,
 } from "../../../../../../feature/api/dashboardApi";
-import { useAppDispatch } from "../../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../redux-hook/hooks";
 import { DelEditCourse } from "../../../../../../feature/course/courseSlice";
-import { useAppSelector } from "../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../redux-hook/hooks";
 
 function CourseTable() {
   const { roles } = useAppSelector((state) => state.auth.user);

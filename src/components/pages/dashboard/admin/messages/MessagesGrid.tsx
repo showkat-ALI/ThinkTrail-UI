@@ -2,7 +2,7 @@ import React,{useState,useRef,useEffect} from 'react';
 import ChatBoxLeftSide from './ChatBoxLeftSide/ChatBoxLeftSide';
 import ChatBoxRightSide from './ChatBoxRightSide/ChatBoxRightSide';
 import {io} from 'socket.io-client';
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 //@ts-ignore
 
 const MessagesGrid = () => {

@@ -14,11 +14,11 @@ import arrow from "../../../assets/arrow.png";
 import { BsSearch } from "react-icons/bs";
 import Link from "next/link";
 import { useLogoutMutation } from "../../../feature/api/authApi";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "../../../redux-hook/hooks";
 import { logout as logoutAction } from "../../../feature/auth/authSlice";
 import { toast } from "react-toastify";
 import Router from "next/router";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "../../../redux-hook/hooks";
 
 const user = {
   name: "Tom Cook",

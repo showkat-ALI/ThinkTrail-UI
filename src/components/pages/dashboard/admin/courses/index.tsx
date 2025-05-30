@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import TableController from "../common/TableController";
 import CoursesCategoriesSection from "./courses-categories";
 import CourseTable from "./courses-list/CourseTable";

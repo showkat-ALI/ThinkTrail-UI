@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { ActiveTab } from ".";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import Link from "next/link";
 
 //@ts-ignore

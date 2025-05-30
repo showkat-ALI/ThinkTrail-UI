@@ -3,7 +3,7 @@ import StartClass from "./modal/StartClass";
 import JoinClass from "./modal/JoinClass";
 import { IoVideocam } from "react-icons/io5";
 import { RiAddBoxFill } from "react-icons/ri";
-import { useAppSelector } from "../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../redux-hook/hooks";
 
 const LiveLeftVideoOptions = () => {
   const [moduleModalShow, setmoduleModalShow] = useState<boolean>(false);

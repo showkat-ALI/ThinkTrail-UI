@@ -7,7 +7,7 @@ import { useAddModuleAssignmentMutation } from "../../../../../../../feature/api
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "../../../../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../../../redux-hook/hooks";
 import { useGetUserQuery } from "../../../../../../../feature/api/authApi";
 import { moduleAssignments } from "../../../../../../../feature/moduleAssignment/moduleAssignment";
 

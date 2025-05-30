@@ -8,8 +8,8 @@ import {
   useSubmitassignmentBystudentBycourseQuery,
   useSubmitquizBystudentBycourseQuery,
 } from "../../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../../app/hooks";
-import { useAppDispatch } from "../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../redux-hook/hooks";
+import { useAppDispatch } from "../../../../../../redux-hook/hooks";
 import { Spinner } from "flowbite-react";
 import CourseTable from "./GradeTable";
 import api from "../../../../../../feature/api/dashboardApi";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useGetOnePageQuery } from "../../../../../feature/api/dashboardApi";
 import { useRouter } from "next/router";
 import { Spinner } from "flowbite-react";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import DeletePage from "./deletePage";
 import Link from "next/link";
 

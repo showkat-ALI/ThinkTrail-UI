@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import TableController from "../common/TableController";
 import AdmissionTable from "./AdmissionTable";
 import MentoringTable from "./MentoringTable";

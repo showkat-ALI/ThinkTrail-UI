@@ -11,7 +11,7 @@ import {
   useMsgGroupCreateMutation,
 } from "../../../../../../../feature/api/dashboardApi";
 import { useSinglePhotoUploadMutation } from "../../../../../../../feature/api/mediaUploadApi";
-import { useAppSelector } from "../../../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../../redux-hook/hooks";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Label, TextInput } from "flowbite-react";

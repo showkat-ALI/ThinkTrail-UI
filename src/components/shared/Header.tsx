@@ -11,7 +11,7 @@ import {
   AiOutlinePoweroff,
 } from "react-icons/ai";
 import { IoIosArrowDown, IoMdCart } from "react-icons/io";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../redux-hook/hooks";
 import UserMenu from "./UserMenu";
 import { isAuthorized } from "../../utils/auth";
 

@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import ButtonLoader from "../../../../utils/loaders/ButtonLoader";
 import Link from "next/link";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 
 type props = {
   comment: string;

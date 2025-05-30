@@ -5,7 +5,7 @@ import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa";
 import Link from "next/link";
 import { useLogoutMutation } from "../../feature/api/authApi";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch } from "../../redux-hook/hooks";
 import { logout as logoutAction } from "../../feature/auth/authSlice";
 import { toast } from "react-toastify";
 import Router from "next/router";

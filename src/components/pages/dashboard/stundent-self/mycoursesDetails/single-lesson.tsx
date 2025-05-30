@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useGetEnrollmentQuery } from "../../../../../feature/api/dashboardApi";
 // import ReactPlayer from 'react-player';
 import Image from "next/image";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import ReactPlayer from "react-player";
 
 export default function Singlelesson({

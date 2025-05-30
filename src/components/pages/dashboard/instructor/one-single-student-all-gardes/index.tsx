@@ -4,7 +4,7 @@ import PrintIcon from "../../../../../assets/print.png";
 import msgIcon from "../../../../../assets/msg.png";
 import { Button } from "flowbite-react";
 import {useAllAssignmentInstructorQuery} from "../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import {Spinner} from "flowbite-react";
 import Link from "next/link";
 import moment from "moment";

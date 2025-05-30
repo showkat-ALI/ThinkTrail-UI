@@ -8,8 +8,8 @@ import {
 import { useRouter } from "next/router";
 
 //component
-import { useAppDispatch } from "../../../../../app/hooks";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../redux-hook/hooks";
+import { useAppSelector } from "../../../../../redux-hook/hooks";
 import { EditCourse } from "../../../../../feature/course/courseSlice";
 import Creation1 from "./steps/Creation1";
 import Creation2 from "./steps/Creation2";
