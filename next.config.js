@@ -1,9 +1,9 @@
-/** @type {import('next').NextConfig} */
-const withVideos = require("next-videos");
+// /** @type {import('next').NextConfig} */
+// const withVideos = require("next-videos");
 
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  // swcMinify: true,
   images: {
     remotePatterns: [
       {
@@ -26,8 +26,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
-      
-    ]
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -35,6 +34,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+ 
 };
 
-module.exports = withVideos(nextConfig);
+// module.exports = withVideos(nextConfig);- const withVideos = require("next-videos");
+module.exports = nextConfig;  // Export directly without wrapper

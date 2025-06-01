@@ -1,10 +1,12 @@
-/** @type {import('tailwindcss').Config} */
+// /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
     // ...
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/flowbite/**/*.js",
+    "./node_modules/flowbite-react/**/*.js",
   ],
   theme: {
     extend: {
@@ -48,4 +50,7 @@ module.exports = {
     }
   },
   plugins: [require("flowbite/plugin"), require("tailwind-scrollbar")],
+  // safelist: [
+  //   { pattern: /.*/ }, // TEMPORARY - allows all classes
+  // ],
 };
