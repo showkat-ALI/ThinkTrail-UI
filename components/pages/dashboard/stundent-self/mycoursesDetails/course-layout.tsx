@@ -1,14 +1,14 @@
+"use client"
 import React from "react";
 import AllLessons from "./all-lessons";
-import Singlelesson from "./single-lesson";
-import {useRouter} from "next/router";
-import {useGetEnrollmentQuery, useGetMyCourseDetailsQuery} from "../../../../../feature/api/dashboardApi";
+import SingleLesson from "./single-lesson";
+import {useSearchParams} from "next/navigation";
+import {useGetMyCourseDetailsQuery} from "../../../../../feature/api/dashboardApi";
 
 
-export default function Courselayout() {
-  const router = useRouter();
-  const id = router?.query?.id as any;
-  const { isError,data, error, isLoading, isSuccess } =  useGetMyCourseDetailsQuery(id)
+export default function CourseLayout(id:any) {
+  
+  const { isError, data, isLoading, isSuccess } = useGetMyCourseDetailsQuery(id?.id?.id);
   console.log(data)
   return (
     <div className="grid grid-cols-12 gap-4 font-nunito bg-gray-bg">
@@ -20,7 +20,7 @@ export default function Courselayout() {
               <div>Error...</div>
                  : isSuccess && data?.data?
                    <>          
-                      <Singlelesson enrollmentData={data?.data}/>
+                      <SingleLesson enrollmentData={data?.data}/>
                    </>: 
                      <div>Not found</div>
          }

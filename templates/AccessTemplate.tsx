@@ -3,7 +3,7 @@ import { useAppSelector } from "../redux-hook/hooks";
 import NotFound from "../components/pages/404";
 
 type Roles =
-  | ("admin" | "student" | "instructor" | "hr" | "superAdmin")[]
+  | ("admin" | "student" | "instructor" | "hr" | "superAdmin"|"admitted")[]
   | undefined;
 type PrivateTemplateProps = {
   children: React.ReactNode;

@@ -1,10 +1,10 @@
 import React from "react";
 import Courselayout from "./course-layout";
 
-export default function index() {
+export default function index(id:any) {
   return (
     <div>
-      <Courselayout />
+      <Courselayout id={id} />
     </div>
   );
 }

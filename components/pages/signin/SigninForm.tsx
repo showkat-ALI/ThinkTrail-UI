@@ -68,16 +68,18 @@ const SigninForm = () => {
       try {
         const decodedToken = jwtDecode<DecodedToken>(accessToken);
         const { userId, roles, email, status, isDeleted, _id } = decodedToken;
-
+console.log(email,"after login")
         dispatch(
           signin({
             _id,
             id: userId,
             email,
             needsPasswordChange,
-            status,
+            status: ["in-progress", "blocked"].includes(status) ? (status as "in-progress" | "blocked" | undefined) : undefined,
             isDeleted,
-            roles,
+            roles: roles.filter((role) =>
+              ["admin", "student", "hr", "instructor", "superAdmin"].includes(role)
+            ) as ("admin" | "student" | "hr" | "instructor" | "superAdmin"|"admitted")[],
           })
         );
 

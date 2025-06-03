@@ -10,7 +10,7 @@ type User = {
   status: "in-progress" | "blocked" | undefined;
   isDeleted: boolean;
   roles:
-    | ("admin" | "student" | "hr" | "instructor" | "superAdmin")[]
+    | ("admin" | "student" | "hr" | "instructor" | "superAdmin"|"admitted")[]
     | undefined;
 };
 
@@ -66,6 +66,7 @@ const authSlice = createSlice({
       state.user.roles = [];
       state.user.isDeleted = false;
       state.user.status = undefined;
+      state.refresh = false;
     },
     refresher: (state) => {
       state.refresh = true;

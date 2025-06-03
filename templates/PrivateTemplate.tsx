@@ -13,7 +13,7 @@ const PrivateTemplate = ({ children }: PrivateTemplateProps) => {
   const [isReady, setIsReady] = useState(false);
   const router = useRouter();
   const { refresh, user } = useAppSelector((state) => state.auth);
-
+console.log(user?.email)
   useEffect(() => {
     setIsReady(true);
   }, []);
