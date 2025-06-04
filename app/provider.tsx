@@ -1,15 +1,20 @@
-'use client'
+"use client";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "../redux-hook/store";
+import BrandLoader from "../components/utils/loaders/BrandLoader";
+import PageWrapper from "../components/wrapper";
 
-import { Provider } from 'react-redux'
-import store from '../redux-hook/store'
-import PageWrapper from '../components/wrapper'
-
-export function Providers({ children }: { children: React.ReactNode }) {
+export function ReduxProvider({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
+      <PersistGate loading={<BrandLoader/>} persistor={persistor}>
       <PageWrapper>
+
         {children}
       </PageWrapper>
+
+      </PersistGate>
     </Provider>
-  )
+  );
 }

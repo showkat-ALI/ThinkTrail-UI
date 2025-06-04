@@ -32,7 +32,7 @@ import user from "../../../assets/user.png";
 import MobileAsideBar from "./MobileAsideBar";
 import { useLogoutMutation } from "../../../feature/api/authApi";
 import { useAppDispatch } from "../../../redux-hook/hooks";
-import { logout as logoutAction } from "../../../feature/auth/authSlice";
+import { logout  } from "../../../feature/auth/authSlice";
 import { toast } from "react-toastify";
 import { usePathname, useRouter } from "next/navigation"; 
 import { ImFilesEmpty } from "react-icons/im";
@@ -43,6 +43,7 @@ import { Disclosure } from "@headlessui/react";
 
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { useDispatch } from "react-redux";
 const AsideBar = () => {
   const avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde"; // Unsplash avatar URL
   const firstName = "John";
@@ -67,26 +68,21 @@ const AsideBar = () => {
   }
   const router = useRouter();
 
-  const [logout, { isSuccess, isError, error }] = useLogoutMutation();
-  const dispatch = useAppDispatch();
-  const logoutHandler = () => {
-    logout({});
-    console.log("logout success");
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Logged out Successfully!");
-      setTimeout(() => {
-       router.push("/");
-        dispatch(logoutAction());
-      }, 1500);
-    } else if (isError) {
-      toast.error("Something went wrong while logging out!");
-      console.log("logout error", error);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess, isError]);
+  const [logoutApiCall] = useLogoutMutation();
+const dispatch = useDispatch()
+const logoutHandler = async () => {
+  try {
+    await logoutApiCall({}).unwrap(); // call API
+    dispatch(logout());              // clear Redux state
+    toast.success("Logged out successfully!");
+    setTimeout(() => {
+      router.push("/signin"); // or "/"
+    }, 1500);
+  } catch (err: any) {
+    toast.error("Logout failed!");
+    console.error("Logout error:", err);
+  }
+};
 
   return (
     <>

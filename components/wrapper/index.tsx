@@ -1,78 +1,49 @@
-"use client"
+"use client";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux-hook/hooks";
 import { refresher, signin } from "../../feature/auth/authSlice";
 import BrandLoader from "../utils/loaders/BrandLoader";
 import { ToastContainer } from "react-toastify";
 import { useGetUserQuery } from "../../feature/api/authApi";
-
+import "../../styles/globals.css"
 type PageWrapperProps = {
   children: React.ReactNode;
 };
 
-const PageWrapper = (props: PageWrapperProps) => {
-  const { children } = props;
-  const { refresh } = useAppSelector((state) => state.auth);
-  const { data, isSuccess, isError } = useGetUserQuery({});
-
-  console.log("me data", data);
+const PageWrapper = ({ children }: PageWrapperProps) => {
   const dispatch = useAppDispatch();
+  const { refresh } = useAppSelector((state) => state.auth);
+  const { data, isSuccess, isError } = useGetUserQuery(undefined, {
+    skip: refresh, // Don't call API if already refreshed
+  });
 
   useEffect(() => {
     if (!refresh) {
-      if (isSuccess) {
-        const {
-          id,
-          user,
-          name,
-          gender,
-          dateOfBirth,
-          email,
-          contactNo,
-          emergencyContactNo,
-          bloogGroup,
-          presentAddress,
-          permanentAddress,
-          guardian,
-          localGuardian,
-          profileImg,
-          admissionSemester,
-          academicDepartment,
-          academicFaculty,
-          isDeleted,
-          status,
-        } = data?.data;
+      if (isSuccess && data?.data) {
+        const { id, user, email, status, isDeleted } = data.data;
         const { needsPasswordChange, roles } = user;
-        setTimeout(() => {
-          dispatch(
-            signin({
-              id,
-              email,
-              needsPasswordChange,
-              roles,
-              isDeleted,
-              status,
-            })
-          );
-        }, 2000);
+
+        dispatch(
+          signin({
+            _id: id,
+            id,
+            email,
+            needsPasswordChange,
+            roles,
+            isDeleted,
+            status,
+          })
+        );
       } else if (isError) {
-        // SET REFRESH TRUE AFTER 2 SEC
-        setTimeout(() => {
-          dispatch(refresher());
-        }, 2000);
+        dispatch(refresher());
       }
     }
-  });
+  }, [refresh, isSuccess, isError, data, dispatch]);
+
   return (
     <div>
-
-      <>
-        <ToastContainer />
-      </>
-      {!refresh && <BrandLoader />}
-
-      {children}
-
+      <ToastContainer />
+      {!refresh ? <BrandLoader /> : children}
     </div>
   );
 };

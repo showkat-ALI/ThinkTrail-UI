@@ -60,7 +60,7 @@ export default function Example() {
     }
   }, [isSuccess, isError]);
   const {
-    user: { email, avatar, firstName },
+    user: { email },
     refresh,
   } = useAppSelector((state) => state.auth);
 

@@ -1,17 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type User = {
-  _id:string;
+  _id: string;
   id: string;
   email: string;
   passwordChangedAt?: Date;
   needsPasswordChange: false;
-
   status: "in-progress" | "blocked" | undefined;
   isDeleted: boolean;
-  roles:
-    | ("admin" | "student" | "hr" | "instructor" | "superAdmin"|"admitted")[]
-    | undefined;
+  roles: ("admin" | "student" | "hr" | "instructor" | "superAdmin" | "admitted")[] | undefined;
 };
 
 type InitialState = {
@@ -23,7 +20,7 @@ type InitialState = {
 const initialState: InitialState = {
   data: null,
   user: {
-  _id:"",
+    _id: "",
     id: "",
     email: "",
     needsPasswordChange: false,
@@ -40,39 +37,20 @@ const authSlice = createSlice({
   reducers: {
     signin: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
-      // state.user.id = action.payload.id
-      // state.user.userName = action.payload.userName
-      // state.user.email = action.payload.email
-      // state.user.avatar = action.payload.avatar
-      // state.user.status = action.payload.status
-      // state.user.title = action.payload.title
-      // state.user.firstName = action.payload.firstName
-      // state.user.lastName = action.payload.lastName
-      // state.user.gender = action.payload.gender
-      // state.user.phone = action.payload.phone
-      // state.user.state = action.payload.state
-      // state.user.country = action.payload.country
-      // state.user.currentJob = action.payload.currentJob
-      // state.user.studentType = action.payload.studentType
-      // state.user.highestStudy = action.payload.highestStudy
-      // state.user.roles = action.payload.roles
       state.refresh = true;
     },
     logout: (state) => {
-      state.user._id="";
-      state.user.id = "";
-      state.user.email = "";
-      state.user.needsPasswordChange = false;
-      state.user.roles = [];
-      state.user.isDeleted = false;
-      state.user.status = undefined;
+      state.user = initialState.user;
       state.refresh = false;
     },
     refresher: (state) => {
       state.refresh = true;
     },
+    setUserData: (state, action: PayloadAction<any>) => {
+      state.data = action.payload;
+    },
   },
 });
 
 export default authSlice.reducer;
-export const { signin, logout, refresher } = authSlice.actions;
+export const { signin, logout, refresher, setUserData } = authSlice.actions;
