@@ -1,18 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Calendar } from "react-calendar";
-import { useRouter } from "next/router";
+import { useParams, useRouter } from "next/navigation";
 import {
   useGetOneQuizQuery,
+ 
   useSubmitQuizMutation,
 } from "../../../../../feature/api/dashboardApi";
+import { useGetUserQuery} from "../../../../../feature/api/authApi"
 import { toast } from "react-toastify";
 import { Spinner } from "flowbite-react";
 
 export default function Quiz() {
   const router = useRouter();
+  const params = useParams();
+  const { courseId, quiz } = params;
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const { quiz, courseId } = router.query;
   const [
     submitQuiz,
     {
@@ -46,23 +50,21 @@ export default function Quiz() {
 
   const handleNext = () => {
     const currentQuestion = data.data.quiz.questions[currentQuestionIndex];
-    
+
     if (!selectedAnswers[currentQuestion._id]) {
       toast.error("Please select an option");
       return;
     }
 
-    // Save the answer
     const answerObject = {
       question: currentQuestion._id,
       answer: selectedAnswers[currentQuestion._id],
     };
-    
-    // Check if answer already exists and update it
+
     const existingAnswerIndex = answers.findIndex(
       (ans) => ans.question === currentQuestion._id
     );
-    
+
     if (existingAnswerIndex >= 0) {
       const updatedAnswers = [...answers];
       updatedAnswers[existingAnswerIndex] = answerObject;
@@ -71,7 +73,6 @@ export default function Quiz() {
       setAnswers([...answers, answerObject]);
     }
 
-    // Move to next question if not last
     if (currentQuestionIndex < data.data.quiz.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
@@ -89,25 +90,26 @@ export default function Quiz() {
       [questionId]: answerValue,
     });
   };
+  const { data:userData } = useGetUserQuery({});
+console.log(userData)
 
   const submitBtn = () => {
-    const currentQuestion = data.data.quiz.questions[currentQuestionIndex];
-    
+    const currentQuestion = data?.data.quiz.questions[currentQuestionIndex];
+
     if (!selectedAnswers[currentQuestion._id]) {
       toast.error("Please select an option");
       return;
     }
 
-    // Save the current answer if not already saved
     const answerObject = {
       question: currentQuestion._id,
       answer: selectedAnswers[currentQuestion._id],
     };
-    
+
     const existingAnswerIndex = answers.findIndex(
       (ans) => ans.question === currentQuestion._id
     );
-    
+
     let finalAnswers = [...answers];
     if (existingAnswerIndex >= 0) {
       finalAnswers[existingAnswerIndex] = answerObject;
@@ -115,19 +117,27 @@ export default function Quiz() {
       finalAnswers = [...answers, answerObject];
     }
 
-    // Calculate score
     const calculatedScore = calculateScore(finalAnswers);
     setScore(calculatedScore);
     setTotalQuestions(data.data.quiz.questions.length);
     setShowResults(true);
-
-    // Submit to backend
+    
+// console.log( 
+//   {
+//     "quiz": quiz,
+//     "course": courseId,
+//     "answers": finalAnswers,
+//     "score": calculatedScore,
+//     "totalQuestions": data.data.quiz.questions.length,
+//     "submittedBy":{name:userData?.data?.name?.firstName+data?.data?.name?.lastName, email:userData?.data?.email}
+//   })
     submitQuiz({
       quiz: quiz,
       course: courseId,
       answers: finalAnswers,
       score: calculatedScore,
-      totalQuestions: data.data.quiz.questions.length
+      totalQuestions: data.data.quiz.questions.length,
+      submittedBy:{name:userData?.data?.name?.firstName+data?.data?.name?.lastName, email:userData?.data?.email}
     });
   };
 
@@ -137,14 +147,12 @@ export default function Quiz() {
       console.error(error);
     } else if (quizSuccess) {
       toast.success("Quiz submitted successfully!");
-      // Delay redirect to show results briefly
       setTimeout(() => {
         router.push(`/dashboard/quiz/submit-result/${quizData.data.subQuiz._id}`);
       }, 3000);
     }
   }, [quizError, quizSuccess]);
 
-  // Initialize selected answers when data loads (don't pre-select correct answers)
   useEffect(() => {
     if (isSuccess && data.data.quiz.questions.length > 0) {
       const initialSelectedAnswers: Record<string, string> = {};
@@ -216,12 +224,16 @@ export default function Quiz() {
                           type="radio"
                           name={`question-${data.data.quiz.questions[currentQuestionIndex]._id}`}
                           value={val.value}
-                          onChange={() => handleAnswerChange(
-                            data.data.quiz.questions[currentQuestionIndex]._id,
-                            val.value
-                          )}
+                          onChange={() =>
+                            handleAnswerChange(
+                              data.data.quiz.questions[currentQuestionIndex]._id,
+                              val.value
+                            )
+                          }
                           checked={
-                            selectedAnswers[data.data.quiz.questions[currentQuestionIndex]._id] === val.value
+                            selectedAnswers[
+                              data.data.quiz.questions[currentQuestionIndex]._id
+                            ] === val.value
                           }
                         />
                         <label>{val.value}</label>
@@ -270,7 +282,6 @@ export default function Quiz() {
               </div>
             </div>
           </div>
-          
         </div>
       ) : (
         <div>No Question Found</div>

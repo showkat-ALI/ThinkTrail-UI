@@ -486,12 +486,19 @@ const dashboardApi = createApi({
       }),
       providesTags: ["quiz"],
     }),
-    //create quiz querstion
+    //create quiz question
     submitQuiz: builder.mutation({
-      query: (body: { quiz: any; course: any; answers: string[] }) => ({
-        url: "/api/v1/subQuizzes",
-        method: "POST",
-        body: body,
+      query: (body: { 
+      quiz: any; 
+      course: any; 
+      answers: string[]; 
+      score: number; 
+      totalQuestions: number; 
+      submittedBy: { name: string; email: string } 
+      }) => ({
+      url: "/api/v1/subQuizzes",
+      method: "POST",
+      body: body,
       }),
       invalidatesTags: ["quiz"],
     }),

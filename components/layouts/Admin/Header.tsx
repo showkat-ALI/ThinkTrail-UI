@@ -16,10 +16,11 @@ import { BsSearch } from "react-icons/bs";
 import Link from "next/link";
 import { useLogoutMutation } from "../../../feature/api/authApi";
 import { useAppDispatch } from "../../../redux-hook/hooks";
-import { logout as logoutAction } from "../../../feature/auth/authSlice";
+import { logout, logout as logoutAction } from "../../../feature/auth/authSlice";
 import { toast } from "react-toastify";
-import Router from "next/router";
+import {useRouter} from "next/navigation";
 import { useAppSelector } from "../../../redux-hook/hooks";
+import { useDispatch } from "react-redux";
 
 const user = {
   name: "Tom Cook",
@@ -40,25 +41,22 @@ function classNames(...classes: any[]) {
 }
 
 export default function Example() {
-  const [logout, { isSuccess, isError, error }] = useLogoutMutation();
-  const dispatch = useAppDispatch();
-  const logoutHandler = () => {
-    logout({});
-    console.log("logout success");
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Logged out Successfully!");
-      setTimeout(() => {
-        Router.push("/");
-        dispatch(logoutAction());
-      }, 1500);
-    } else if (isError) {
-      toast.error("Something went wrong while logging out!");
-      console.log("logout error", error);
-    }
-  }, [isSuccess, isError]);
+  const router=useRouter()
+  const [logoutApiCall] = useLogoutMutation();
+ const dispatch = useDispatch()
+ const logoutHandler = async () => {
+   try {
+     await logoutApiCall({}).unwrap(); // call API
+     dispatch(logout());              // clear Redux state
+     toast.success("Logged out successfully!");
+     setTimeout(() => {
+       router.push("/signin"); // or "/"
+     }, 1500);
+   } catch (err: any) {
+     toast.error("Logout failed!");
+     console.error("Logout error:", err);
+   }
+ };
   const {
     user: { email },
     refresh,

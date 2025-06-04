@@ -1,12 +1,13 @@
+"use client"
 import type { NextPage } from "next";
 import Head from "next/head";
-import DashboardLayout from "../../../../components/layouts/DashboardLayout";
-import Quiz from "../../../../components/pages/dashboard/student-instructor-led/quiz/index";
+import DashboardLayout from "../../../../../components/layouts/DashboardLayout";
+import Quiz from "../../../../../components/pages/dashboard/student-instructor-led/quiz/index";
 import dynamic from "next/dynamic";
-import PrivateTemplate from "../../../../templates/PrivateTemplate";
-import AccessTemplate from "../../../../templates/AccessTemplate";
+import PrivateTemplate from "../../../../../templates/PrivateTemplate";
+import AccessTemplate from "../../../../../templates/AccessTemplate";
 
-const quiz: NextPage = () => {
+const QuizPage: NextPage = () => {
   return (
     <PrivateTemplate>
       <AccessTemplate accessRoles={["student", "superAdmin"]}>
@@ -22,4 +23,4 @@ const quiz: NextPage = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(quiz), { ssr: false });
+export default QuizPage;
