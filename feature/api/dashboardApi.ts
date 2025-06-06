@@ -491,16 +491,24 @@ const dashboardApi = createApi({
       query: (body: { 
       quiz: any; 
       course: any; 
-      answers: string[]; 
+      answers: any; 
       score: number; 
       totalQuestions: number; 
       submittedBy: { name: string; email: string } 
       }) => ({
-      url: "/api/v1/subQuizzes",
+      url: "/api/v1/quiz/submit-quiz",
       method: "POST",
       body: body,
       }),
       invalidatesTags: ["quiz"],
+    }),
+    getSubMitQuiz: builder.query({
+      query: () => ({
+      url: "/api/v1/quiz/submit-quiz/get-all-sub-Quiz",
+      method: "GET",
+    
+      }),
+     
     }),
     // GET ALL active course by gatecory
     getCourseByCategory: builder.query({
@@ -1394,6 +1402,7 @@ export const {
   useGetAllMyCourseQuery,
   useGetMyCourseDetailsQuery,
   useSingleStudentAssignmentQuery,
-  useGetSingleModuleQuizesQuery
+  useGetSingleModuleQuizesQuery,
+  useGetSubMitQuizQuery
 } = dashboardApi;
 export default dashboardApi;

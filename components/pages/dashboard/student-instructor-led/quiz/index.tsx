@@ -5,6 +5,8 @@ import { useParams, useRouter } from "next/navigation";
 import {
   useGetOneQuizQuery,
  
+  useGetSubMitQuizQuery,
+ 
   useSubmitQuizMutation,
 } from "../../../../../feature/api/dashboardApi";
 import { useGetUserQuery} from "../../../../../feature/api/authApi"
@@ -27,13 +29,22 @@ export default function Quiz() {
       isError: quizError,
     },
   ] = useSubmitQuizMutation();
+  const {
+   
+      error:subQuizError,
+      data:subQuizData ,
+      isLoading: subMittedQuizLoading,
+      isSuccess: subQuizIsSuccess,
+      isError: subQuizIsError,
+    }
+   = useGetSubMitQuizQuery({});
   const { data, isSuccess, isError, isLoading } = useGetOneQuizQuery(quiz);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [answers, setAnswers] = useState<any[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
-
+console.log(subQuizData)
   const calculateScore = (userAnswers: any[]) => {
     let correctAnswers = 0;
     data.data.quiz.questions.forEach((question: any) => {
@@ -122,15 +133,7 @@ console.log(userData)
     setTotalQuestions(data.data.quiz.questions.length);
     setShowResults(true);
     
-// console.log( 
-//   {
-//     "quiz": quiz,
-//     "course": courseId,
-//     "answers": finalAnswers,
-//     "score": calculatedScore,
-//     "totalQuestions": data.data.quiz.questions.length,
-//     "submittedBy":{name:userData?.data?.name?.firstName+data?.data?.name?.lastName, email:userData?.data?.email}
-//   })
+
     submitQuiz({
       quiz: quiz,
       course: courseId,
@@ -147,9 +150,7 @@ console.log(userData)
       console.error(error);
     } else if (quizSuccess) {
       toast.success("Quiz submitted successfully!");
-      setTimeout(() => {
-        router.push(`/dashboard/quiz/submit-result/${quizData.data.subQuiz._id}`);
-      }, 3000);
+      
     }
   }, [quizError, quizSuccess]);
 
@@ -184,7 +185,36 @@ console.log(userData)
         <div>Loading...</div>
       ) : isError ? (
         <div>Error</div>
-      ) : isSuccess && data.data.quiz.questions.length > 0 ? (
+            ) : subQuizData?.data?.savedQuiz?.some(
+          (savedQuiz: any) =>
+            savedQuiz.submittedBy?.email === userData?.data?.email &&
+            savedQuiz.quiz === quiz &&
+            savedQuiz.course === courseId
+        ) ? (
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md w-full">
+            <h2 className="text-2xl font-bold text-[#3A57E8] mb-4">Quiz Submitted</h2>
+            <p className="text-lg text-gray-700 mb-2">You have already submitted this quiz.</p>
+            <div className="bg-gray-100 p-4 rounded-lg mt-4">
+              <p className="text-lg font-semibold text-gray-800">Your Score:</p>
+              <p className="text-4xl font-bold text-[#3A57E8]">
+          {subQuizData?.data?.savedQuiz?.find(
+            (savedQuiz: any) =>
+              savedQuiz.submittedBy?.email === userData?.data?.email &&
+              savedQuiz.quiz === quiz &&
+              savedQuiz.course === courseId
+          )?.score}
+              </p>
+            </div>
+            <button
+              className="mt-6 bg-[#3A57E8] text-white py-2 px-4 rounded-lg hover:bg-[#2a46c0] transition duration-300"
+              onClick={() => router.push('/dashboard')}
+            >
+              Go to Dashboard
+            </button>
+          </div>
+        </div>
+            ) : isSuccess && data.data.quiz.questions.length > 0 ? (
         <div className="grid grid-cols-12 gap-8 font-nunito bg-gray-bg">
           <div className="col-span-12 xl:col-span-8">
             <div>
