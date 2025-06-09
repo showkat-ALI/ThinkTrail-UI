@@ -1,11 +1,10 @@
+'use client'
 import React, { useState, useEffect } from "react";
-import { useGetAllSubmitAssignmentInstructorQuery } from "../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../redux-hook/hooks";
 import { Spinner } from "flowbite-react";
 import Link from "next/link";
-import moment from "moment";
-import Image from "next/image";
+import { useGetAllSubmitAssignmentInstructorQuery } from "../../../../../feature/api/dashboardApi";
 import { useGetUserQuery } from "../../../../../feature/api/authApi";
+
 
 export default function AllAssignments() {
   const {
@@ -14,6 +13,7 @@ export default function AllAssignments() {
       isError: isErrorUser,
     } = useGetUserQuery({});
   const id=userData?.data?._id
+  console.log(id)
   const { data, isSuccess, isError, isLoading } =
     useGetAllSubmitAssignmentInstructorQuery(id);
 console.log(data)
