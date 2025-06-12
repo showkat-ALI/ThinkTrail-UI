@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect } from "react";
 import InstructorCss from "../../../../../styles/Instructor.module.css";
 import fileIcon from "../../../../../assets/filel.png";
@@ -8,14 +9,17 @@ import {
   useGetOneSubmitAssignmentQuery,
   useSubmitAssignmentUdpateMutation,
 } from "../../../../../feature/api/dashboardApi";
-import { useRouter } from "next/router";
+import { useRouter,useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Spinner } from "flowbite-react";
 import moment from "moment";
 const Assignment = () => {
   const router = useRouter();
-  const { id,assignmentId,submissionId } = router.query;
+  const params = useParams();
+    const { id, assignmentId,submissionId } = params;
+  
+  console.log(id)
   const {
     register,
     handleSubmit,
@@ -286,8 +290,8 @@ const Assignment = () => {
                         >
                           <Image
                             src={fileIcon}
-                            width={"18px"}
-                            height={"19px"}
+                            width={18}
+                            height={18}
                             alt=""
                           />
                           History Survey
