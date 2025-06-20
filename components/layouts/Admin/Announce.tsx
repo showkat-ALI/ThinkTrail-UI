@@ -16,7 +16,7 @@ export default function Announce() {
           <div>
             <h1 className="text-4xl font-extrabold text-white">Welcome!</h1>
             <p className="text-white text-sm">
-              The Fourth IT Academy Courses Dashboard has everything you need to
+              The Think Trail Courses Dashboard has everything you need to
               succeed
             </p>
           </div>

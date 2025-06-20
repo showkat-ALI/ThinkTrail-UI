@@ -11,7 +11,7 @@ export default function Footer() {
         <p className="mx-[20px]">Terms of Use</p>
       </div>
       <div>
-        <p>© {year} Fourth IT Academy</p>
+        <p>© {year} Think Trail</p>
       </div>
     </div>
   );

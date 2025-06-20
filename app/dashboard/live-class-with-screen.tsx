@@ -10,7 +10,7 @@ const Students: NextPage = () => {
     <PrivateTemplate>
       <AccessTemplate accessRoles={["superAdmin"]}>
         <Head>
-          <title>Screen Live Class | Fourth IT Academy</title>
+          <title>Screen Live Class | Think Trail</title>
         </Head>
         <DashboardLayout>
           <LiveClass />

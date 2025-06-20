@@ -50,13 +50,16 @@ console.log(data)
                       /> */}
                       <div>
                         <h4 className="font-nunito text-sm mt-1 ">
-                          {item?.submittedBy?.id} 
+                          Student ID-{item?.submittedBy?.id} 
                         </h4>
                       </div>
                     </div>
                     <div className="">
                       <h1 className="font-bold text-2xl">
-                        {item?.submittedBy?.email}
+                        Mail-{item?.submittedBy?.email}
+                      </h1>
+                      <h1 className="font-bold text-2xl">
+                     Course-{item?.course?.title}
                       </h1>
                       {/*
                   <div className="flex xsm:flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row justify-between xsm:items-start sm:items-start md:items-start lg:items-center xl:items-center md:text-sm sm:text-sm xsm:text-sm xl:text-sm lg:text-xs ">

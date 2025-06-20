@@ -7,7 +7,7 @@ const about = () => {
   return (
     <>
       <Head>
-        <title>About | Fourth IT Academy</title>
+        <title>About | Think Trail</title>
       </Head>
       <HomeLayout>
         <div
@@ -15,7 +15,7 @@ const about = () => {
         >
           <div className="flex flex-col justify-center items-center">
             <h1 className="font-bold text-white text-4xl mt-[11rem]">
-              Fourth IT Academy
+              Think Trail
             </h1>
             <p className="font-bold text-white text-3xl ">#Get to know us</p>
           </div>
@@ -25,7 +25,7 @@ const about = () => {
             <h1 className="text-3xl">About Us</h1>
             <div className="text-gray-400">
               <p className="mt-2">
-                Fourth IT Academy focuses heavily on the Risk Management
+                Think Trail focuses heavily on the Risk Management
                 Framework. The risk management framework creates an effective
                 means to help companies select the required security controls
                 which are deemed necessary to protect the Organization , its

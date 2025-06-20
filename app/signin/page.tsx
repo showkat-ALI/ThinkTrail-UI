@@ -6,7 +6,7 @@ const SigninPage = () => {
   return (
     <>
       <Head>
-        <title> Signin | Fourth IT Academy</title>
+        <title> Signin | Think Trail</title>
       </Head>
       <Signin/>
     </>

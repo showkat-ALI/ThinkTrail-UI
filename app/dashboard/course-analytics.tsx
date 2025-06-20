@@ -10,7 +10,7 @@ export default function courseAnalytics() {
     <PrivateTemplate>
       <AccessTemplate accessRoles={["superAdmin"]}>
         <Head>
-          <title>courses-analytics | Fourth IT Academy</title>
+          <title>courses-analytics | Think Trail</title>
         </Head>
         <DashboardLayout>
           <Main />

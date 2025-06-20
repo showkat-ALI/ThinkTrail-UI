@@ -11,7 +11,7 @@ const Students: NextPage = () => {
     <PrivateTemplate>
       <AccessTemplate accessRoles={["admin", "instructor", "superAdmin"]}>
         <Head>
-          <title>Students | Fourth IT Academy</title>
+          <title>Students | Think Trail</title>
         </Head>
 
         <DashboardLayout>

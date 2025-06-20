@@ -9,7 +9,7 @@ const AssignmentEdit = () => {
     <PrivateTemplate>
       <AccessTemplate accessRoles={["admin", "instructor", "superAdmin"]}>
         <Head>
-          <title>Edit Assignments | Fourth IT Academy</title>
+          <title>Edit Assignments | Think Trail</title>
         </Head>
 
         <DashboardLayout>

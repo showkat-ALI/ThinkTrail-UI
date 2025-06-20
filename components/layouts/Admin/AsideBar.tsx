@@ -57,6 +57,7 @@ const AsideBar = () => {
     needsPasswordChange,
     status,
     passwordChangedAt,
+    
   } = useAppSelector((state) => state.auth.user);
   const pathname = usePathname(); // Get the current pathname
   console.log("userId", id);
@@ -116,11 +117,9 @@ const logoutHandler = async () => {
           </div>
           <div className="text-center">
             <h3 className="text-[#001F4D] font-medium">
-              {firstName + " " + lastName}
+              {email}
             </h3>
-            <Link href={"/dashboard/my-account"}>
-              <span className="text-sm text-[#8A92A6]">@{userName}</span>
-            </Link>
+           
           </div>
 
           <div className="flex items-center gap-2 mt-4">
@@ -246,7 +245,6 @@ const logoutHandler = async () => {
                    pathname == "/dashboard/take-admission" ||
                    pathname === "/dashboard/academic-faculty" ||
                    pathname === "/dashboard/academic-department" ||
-                   pathname === "/dashboard/faculty" ||
                    pathname === "/dashboard/course/creation" ||
                    pathname === "/dashboard/quiz/quiz-creation" ||
                    pathname ===
@@ -262,14 +260,7 @@ const logoutHandler = async () => {
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
-                    {
-                      name: "Semester",
-                      url: "/dashboard/semester",
-                      active:
-                       pathname == "/dashboard/semester"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
+                   
                     {
                       name: "Academic department",
                       url: "/dashboard/academic-department",
@@ -315,13 +306,10 @@ const logoutHandler = async () => {
                 {
                   name: "Creation",
                   id: 6,
-                  url: "/dashboard/semester",
                   icon: AiOutlineTeam,
                   active:
-                   pathname == "/dashboard/semester" ||
                    pathname === "/dashboard/academic-faculty" ||
                    pathname === "/dashboard/academic-department" ||
-                   pathname === "/dashboard/faculty" ||
                    pathname === "/dashboard/course/creation" ||
                    pathname === "/dashboard/quiz/quiz-creation" ||
                    pathname ===
@@ -337,14 +325,7 @@ const logoutHandler = async () => {
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
-                    {
-                      name: "Semester",
-                      url: "/dashboard/semester",
-                      active:
-                       pathname == "/dashboard/semester"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
+                   
                     {
                       name: "Academic department",
                       url: "/dashboard/academic-department",
@@ -369,14 +350,8 @@ const logoutHandler = async () => {
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
-                    {
-                      name: "Semester Registration",
-                      url: "/dashboard/semester-registration",
-                      active:
-                       pathname == "/dashboard/semester-registration"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
+                    
+                   
                     {
                       name: "Quiz Creation",
                       url: "/dashboard/quiz/quiz-creation",
@@ -405,7 +380,7 @@ const logoutHandler = async () => {
                       : "",
                   children: [
                     {
-                      name: "All quizzes of a ins",
+                      name: "All quizzes of a instructor",
                       url: "/dashboard/quiz/all-quiz",
                       active:
                        pathname == "/dashboard/quiz/all-quiz-ins"
@@ -420,46 +395,10 @@ const logoutHandler = async () => {
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
-                    {
-                      name: "Semester",
-                      url: "/dashboard/semester",
-                      active:
-                       pathname == "/dashboard/semester"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Academic department",
-                      url: "/dashboard/academic-department",
-                      active:
-                       pathname == "/dashboard/academic-department"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Course creation",
-                      url: "/dashboard/course/creation",
-                      active:
-                       pathname == "/dashboard/course/creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Semester Registration",
-                      url: "/dashboard/semester-registration",
-                      active:
-                       pathname == "/dashboard/semester-registration"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Quiz Creation",
-                      url: "/dashboard/quiz/quiz-creation",
-                      active:
-                       pathname == "/dashboard/quiz/quiz-creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },{
+                  
+                    
+                    
+                   ,{
                       name: "Admission Requests",
                       url: "/dashboard/admission-request",
                       active:
@@ -704,7 +643,7 @@ const logoutHandler = async () => {
                       : "",
                 },
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : roles?.includes("student") && studentType === "self-pace"
+            : roles?.includes("student")
             ? [
               {
                 name: "Take Admission",
@@ -727,64 +666,13 @@ const logoutHandler = async () => {
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },
-                {
-                  name: "My Courses",
-                  id: 2,
-                  url: "/dashboard/my-course",
-                  icon: AiOutlineUser,
-                  active:
-                   pathname == "/dashboard/my-course" ||
-                   pathname === "/dashboard/my-course/[id]" ||
-                   pathname == "/dashboard/page-overview/[id]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Files",
-                  id: 5,
-                  url: "/dashboard/files",
-                  icon: ImFilesEmpty,
-                  active:
-                   pathname == "/dashboard/files"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Messages",
-                  id: 6,
-                  url: "/dashboard/messages",
-                  icon: BsFillChatLeftDotsFill,
-                  active:
-                   pathname == "/dashboard/messages"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "My Account",
-                  id: 7,
-                  url: "/dashboard/my-account",
-                  icon: AiFillSetting,
-                  active:
-                   pathname == "/dashboard/my-account"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
+               
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : roles &&
-              roles.includes("student") &&
+            : 
+              (roles?.includes("student") && roles?.includes("admitted")) &&
               
               [
-                {
-                  name: "Take Admission",
-                  url: "/dashboard/take-admission",
-                  id:0,
-                  icon: AiOutlineAppstore,
-
-                  active:
-                   pathname == "/dashboard/take-admission"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
+               
                 {
                   name: "Dashboard",
                   id: 1,
@@ -818,16 +706,7 @@ const logoutHandler = async () => {
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },
-                {
-                  name: "Quiz",
-                  id: 4,
-                  url: "/dashboard/quiz/all-quizes",
-                  icon: MdQuiz,
-                  active:
-                   pathname == "/dashboard/quiz/all-quizes"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
+                
                 {
                   name: "Messages",
                   id: 5,
@@ -838,16 +717,7 @@ const logoutHandler = async () => {
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },
-                {
-                  name: "Files",
-                  id: 6,
-                  url: "/dashboard/files",
-                  icon: ImFilesEmpty,
-                  active:
-                   pathname == "/dashboard/files"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
+                
                 {
                   name: "Live Class",
                   id: 7,

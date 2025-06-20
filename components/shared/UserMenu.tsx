@@ -43,11 +43,16 @@ const UserMenu = (props: UserMenuProps) => {
     <div className="text-right">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="w-full justify-center rounded-full   text-white hover:bg-opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden mr-1">
-              <Image src={avatar} alt={username} width={40} height={40} />
+            <Menu.Button className="w-full justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-opacity-75">
+            <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden mr-1 border-2 border-yellow-500">
+              <Image
+              src="/user.png" // Use a default avatar image
+              alt={username}
+              width={40}
+              height={40}
+              />
             </div>
-          </Menu.Button>
+            </Menu.Button>
         </div>
         <Transition
           as={Fragment}
@@ -65,7 +70,7 @@ const UserMenu = (props: UserMenuProps) => {
                   <div className="flex w-full items-center text-sm font-medium text-black hover:bg-opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 cursor-pointer">
                     <div className="relative min-w-[40px] min-h-[40px] rounded-full overflow-hidden ">
                       <Image
-                        src={avatar}
+                        src={"/user.png"}
                         alt={username}
                         layout="fill"
                         objectFit="cover"

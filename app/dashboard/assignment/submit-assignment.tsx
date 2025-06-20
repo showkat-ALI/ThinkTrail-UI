@@ -11,7 +11,7 @@ export default function index() {
       <PrivateTemplate>
         <AccessTemplate accessRoles={["instructor", "superAdmin"]}>
           <Head>
-            <title>Submitted Assignments | Fourth IT Academy</title>
+            <title>Submitted Assignments | Think Trail</title>
           </Head>
           <DashboardLayout>
             <AllAssingments />

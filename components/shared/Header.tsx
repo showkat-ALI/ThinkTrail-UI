@@ -33,27 +33,14 @@ const menu: {
     url: "/about",
   },
 
-  {
-    name: "Services",
-    url: "/services",
-  },
-  {
-    name: "Bootcamps",
-    url: "/bootcamps",
-  },
+ 
+  
   {
     name: "Departments",
     url: "/departments",
   },
 
-  {
-    name: "Consulting",
-    url: "/consulting",
-  },
-  {
-    name: "Contact",
-    url: "/contact",
-  },
+  
 ];
 
 function classNames(...classes: any[]): string {
@@ -80,7 +67,7 @@ export default function Header() {
                   src={logo}
                   alt=""
                 />
-                <span className="min-w-max font-bold">Fourth IT Academy</span>
+                <span className="min-w-max font-bold">Think Trail</span>
               </div>
             </Link>
           </div>
@@ -119,11 +106,14 @@ export default function Header() {
                 </span>
               </Link>
             ) : (
+              <>
               <UserMenu
                 userEmail={email}
                 username={firstName}
                 avatar={avatar}
               />
+              </>
+
             )}
           </div>
         </div>
@@ -147,7 +137,7 @@ export default function Header() {
               <div className="flex items-center justify-between">
                 <div className="flex gap-2 items-center min-w-max">
                   <Image height={45} width={45} src={logo} alt="Your Company" />
-                  <span className="min-w-max font-bold">Fourth IT Academy</span>
+                  <span className="min-w-max font-bold">Think Trail</span>
                 </div>
                 <div className="-mr-2">
                   <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">

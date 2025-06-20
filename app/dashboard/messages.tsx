@@ -8,7 +8,7 @@ export default function messages() {
     return (
         <PrivateTemplate>
             <Head>
-                <title>Message | Fourth IT Academy</title>
+                <title>Message | Think Trail</title>
             </Head>
 
             <DashboardLayout>

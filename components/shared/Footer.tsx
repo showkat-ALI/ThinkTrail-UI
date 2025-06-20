@@ -140,7 +140,7 @@ const Footer = () => {
       </div>
 
       <div className="container mt-3 px-4 xl:px-0 flex flex-col sm:flex-row gap-2 justify-between">
-        <p className="font-bold text-white text-xl">Fourth IT Academy</p>
+        <p className="font-bold text-white text-xl">Think Trail</p>
         <p className=" text-white">
           Copyright &#169;{" "}
           <span className="font-bold">All Rights Reserved. FITA</span>

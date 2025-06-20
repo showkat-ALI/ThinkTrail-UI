@@ -5,7 +5,7 @@ const ResetPasswordPage = () => {
     return (
         <>
             <Head>
-                <title> reset-password | Fourth IT Academy</title>
+                <title> reset-password | Think Trail</title>
             </Head>
             <ResetPassword />
         </>

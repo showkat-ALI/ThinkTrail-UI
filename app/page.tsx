@@ -1,7 +1,7 @@
 import HomeLayout from "../components/layouts/HomeLayout";
 import HomeComponent from "../components/pages/home/Home";
 export const metadata = {
-  title: 'Home | Fourth IT Academy',
+  title: 'Home | Think Trail',
 };
 
 export default function HomePage() {

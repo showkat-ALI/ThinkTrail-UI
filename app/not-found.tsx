@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "flowbite-react";
 import Head from "next/head";
 import Link from "next/link";
@@ -12,11 +13,11 @@ const NotFound = () => {
                 <h3>404</h3>
                 <h5>Oops! This page is Not Found.</h5>
                 <p>The requested page dose not exist</p>
-                <Link href="/dashboard">
+                {/* <Link href="/dashboard">
                     <a>
                         <Button>Back to Home</Button>
                     </a>
-                </Link>
+                </Link> */}
             </div>
         </div>
     );

@@ -10,7 +10,7 @@ const UsersPage: NextPage = () => {
     <PrivateTemplate>
       <AccessTemplate accessRoles={["admin", "superAdmin"]}>
         <Head>
-          <title>Instructor | Fourth IT Academy</title>
+          <title>Instructor | Think Trail</title>
         </Head>
         <DashboardLayout>
           <Users />

@@ -10,7 +10,7 @@ function index() {
       <PrivateTemplate>
         <AccessTemplate accessRoles={["superAdmin"]}>
           <Head>
-            <title>Instructor | Fourth IT Academy</title>
+            <title>Instructor | Think Trail</title>
           </Head>
           <DashboardLayout>
             <Semester />

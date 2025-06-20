@@ -1,13 +1,11 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InputErrorMessage } from "../../../../utils/error";
 import "react-quill/dist/quill.snow.css";
 import {
-  useAddAcademicDepartmentMutation,
   useAddAcademicFacultyMutation,
-  useAddAcademicSemesterMutation,
   useGetAllAcademicDepartmentsQuery,
-  useGetAllAcademicSemestersQuery,
 } from "../../../../../feature/api/dashboardApi";
 import { toast } from "react-toastify";
 
@@ -34,7 +32,6 @@ const AcademicFaculty = () => {
   } = useGetAllAcademicDepartmentsQuery({});
   console.log(AllAcademicDepartments);
   const submitFirstStep = async (data: RegistrationFirstStepFromData) => {
-    console.log("fac data", data);
     await AddAcademicFaculty(data).unwrap();
   };
 

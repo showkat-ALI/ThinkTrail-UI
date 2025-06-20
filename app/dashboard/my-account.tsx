@@ -8,7 +8,7 @@ export default function MyAccountPage() {
   return (
     <PrivateTemplate>
       <Head>
-        <title>my-account | Fourth IT Academy</title>
+        <title>my-account | Think Trail</title>
       </Head>
 
       <DashboardLayout>

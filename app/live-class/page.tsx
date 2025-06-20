@@ -7,7 +7,7 @@ const Students: NextPage = () => {
   return (
     <>
       <Head>
-        <title>LIve Class | Fourth IT Academy</title>
+        <title>LIve Class | Think Trail</title>
       </Head>
 
       <LiveClass />

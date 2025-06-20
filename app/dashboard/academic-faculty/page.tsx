@@ -1,24 +1,24 @@
 import React from "react";
+import AcademicFaculty from "../../../components/pages/dashboard/superAdmin/academic-faculty/AcademicFaculty";
 import PrivateTemplate from "../../../templates/PrivateTemplate";
 import AccessTemplate from "../../../templates/AccessTemplate";
 import Head from "next/head";
-import SemesterRegistration from "../../../components/pages/dashboard/superAdmin/semester-Registration/SemesterRegistration";
 import DashboardLayout from "../../../components/layouts/DashboardLayout";
 
-const index = () => {
+const AcademicFacultyPage = () => {
   return (
     <>
       <PrivateTemplate>
-        <AccessTemplate accessRoles={["admin", "instructor", "superAdmin"]}>
+        <AccessTemplate accessRoles={["superAdmin"]}>
           <Head>
-            <title>Instructor File | Fourth IT Academy</title>
+            <title>Instructor | Think Trail</title>
           </Head>
           <DashboardLayout>
-            <SemesterRegistration />
+            <AcademicFaculty />
           </DashboardLayout>
         </AccessTemplate>
       </PrivateTemplate>
     </>
   );
 };
-export default index;
+export default AcademicFacultyPage;

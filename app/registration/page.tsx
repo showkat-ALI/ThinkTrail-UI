@@ -11,7 +11,7 @@ const registration = () => {
   return (
     <>
       <Head>
-        <title> Registration | Fourth IT Academy</title>
+        <title> Registration | Think Trail</title>
       </Head>
       <HomeLayout>
         <Registration />

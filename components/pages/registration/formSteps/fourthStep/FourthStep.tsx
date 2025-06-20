@@ -107,7 +107,7 @@ const FourthStep = (props: StepProps) => {
         />
         <label htmlFor="consent">
           By checking this box, I consent to be contacted by or on behalf of
-          Fourth IT Academy, including by email, phone or text, about my
+          Think Trail, including by email, phone or text, about my
           interest in furthering my career with the bootcamp. I also agree to
           the
           <span className="underline mx-[3px]">

@@ -13,7 +13,7 @@ export default function Mycourses() {
     <PrivateTemplate>
       <AccessTemplate accessRoles={["student", "superAdmin"]}>
         <Head>
-          <title>My Courses | Fourth IT Academy</title>
+          <title>My Courses | Think Trail</title>
         </Head>
 
         <DashboardLayout>
