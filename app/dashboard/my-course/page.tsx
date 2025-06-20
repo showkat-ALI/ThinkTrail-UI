@@ -24,4 +24,4 @@ const Student = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(Student), { ssr: false });
+export default Student
