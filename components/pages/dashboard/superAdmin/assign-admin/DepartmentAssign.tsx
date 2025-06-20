@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+"use client"
 import { Button, Modal } from "flowbite-react";
 import { useEffect } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../utils/loaders/ButtonLoader";
 import { useDeleteOneOptimizationMutation } from "../../../../../feature/api/dashboardApi";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type Props = {
   show: boolean;

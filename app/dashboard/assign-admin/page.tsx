@@ -11,7 +11,7 @@ const Assignadmin = () => {
       <PrivateTemplate>
         <AccessTemplate accessRoles={["superAdmin"]}>
           <Head>
-            <title>Instructor | Think Trail</title>
+            <title>SuperAdmin | Think Trail</title>
           </Head>
           <DashboardLayout>
             <AssignAdmin />

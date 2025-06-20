@@ -242,7 +242,6 @@ const logoutHandler = async () => {
                   url: "/dashboard/semester",
                   icon: AiOutlineTeam,
                   active:
-                   pathname == "/dashboard/take-admission" ||
                    pathname === "/dashboard/academic-faculty" ||
                    pathname === "/dashboard/academic-department" ||
                    pathname === "/dashboard/course/creation" ||
@@ -252,14 +251,6 @@ const logoutHandler = async () => {
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                   children: [
-                    {
-                      name: "Take Admission",
-                      url: "/dashboard/take-admission",
-                      active:
-                       pathname == "/dashboard/take-admission"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
                    
                     {
                       name: "Academic department",
@@ -269,38 +260,7 @@ const logoutHandler = async () => {
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
-                    {
-                      name: "Assignment-creation",
-                      url: "/dashboard/assignment-creation",
-                      active:
-                       pathname == "/dashboard/assignment-creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Course creation",
-                      url: "/dashboard/course/creation",
-                      active:
-                       pathname == "/dashboard/course/creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Semester Registration",
-                      url: "/dashboard/semester-registration",
-                      active:
-                       pathname == "/dashboard/semester-registration"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Quiz Creation",
-                      url: "/dashboard/quiz/quiz-creation",
-                      active:
-                       pathname == "/dashboard/quiz/quiz-creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
+                   
                   ],
                 },
                 {
@@ -367,17 +327,7 @@ const logoutHandler = async () => {
                   id: 6,
                   url: "/dashboard/semester",
                   icon: AiOutlineTeam,
-                  active:
-                   pathname == "/dashboard/semester" ||
-                   pathname === "/dashboard/academic-faculty" ||
-                   pathname === "/dashboard/academic-department" ||
-                   pathname === "/dashboard/faculty" ||
-                   pathname === "/dashboard/course/creation" ||
-                   pathname === "/dashboard/quiz/quiz-creation" ||
-                   pathname ===
-                      "/dashboard/assignments/[singleAssignment]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
+                 
                   children: [
                     {
                       name: "All quizzes of a instructor",
@@ -394,7 +344,7 @@ const logoutHandler = async () => {
                        pathname == "/dashboard/assignment/all-assignments"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
-                    },
+                    }
                   
                     
                     
@@ -411,21 +361,21 @@ const logoutHandler = async () => {
                 },
                 {
                   name: "Assign Admin",
-                  url: "/dashboard/assign-instructor/assign-admin",
+                  url: "/dashboard/assign-admin",
                   id: 344,
                   icon: AiOutlineAppstore,
                   active:
-                   pathname == "/dashboard/admins/assign-admin"
+                   pathname == "/dashboard/assign-admin"
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },
                 {
                   name: "Assign Instructors",
-                  url: "/dashboard/assign-instructor/assign-instructor",
+                  url: "/dashboard/assign-instructor",
                   id: 344,
                   icon: AiOutlineAppstore,
                   active:
-                   pathname == "/dashboard/admins/assign-instructor"
+                   pathname == "/dashboard/assign-instructor"
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },

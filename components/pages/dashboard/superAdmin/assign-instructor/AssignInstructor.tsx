@@ -1,7 +1,7 @@
+"use client"
 import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { FaEnvelopeOpenText } from "react-icons/fa";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
+
 import { IoMdPersonAdd } from "react-icons/io";
 
 import responsiveStyle from "../../../../../styles/ContactStyle.module.css";

@@ -1,16 +1,15 @@
+"use client"
 import { useState } from "react";
+
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaEnvelopeOpenText } from "react-icons/fa";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoMdPersonAdd } from "react-icons/io";
 
 import responsiveStyle from "../../../../../styles/ContactStyle.module.css";
 import {
   useGetAllAcademicDepartmentsQuery,
   useGetAllAdminsQuery,
-  useGetAllMentoringsQuery,
 } from "../../../../../feature/api/dashboardApi";
-import MentoringViewModal from "../../../../common/mentoring-view/index";
 import DeleteMentoring from "./DepartmentAssign";
 import AssignAdminModel from "../../../../common/assignAdmin/assignAdmin";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
@@ -80,9 +79,9 @@ const AssignAdmin = () => {
           </thead>
           <tbody className="text-[#232D42]">
             {isLoading ? (
-              <div>Loading...</div>
+              <p>Loading...</p>
             ) : isError ? (
-              <div>Error...</div>
+              <p>Error...</p>
             ) : isSuccess && data?.data && data?.data.length > 0 ? (
               data?.data.map((student: any, idx: any) => (
                 <Table
@@ -148,13 +147,11 @@ function Table({
       />
       <tr className="border-b font-nunito">
         <td scope="row" className="py-4 px-6">
-          <div className="flex items-center space-x-2 justify-center">
-            <div>
+          <p className="flex items-center space-x-2 justify-center">
               <h2 className="text-[16px] md:text-[18px] text-[#232D42] font-medium  font-nunito">
                 {firstName}
               </h2>
-            </div>
-          </div>
+          </p>
         </td>
         <td className="py-4 px-6 font-nunito">{email}</td>
         <td className="py-4 px-6 font-nunito">{id}</td>
@@ -170,11 +167,11 @@ function Table({
           </a>
         </td>
         <td className="py-4 px-6">
-          <div className="flex justify-center space-x-6">
+          <p className="flex justify-center space-x-6">
             {assignedDepartment ? (
-              <div className="w-[32px] h-[32px] flex justify-center items-center text-white rounded-full bg-[#3A57E8]">
+              <p className="w-[32px] h-[32px] flex justify-center items-center text-white rounded-full bg-[#3A57E8]">
                 <IoCheckmarkDoneCircleSharp />
-              </div>
+              </p>
             ) : (
               <button
                 onClick={() => handleMentorView(_id)}
@@ -190,7 +187,7 @@ function Table({
             >
               <AiOutlineDelete />
             </button>
-          </div>
+          </p>
         </td>
       </tr>
     </>
