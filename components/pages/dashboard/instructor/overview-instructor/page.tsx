@@ -14,7 +14,7 @@ function InstructorOverview() {
     <div className="grid grid-cols-12 gap-4 font-nunito bg-gray-bg min-h-max">
       <div className="col-span-12 lg:col-span-8">
         <OverView />
-        <StudyStatistics />
+        {/* <StudyStatistics /> */}
         <div className="grid grid-cols-12 gap-x-5 my-8">
           <div className="lg:col-span-6 col-span-12">
             <FilledPositions />

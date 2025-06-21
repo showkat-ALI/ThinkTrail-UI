@@ -3,9 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { Calendar } from "react-calendar";
 import CourseCard from "./CourseCard";
-import HourSpent from "./HourSpent";
-import Progress from "./Progress";
-import CalendarIcon from "../../../../../assets/Calender.png";
+
 import icon from "../../../../../assets/b.png";
 import { useGetAllMyCourseQuery, useGetMyEnrollmentAllQuery } from "../../../../../feature/api/dashboardApi";
 import { useAppSelector } from "../../../../../redux-hook/hooks";
@@ -55,11 +53,11 @@ const Student = () => {
           <div className="grid grid-cols-12 gap-5 mt-9">
             <div className="col-span-12 lg:col-span-8">
               <div className="bg-[#fff] p-4 rounded">
-                <HourSpent />
+                {/* <HourSpent /> */}
               </div>
             </div>
             <div className="col-span-12 lg:col-span-4">
-              <Progress />
+              {/* <Progress /> */}
             </div>
           </div>
         </div>

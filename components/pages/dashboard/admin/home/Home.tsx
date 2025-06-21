@@ -11,7 +11,7 @@ function Home() {
     <div className="grid grid-cols-12 gap-4 font-nunito bg-gray-bg">
       <div className="col-span-12 lg:col-span-8">
         <OverView />
-        <StudyStatistics />
+        {/* <StudyStatistics /> */}
 
         <NextClass />
       </div>
