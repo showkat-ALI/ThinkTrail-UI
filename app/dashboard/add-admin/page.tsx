@@ -1,25 +1,23 @@
-import React from "react";
 import Head from "next/head";
-
-//component
-import CourseCreationMain from "../../../components/pages/dashboard/instructor/course/CourseCreationMain";
 import DashboardLayout from "../../../components/layouts/DashboardLayout";
 import PrivateTemplate from "../../../templates/PrivateTemplate";
 import AccessTemplate from "../../../templates/AccessTemplate";
+import { AddingAdmin } from "../../../components/pages/dashboard/superAdmin/add-admin/AddingAdmin";
 
-const creation = () => {
+const Assignmentcreation = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRoles={["admin", "instructor", "superAdmin"]}>
+      <AccessTemplate accessRoles={["superAdmin"]}>
         <Head>
-          <title>Instructor File | Think Trail</title>
+          <title>Instructor | Think Trail</title>
         </Head>
+
         <DashboardLayout>
-          <CourseCreationMain />
+          <AddingAdmin />
         </DashboardLayout>
       </AccessTemplate>
     </PrivateTemplate>
   );
 };
 
-export default creation;
+export default Assignmentcreation;

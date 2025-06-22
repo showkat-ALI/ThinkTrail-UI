@@ -86,7 +86,6 @@ const VideoCategory = ({
       const formData = new FormData();
       setshowVideoInputLocal(true);
       formData.append("file", file["0"]);
-      console.log(formData);
       singleVideoUpload(formData);
     } else if (
       file &&
@@ -99,10 +98,9 @@ const VideoCategory = ({
 
   useEffect(() => {
     if (isUploadError) {
-      console.log("upload error", uploadError);
       // toast.error((uploadError as any).data.message);
     } else if (isUploadSuccess) {
-      setlocalVideo(uploadData.data);
+      setlocalVideo(uploadData?.data?.fileUrl);
       const randomKey = `video_${Date.now()}_${Math.random()
         .toString(36)
         .substr(2, 9)}`;
@@ -117,7 +115,6 @@ const VideoCategory = ({
     const { name, value } = e.target;
     setinputValue({ ...inputValue, [name]: value });
   }
-  console.log(module);
   const handleYoutube = (e: any) => {
     setyoutubeUrl(e);
   };
@@ -134,8 +131,7 @@ const VideoCategory = ({
     if (youtubeUrl) {
       inputValue.key = inputValue.topicName;
     }
-    moduleVideoUpload({ ...inputValue, module: module._id });
-    console.log(inputValue.topicName.trim());
+    moduleVideoUpload({ ...inputValue, module:id });
 
     if (
       !inputValue.topicName.trim() ||

@@ -26,7 +26,7 @@ const mediaUploadApi = createApi({
     // Single Video Upload
     singleVideoUpload: builder.mutation({
       query: (body: any) => ({
-        url: "/api/v1/assignment/upload/upload-any-video",
+        url: "/api/v1/assignment/upload/upload-any-file",
         method: "POST",
         body: body,
       }),

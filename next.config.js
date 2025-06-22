@@ -35,6 +35,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
  
+ 
 };
 
 // module.exports = withVideos(nextConfig);- const withVideos = require("next-videos");

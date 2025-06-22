@@ -31,6 +31,7 @@ const QuizCategory = ({
     isError: instructorQuizIsError,
     isLoading: instructorQuizLoading,
   } = useAllQuizInstructorQuery(insId);
+  console.log(instructorAllQuiz)
   const [
     updateModuleQuiz,
     {
@@ -112,7 +113,7 @@ const QuizCategory = ({
                   <div>No quiz found</div>
                 ))} */}
 
-              {roles?.includes("instructor") &&
+                {(roles?.includes("instructor") || roles?.includes("superAdmin")) &&
                 (instructorQuizLoading ? (
                   <div>Loading....</div>
                 ) : instructorQuizIsError ? (
@@ -121,20 +122,20 @@ const QuizCategory = ({
                   instructorAllQuiz?.data?.groupedQuestions &&
                   instructorAllQuiz.data?.groupedQuestions.length > 0 ? (
                   instructorAllQuiz.data?.groupedQuestions.map(
-                    (
-                     question:any,
-                      index: string
-                    ) => (
-                      <li
-                        key={index}
-                        onClick={() => clickQuiz(question?.questions[0]?.quiz?._id)}
-                        className={`${
-                          activeClass == index && "text-[#3A57E8]"
-                        } hover:text-[#da7b4f] cursor-pointer`}
-                      >
-                        Quiz {index + 1} - {question?.title}
-                      </li>
-                    )
+                  (
+                   question: any,
+                    index: string
+                  ) => (
+                    <li
+                    key={index}
+                    onClick={() => clickQuiz(question?.questions[0]?.quiz?._id)}
+                    className={`${
+                      activeClass === question?.questions[0]?.quiz?._id && "text-[#3A57E8]"
+                    } hover:text-[#da7b4f] cursor-pointer`}
+                    >
+                    Quiz {index + 1} - {question?.title}
+                    </li>
+                  )
                   )
                 ) : (
                   <div>No quiz found</div>

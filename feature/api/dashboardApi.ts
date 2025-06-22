@@ -95,64 +95,8 @@ const dashboardApi = createApi({
       }),
       invalidatesTags: ["courses"],
     }),
-    // ACCEPT A Course
-    acceptCourse: builder.mutation({
-      query: (id: string) => ({
-        url: `/api/v1/courses/${id}`,
-        method: "PATCH",
-        body: { status: "active" },
-      }),
-      invalidatesTags: ["courses"],
-    }),
-    // update a course status
-    updateCourseStatus: builder.mutation({
-      query: ({ id, status }: { id: string; status: string }) => ({
-        url: `/api/v1/courses/${id}`,
-        method: "PATCH",
-        body: { status },
-      }),
-      invalidatesTags: ["courses"],
-    }),
-    //Get all categories
-    getCategories: builder.query({
-      query: () => ({
-        url: `/api/v1/categories`,
-        method: "GET",
-      }),
-      providesTags: ["categories"],
-    }),
-    // DELETE A Course Categories
-    deleteCourseCategories: builder.mutation({
-      query: (id: string) => ({
-        url: `/api/v1/categories/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["categories"],
-    }),
-    //create Category
-    createCategory: builder.mutation({
-      query: (body: { name: string }) => ({
-        url: "/api/v1/categories",
-        method: "POST",
-        body: body,
-      }),
-      invalidatesTags: ["categories"],
-    }),
-    // UPDATE A CATEGORY BY ID
-    updateCategory: builder.mutation({
-      query: (body: {
-        id: string;
-        data: {
-          name: string;
-          description: string;
-        };
-      }) => ({
-        url: `/api/v1/categories/${body.id}`,
-        method: "PATCH",
-        body: body.data,
-      }),
-      invalidatesTags: ["categories"],
-    }),
+   
+   
     // GET ALL STUDENTS
     getAllStudents: builder.query({
       query: () => ({
@@ -1262,6 +1206,13 @@ const dashboardApi = createApi({
       }),
       providesTags: ["moduleQuiz"], // Add this to force a refetch
     }),
+    createSingleAdmin:builder.mutation({
+      query: (body: any) => ({
+        url: `api/v1/users/create-admin`,
+        method: "POST",
+        body: body,
+      }),
+    })
   }),
 });
 
@@ -1325,12 +1276,7 @@ export const {
   useGetAllCourseQuery,
   useGetAllActiveCourseQuery,
   useDeleteCourseMutation,
-  useAcceptCourseMutation,
-  useUpdateCourseStatusMutation,
-  useGetCategoriesQuery,
-  useDeleteCourseCategoriesMutation,
-  useCreateCategoryMutation,
-  useUpdateCategoryMutation,
+  
   useGetAllStudentsQuery,
   useCreateCourseMutation,
   useGetAllAdmissionRequestQuery,
@@ -1403,6 +1349,7 @@ export const {
   useGetMyCourseDetailsQuery,
   useSingleStudentAssignmentQuery,
   useGetSingleModuleQuizesQuery,
-  useGetSubMitQuizQuery
+  useGetSubMitQuizQuery,
+  useCreateSingleAdminMutation
 } = dashboardApi;
 export default dashboardApi;

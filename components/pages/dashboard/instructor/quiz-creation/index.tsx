@@ -1,3 +1,4 @@
+"use client"
 import React, { useMemo, useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
@@ -213,18 +214,27 @@ export default function QuizCreation() {
         {newQuestion && (
           <form onSubmit={(e) => onQuestionSubmit(e)}>
             <div>
-              <ReactQuill
-                theme="snow"
-                className="font-nunito"
-                value={question}
-                onChange={(e) => {
-                  setValue(e);
-                }}
+              <input
+              type="text"
+              className="font-nunito"
+              value={question}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+              placeholder="Enter your question"
+              style={{
+                background: " #FFFFFF",
+                boxShadow: "0px 1px 15px rgb(0 0 0 / 15%)",
+                borderRadius: "8px",
+                width: "100%",
+                border: "none",
+                padding: " 11px 17px",
+              }}
               />
               <div>
-                {errors.question && (
-                  <InputErrorMessage message="Enter question" />
-                )}
+              {errors.question && (
+                <InputErrorMessage message="Enter question" />
+              )}
               </div>
             </div>
 

@@ -1,10 +1,12 @@
-import React, { useState, useMemo, useEffect } from "react";
-import TextEditor from "../../../../../common/textEditor/TextEditor";
+"use client"
+import React, { useState, useEffect } from "react";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import TextStyle from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
 import { InitialFormDataCourse } from "../CourseCreationMain";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { InputErrorMessage } from "../../../../../utils/error";
-import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
 import { useGetCategoriesQuery } from "../../../../../../feature/api/dashboardApi";
 
 export type StepPropss = {
@@ -29,19 +31,14 @@ type RegistrationFirstStepFromData = {
 };
 
 const Creation1 = (props: StepPropss) => {
-  const ReactQuill = useMemo(
-    () => dynamic(() => import("react-quill"), { ssr: false }),
-    []
-  );
   const { setStep, setFormData, formData } = props;
   const { data, isSuccess, isError, isLoading } = useGetCategoriesQuery({});
-  const [value, setValuee] = useState("");
 
   const {
     register,
     handleSubmit,
     setValue,
-    control,
+    watch,
     formState: { errors },
   } = useForm<RegistrationFirstStepFromData>({
     defaultValues: {
@@ -57,15 +54,40 @@ const Creation1 = (props: StepPropss) => {
       isDiscount: formData.isDiscount,
       description: formData.description,
     },
-    // resolver: zodResolver(registrationFirstStepFromSchema)
+  });
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TextStyle,
+      Underline,
+    ],
+    content: formData.description || '',
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      setValue("description", html, { shouldValidate: true });
+    },
+    editorProps: {
+      attributes: {
+        class: "min-h-[200px] p-3 focus:outline-none",
+      },
+    },
   });
 
   useEffect(() => {
     register("description", { required: true, minLength: 1 });
-  }, [register, setValue]);
+    
+    // Set initial content if it exists
+    if (editor && formData.description) {
+      editor.commands.setContent(formData.description);
+    }
+
+    return () => {
+      editor?.destroy();
+    };
+  }, [editor, register, formData.description]);
 
   const submitFirstStep = async (data: RegistrationFirstStepFromData) => {
-    // console.log("first form data", data);
     setFormData((prev: object) => ({ ...prev, ...data }));
     setStep(2);
   };
@@ -76,6 +98,8 @@ const Creation1 = (props: StepPropss) => {
         <div className="course_creation p-3 mt-5">
           <h2 className="font-semibold text-2xl mb-5">Course details</h2>
           <div className="course_form">
+            {/* All your existing form fields */}
+            {/* ... (keep all your existing form fields exactly as they were) ... */}
             <div className="form_control mb-5">
               <label className="text-sm font-medium">Course Title</label>
               <br />
@@ -123,37 +147,7 @@ const Creation1 = (props: StepPropss) => {
             </div>
             <div className="from_middel lg:flex md:flex gap-7 sm:block">
               <div className="from_lft lg:w-3/6 sm:w-full">
-                {/* <div className="form_control h-[7rem]">
-                  <label className="text-sm font-medium">Course Category</label>
-                  <br />
-                  <select
-                    {...register("category", { required: true })}
-                    className="mt-3 text-[#8A92A6]"
-                    style={{
-                      boxShadow: "0px 1px   15px rgb(0 0 0 / 15%)",
-                      borderRadius: "8px",
-                      width: "100%",
-                      border: "none",
-                      padding: " 11px 17px",
-                    }}
-                    {...register("category", { required: true })}
-                  >
-                    <option value="">{"Select your Category"}</option>
-                    {isSuccess &&
-                      data.data.categories.map(
-                        ({ name, id }: { name: string; id: string }) => (
-                          <option value={id} key={id}>
-                            {name}
-                          </option>
-                        )
-                      )}
-                  </select>
-                  <div className="">
-                    {errors.category && (
-                      <InputErrorMessage message={"Enter your category"} />
-                    )}
-                  </div>
-                </div> */}
+              
 
                 <div className="form_control h-[7rem]">
                   <label className="text-sm font-medium">Language</label>
@@ -346,14 +340,48 @@ const Creation1 = (props: StepPropss) => {
               <label className="text-sm font-medium mb-3">
                 Add Description
               </label>
-              <ReactQuill
-                theme="snow"
-                value={value ? value : formData.description}
-                placeholder="Write a description...."
-                onChange={(e) => {
-                  setValue("description", e), setValuee(e);
-                }}
-              />
+              <div className="bg-white rounded-lg border border-gray-200">
+                {editor && (
+                  <div className="flex flex-wrap gap-1 p-2 border-b">
+                    <button
+                      type="button"
+                      onClick={() => editor.chain().focus().toggleBold().run()}
+                      className={`p-1 rounded ${editor.isActive('bold') ? 'bg-gray-200' : ''}`}
+                    >
+                      <strong>B</strong>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => editor.chain().focus().toggleItalic().run()}
+                      className={`p-1 rounded ${editor.isActive('italic') ? 'bg-gray-200' : ''}`}
+                    >
+                      <em>I</em>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => editor.chain().focus().toggleUnderline().run()}
+                      className={`p-1 rounded ${editor.isActive('underline') ? 'bg-gray-200' : ''}`}
+                    >
+                      <u>U</u>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => editor.chain().focus().toggleBulletList().run()}
+                      className={`p-1 rounded ${editor.isActive('bulletList') ? 'bg-gray-200' : ''}`}
+                    >
+                      • List
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                      className={`p-1 rounded ${editor.isActive('orderedList') ? 'bg-gray-200' : ''}`}
+                    >
+                      1. List
+                    </button>
+                  </div>
+                )}
+                <EditorContent editor={editor} />
+              </div>
               <div>
                 {errors.description && (
                   <InputErrorMessage message="Enter description" />

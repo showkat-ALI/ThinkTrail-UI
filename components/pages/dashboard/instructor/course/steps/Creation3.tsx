@@ -11,7 +11,6 @@ import plusIconBg from "../../../../../../assets/Group34917.png";
 import { Spinner } from "flowbite-react";
 
 //component
-import PopupModal from "./popup/PopupModal";
 import AddModuleModal from "./popup/module/AddModuleModal";
 import { useGetCourseModuleQuery } from "../../../../../../feature/api/dashboardApi";
 import EditModuleModal from "./popup/module/EditModuleModal";

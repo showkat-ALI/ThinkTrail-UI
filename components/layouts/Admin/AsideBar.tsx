@@ -237,7 +237,7 @@ const logoutHandler = async () => {
             : roles && roles.includes("superAdmin")
             ? [
                 {
-                  name: "Student",
+                  name: "Main",
                   id: 6,
                   url: "/dashboard/semester",
                   icon: AiOutlineTeam,
@@ -252,14 +252,14 @@ const logoutHandler = async () => {
                       : "",
                   children: [
                    
-                    {
-                      name: "Academic department",
-                      url: "/dashboard/academic-department",
-                      active:
-                       pathname == "/dashboard/academic-department"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
+                    // {
+                    //   name: "Academic department",
+                    //   url: "/dashboard/academic-department",
+                    //   active:
+                    //    pathname == "/dashboard/academic-department"
+                    //       ? "!border-[#3A57E8] !text-[#3A57E8]"
+                    //       : "",
+                    // },
                    
                   ],
                 },
@@ -331,14 +331,14 @@ const logoutHandler = async () => {
                   children: [
                     {
                       name: "All quizzes of a instructor",
-                      url: "/dashboard/quiz/all-quiz",
+                      url: "/dashboard/quiz/quiz/all-quiz-instructor",
                       active:
-                       pathname == "/dashboard/quiz/all-quiz-ins"
+                       pathname == "/dashboard/quiz/all-quiz-instructor"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
                     {
-                      name: "All assignments",
+                      name: "All submitted assignments",
                       url: "/dashboard/assignment/all-assignments",
                       active:
                        pathname == "/dashboard/assignment/all-assignments"
@@ -404,6 +404,7 @@ const logoutHandler = async () => {
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },
+
                 {
                   name: "Quiz",
                   id: 3,
@@ -417,10 +418,10 @@ const logoutHandler = async () => {
                       : "",
                   children: [
                     {
-                      name: "All Quiz",
-                      url: "/dashboard/quiz",
+                      name: "All quizzes of a instructor",
+                      url: "/dashboard/quiz/quiz/all-quiz-instructor",
                       active:
-                       pathname == "/dashboard/quiz"
+                       pathname == "/dashboard/quiz/all-quiz-instructor"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
@@ -432,16 +433,17 @@ const logoutHandler = async () => {
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
                     },
-                    {
-                      name: "Quiz Result",
-                      url: "/dashboard/quiz/quiz-result",
-                      active:
-                       pathname == "/dashboard/quiz/quiz-result"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
+                    // {
+                    //   name: "Quiz Result",
+                    //   url: "/dashboard/quiz/quiz-result",
+                    //   active:
+                    //    pathname == "/dashboard/quiz/quiz-result"
+                    //       ? "!border-[#3A57E8] !text-[#3A57E8]"
+                    //       : "",
+                    // },
                   ],
                 },
+                
                 {
                   name: "Messages",
                   id: 3,
@@ -482,17 +484,17 @@ const logoutHandler = async () => {
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                   children: [
+                    // {
+                    //   name: "All Assignment",
+                    //   url: "/dashboard/assignment/all-assignments",
+                    //   active:
+                    //    pathname ==
+                    //     "/dashboard/assignment/all-assignments"
+                    //       ? "!border-[#3A57E8] !text-[#3A57E8]"
+                    //       : "",
+                    // },
                     {
-                      name: "All Assignment",
-                      url: "/dashboard/assignment/all-assignments",
-                      active:
-                       pathname ==
-                        "/dashboard/assignment/all-assignments"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Add Assignment",
+                      name: "Assignment-creation",
                       url: "/dashboard/assignment-creation",
                       active:
                        pathname == "/dashboard/assignment-creation"
@@ -500,14 +502,13 @@ const logoutHandler = async () => {
                           : "",
                     },
                     {
-                      name: "Submitted Assignment",
-                      url: "/dashboard/assignment/submit-assignment",
+                      name: "All submitted assignments",
+                      url: "/dashboard/assignment/all-assignments",
                       active:
-                       pathname ==
-                        "/dashboard/assignment/submit-assignment"
+                       pathname == "/dashboard/assignment/all-assignments"
                           ? "!border-[#3A57E8] !text-[#3A57E8]"
                           : "",
-                    },
+                    }
                   ],
                 },
 
@@ -521,77 +522,9 @@ const logoutHandler = async () => {
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },
-                {
-                  name: "Files",
-                  id: 8,
-                  url: "/dashboard/files",
-                  icon: ImFilesEmpty,
-                  active:
-                   pathname == "/dashboard/files"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Grades",
-                  id: 9,
-                  url: "/dashboard/grades",
-                  icon: MdNoteAdd,
-                  active:
-                   pathname == "/dashboard/grades"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                  children: [
-                    {
-                      name: "All Grade",
-                      url: "/dashboard/grades",
-                      active:
-                       pathname == "/dashboard/grades"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Grade",
-                      url: "/dashboard/student/all",
-                      active:
-                       pathname == "/dashboard/student/all"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                  ],
-                },
-                {
-                  name: "Reviews",
-                  id: 10,
-                  url: "/dashboard/review",
-                  icon: VscPreview,
-                  active:
-                   pathname == "/dashboard/review"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Page",
-                  id: 11,
-                  url: "/dashboard/page",
-                  icon: SiPagekit,
-                  active:
-                   pathname == "/dashboard/page" ||
-                   pathname == "/dashboard/page-overview/[id]" ||
-                   pathname == "/dashboard/page/edit/[id]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-
-                {
-                  name: "My Account",
-                  id: 12,
-                  url: "/dashboard/my-account",
-                  icon: AiFillSetting,
-                  active:
-                   pathname == "/dashboard/my-account"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
+                
+               
+                
               ].map((single, idx) => <Item key={idx} item={single} />)
             : roles?.includes("student")
             ? [
@@ -641,22 +574,7 @@ const logoutHandler = async () => {
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },
-                {
-                  name: "Assignment",
-                  id: 3,
-                  url: "/dashboard/assignment/all-assignments",
-                  icon: BiGroup,
-                  active:
-                   pathname ==
-                      "/dashboard/assignment/all-assignments" ||
-                   pathname ==
-                      "/dashboard/assignment/[courseId]/[id]" ||
-                   pathname ==
-                      "/dashboard/assignment-submission/[courseId]/[assignmentId]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                
+               
                 {
                   name: "Messages",
                   id: 5,
@@ -688,16 +606,7 @@ const logoutHandler = async () => {
                       ? "!border-[#3A57E8] !text-[#3A57E8]"
                       : "",
                 },
-                {
-                  name: "My Account",
-                  id: 10,
-                  url: "/dashboard/my-account",
-                  icon: AiFillSetting,
-                  active:
-                   pathname == "/dashboard/my-account"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
+               
               ].map((single, idx) => <Item key={idx} item={single} />)}
         </div>
         <div className="border-b mt-4 w-full px-5"></div>

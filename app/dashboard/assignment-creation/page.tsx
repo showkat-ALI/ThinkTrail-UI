@@ -1,8 +1,8 @@
 import Head from "next/head";
-import DashboardLayout from "../../components/layouts/DashboardLayout";
-import AssignmentCreation from "../../components/pages/dashboard/instructor/assignmentcreation/AssignmentCreation";
-import PrivateTemplate from "../../templates/PrivateTemplate";
-import AccessTemplate from "../../templates/AccessTemplate";
+import DashboardLayout from "../../../components/layouts/DashboardLayout";
+import AssignmentCreation from "../../../components/pages/dashboard/instructor/assignmentcreation/AssignmentCreation";
+import PrivateTemplate from "../../../templates/PrivateTemplate";
+import AccessTemplate from "../../../templates/AccessTemplate";
 
 const Assignmentcreation = () => {
   return (

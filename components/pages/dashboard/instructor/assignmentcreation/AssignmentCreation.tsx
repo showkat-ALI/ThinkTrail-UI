@@ -1,3 +1,4 @@
+"use client"
 import AssignementNaming from "./AssignementNaming";
 import AssignmentDue from "./AssignmentDue";
 import AssignmentFile from "./AssignmentFile";
@@ -11,7 +12,7 @@ import { useForm } from "react-hook-form";
 import React, { useState, Fragment, useMemo, useEffect } from "react";
 import { useCreateAssignmentMutation } from "../../../../../feature/api/dashboardApi";
 import { useSingleFileUploadMutation } from "../../../../../feature/api/mediaUploadApi";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useGetUserQuery } from "../../../../../feature/api/authApi";
 
 type assignmentType = {

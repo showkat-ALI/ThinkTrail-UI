@@ -1,3 +1,4 @@
+"use client"
 import React, { Fragment, useEffect } from "react";
 import rocket from "../../../../../assets/dashboard/Mask group.png";
 import Image from "next/image";
@@ -24,7 +25,6 @@ export default function AllQuizes() {
   const { data, isSuccess, isError, isLoading } = useAllQuizInstructorQuery(
     userData?.data?._id
   );
-  console.log("all", data, "insID", userData.data._id);
   const [
     DeleteQuiz,
     {
@@ -36,7 +36,6 @@ export default function AllQuizes() {
     },
   ] = useDeleteQuizMutation();
 
-  console.log(data);
   const DeleteQuizs = (id: any) => {
     DeleteQuiz(id);
   };
@@ -127,7 +126,7 @@ export default function AllQuizes() {
             <div className="">
               {data.data.groupedQuestions.map((group: any) => (
                 <div key={group.title} className="mb-4">
-                  <h2 className="font-bold text-xl mb-2">{group.title}</h2>
+                  <h2 className="font-bold text-xl mb-2">Quiz title - {group.title}</h2>
                   {group.questions.map((question: any) => (
                     <div
                       key={question._id}
