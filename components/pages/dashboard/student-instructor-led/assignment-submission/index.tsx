@@ -1,6 +1,6 @@
+"use client"
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import "react-quill/dist/quill.snow.css";
-import dynamic from "next/dynamic";
 import { useForm } from "react-hook-form";
 import {
   useSubmitAssignmentMutation,
@@ -10,10 +10,10 @@ import { useSingleFileUploadMutation } from "../../../../../feature/api/mediaUpl
 import Plus from "../../../../../Icon/Plus";
 import { InputErrorMessage } from "../../../../utils/error";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
+import {  useParams} from "next/navigation";
 import ButtonLoader from "../../../../utils/loaders/ButtonLoader";
-import Link from "next/link";
 import { useAppSelector } from "../../../../../redux-hook/hooks";
+import { useRouter } from "next/navigation";
 
 type props = {
   comment: string;
@@ -21,27 +21,26 @@ type props = {
 };
 
 export default function AssignmentSubmission() {
-  const ReactQuill = useMemo(
-    () => dynamic(() => import("react-quill"), { ssr: false }),
-    []
-  );
+ 
   const router = useRouter();
+  const searchParams= useParams();
+  const assignmentId =searchParams?.assignmentId;
+  const courseId = searchParams?.courseId;
+  const instructor= searchParams?.instructor
   const [serviceList, setserviceList] = useState<any>([]);
   const { id: studentId } = useAppSelector((state) => state.auth.user);
-  const { assignmentId, courseId,instructor} = router.query;
+  
   const [filePreview, setFilePreview] = useState([]);
   const [Filename, setFilename] = useState("");
   const [showFileUpload, setshowFileUpload] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
 
-  const [quillText, setQuillText] = useState("");
   const {
     data: AllSubmitAssignment,
     isSuccess: AllSubmitAssignmentIsSuccess,
     isError: AllSubmitAssignmentIsError,
     isLoading: AllSubmitAssignmentIsLoading,
   } = useGetAllSubmitAssignmentQuery({});
-  console.log(courseId,assignmentId,instructor)
   const [submitAssignment, { error, data, isLoading, isSuccess, isError }] =
     useSubmitAssignmentMutation();
   const [
@@ -155,7 +154,6 @@ export default function AssignmentSubmission() {
     };
     test();
   }, [AllSubmitAssignmentIsSuccess]);
-  const [activeTab, setactiveTab] = useState("assignment");
 
 
   return (
@@ -182,20 +180,21 @@ export default function AssignmentSubmission() {
                 </div>
 
                 <div>
-                  <div className="mb-[10px]">
-                    <ReactQuill
-                      theme="snow"
-                      className="font-nunito"
+                    <div className="mb-[10px]">
+                    <textarea
+                      className="w-full p-2 border border-gray-300 rounded-lg font-nunito"
+                      rows={5}
+                      placeholder="Enter description"
                       onChange={(e) => {
-                        setValue("text", e);
+                      setValue("text", e.target.value);
                       }}
                     />
                     <div>
                       {errors.text && (
-                        <InputErrorMessage message="Enter description" />
+                      <InputErrorMessage message="Enter description" />
                       )}
                     </div>
-                  </div>
+                    </div>
 
                   <div>
                     <>

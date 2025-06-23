@@ -10,7 +10,7 @@ export default function index() {
   return (
     <>
     <PrivateTemplate>
-      <AccessTemplate accessRoles={["instructor", "student", "superAdmin"]}>
+      <AccessTemplate accessRoles={["instructor", "superAdmin","admin"]}>
         <Head>
           <title>All Assignments | Think Trail</title>
         </Head>

@@ -8,7 +8,7 @@ import AccessTemplate from "../../../../templates/AccessTemplate";
 export default function AllQuizes() {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRoles={["instructor", "superAdmin"]}>
+      <AccessTemplate accessRoles={["instructor", "superAdmin","admin"]}>
         <Head>
           <title>Instructor | Think Trail</title>
         </Head>

@@ -29,8 +29,7 @@ export default function Index({ enrollmentData }: { enrollmentData: any }) {
   };
  
  console.log(enrollmentData)
-  //onClick={() => assignmentSubmitHandle(id)}
- // console.log(moment("2021-07-14T00:00:00.000Z").utc().format("YYYY-MM-DD"));
+  
   const openSlide = (fileUrl:string) => {
     window.open(`https://docs.google.com/gview?url=${fileUrl}`)
     
@@ -130,7 +129,7 @@ export default function Index({ enrollmentData }: { enrollmentData: any }) {
                 <Link
                 key={_id}
                 href={"/dashboard/assignment/[instructor]/[courseId]/[id]"}
-                as={`/dashboard/assignment/${enrollmentData?.course?.createdBy}/${enrollmentData?.course?._id}}/${_id}`}
+                as={`/dashboard/assignment/${enrollmentData?.course?.createdBy}/${enrollmentData?.module[0]?.course}/${_id}`}
               >
               <div className="flex my-5" >
                 <div className="flex items-center h-5">

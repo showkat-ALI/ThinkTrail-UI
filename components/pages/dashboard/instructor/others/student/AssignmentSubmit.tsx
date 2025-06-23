@@ -1,7 +1,9 @@
+"use client"
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import rightIcon from "../../../../../../assets/RightIcon.png";
-import { useRouter } from "next/router";
+import { useRouter  } from "next/navigation";
+import { useParams} from "next/navigation";
 import {
   useGetOneSubmitAssignmentQuery,
   useGetAllSubmitAssignmentQuery,
@@ -11,7 +13,10 @@ import moment from "moment";
 
 function AssignmentSubmitted() {
   const router = useRouter();
-  const { assignmentId, studentId } = router.query;
+  const searchParams = useParams()
+  const assignmentId = searchParams?.assignmentId
+  const studentId = searchParams?.studentId
+  
   const { isError, data, error, isLoading, isSuccess } =
     useGetOneSubmitAssignmentQuery({
       id: studentId,

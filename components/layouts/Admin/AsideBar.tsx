@@ -29,7 +29,7 @@ import { useAppSelector } from "../../../redux-hook/hooks";
 import logo from "../../../assets/logo.png";
 import user from "../../../assets/user.png";
 import MobileAsideBar from "./MobileAsideBar";
-import { useLogoutMutation } from "../../../feature/api/authApi";
+import { useGetUserQuery, useLogoutMutation } from "../../../feature/api/authApi";
 import { useAppDispatch } from "../../../redux-hook/hooks";
 import { logout  } from "../../../feature/auth/authSlice";
 import { toast } from "react-toastify";
@@ -48,19 +48,21 @@ const AsideBar = () => {
   const firstName = "John";
   const lastName = "Doe";
   const userName = "johndoe123";
-  const {
-    id,
-    email,
-    isDeleted,
-    roles,
-    needsPasswordChange,
-    status,
-    passwordChangedAt,
+  // const {
+  //   id,
+  //   email,
+  //   isDeleted,
+  //   roles,
+  //   needsPasswordChange,
+  //   status,
+  //   passwordChangedAt,
     
-  } = useAppSelector((state) => state.auth.user);
+  // } = useAppSelector((state) => state.auth.user);
   const pathname = usePathname(); // Get the current pathname
-  console.log("userId", id);
-  const studentType = "self-pace";
+  const { data, isError, error, isLoading } = useGetUserQuery({});
+  const roles = data?.data?.user?.roles;
+  const email = data?.data?.user?.email;
+  console.log(roles)
   const [show, setShow] = useState(true);
   let width = "w-[260px]";
   if (!show) {
@@ -199,7 +201,7 @@ const logoutHandler = async () => {
           children: [
             {
               name: "All quizzes of a instructor",
-              url: "/dashboard/quiz/quiz/all-quiz-instructor",
+              url: "/dashboard/quiz/all-quiz-instructor",
               active:
                 pathname == "/dashboard/quiz/all-quiz-instructor"
                   ? "!border-[#3A57E8] !text-[#3A57E8]"
@@ -462,30 +464,8 @@ const logoutHandler = async () => {
               : "",
         },
       ].map((single, idx) => <Item key={idx} item={single} />)
-    : roles?.includes("student")
-    ? [
-        {
-          name: "Take Admission",
-          url: "/dashboard/take-admission",
-          id: 0,
-          icon: AiOutlineAppstore,
-          active:
-            pathname == "/dashboard/take-admission"
-              ? "!border-[#3A57E8] !text-[#3A57E8]"
-              : "",
-        },
-        {
-          name: "Dashboard",
-          id: 1,
-          url: "/dashboard",
-          icon: AiOutlineAppstore,
-          active:
-            pathname == "/dashboard"
-              ? "!border-[#3A57E8] !text-[#3A57E8]"
-              : "",
-        },
-      ].map((single, idx) => <Item key={idx} item={single} />)
-    : roles?.includes("student") && roles?.includes("admitted")
+    
+    : ["student", "admitted"].every(role => roles?.includes(role))
     ? [
         {
           name: "Dashboard",
@@ -536,7 +516,30 @@ const logoutHandler = async () => {
               : "",
         },
       ].map((single, idx) => <Item key={idx} item={single} />)
-    : null
+      : ["student"].every(role => roles?.includes(role))
+      ? [
+          {
+            name: "Take Admission",
+            url: "/dashboard/take-admission",
+            id: 0,
+            icon: AiOutlineAppstore,
+            active:
+              pathname == "/dashboard/take-admission"
+                ? "!border-[#3A57E8] !text-[#3A57E8]"
+                : "",
+          },
+          {
+            name: "Dashboard",
+            id: 1,
+            url: "/dashboard",
+            icon: AiOutlineAppstore,
+            active:
+              pathname == "/dashboard"
+                ? "!border-[#3A57E8] !text-[#3A57E8]"
+                : "",
+          },
+        ].map((single, idx) => <Item key={idx} item={single} />)
+        :null // Ensure a fallback case is provided
 }
         </div>
         <div className="border-b mt-4 w-full px-5"></div>

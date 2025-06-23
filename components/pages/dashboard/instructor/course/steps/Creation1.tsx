@@ -7,7 +7,6 @@ import Underline from "@tiptap/extension-underline";
 import { InitialFormDataCourse } from "../CourseCreationMain";
 import { useForm } from "react-hook-form";
 import { InputErrorMessage } from "../../../../../utils/error";
-import { useGetCategoriesQuery } from "../../../../../../feature/api/dashboardApi";
 
 export type StepPropss = {
   setStep: (step: number) => void;
@@ -32,7 +31,6 @@ type RegistrationFirstStepFromData = {
 
 const Creation1 = (props: StepPropss) => {
   const { setStep, setFormData, formData } = props;
-  const { data, isSuccess, isError, isLoading } = useGetCategoriesQuery({});
 
   const {
     register,

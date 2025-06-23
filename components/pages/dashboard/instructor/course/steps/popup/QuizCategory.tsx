@@ -113,7 +113,7 @@ const QuizCategory = ({
                   <div>No quiz found</div>
                 ))} */}
 
-                {(roles?.includes("instructor") || roles?.includes("superAdmin")) &&
+                {(roles?.includes("instructor") || roles?.includes("superAdmin") ||  roles?.includes("admin")) &&
                 (instructorQuizLoading ? (
                   <div>Loading....</div>
                 ) : instructorQuizIsError ? (

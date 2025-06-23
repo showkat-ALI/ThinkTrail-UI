@@ -1,20 +1,21 @@
+import Head from "next/head";
 import React from "react";
 import PrivateTemplate from "../../../../../../templates/PrivateTemplate";
 import AccessTemplate from "../../../../../../templates/AccessTemplate";
 import DashboardLayout from "../../../../../../components/layouts/DashboardLayout";
-import Assignment from "../../../../../../components/pages/dashboard/instructor/Assignment/Assignmentmarking";
+import AssignmentSubmitted from "../../../../../../components/pages/dashboard/instructor/others/student/AssignmentSubmit";
 
-
-const Index = () => {
+const assignmentsubmit = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRoles={["instructor", "superAdmin","admin"]}>
+      <AccessTemplate accessRoles={["student","admitted"]}>
+        <Head>Assignment | Think Trail</Head>
         <DashboardLayout>
-          <Assignment />
+          <AssignmentSubmitted />
         </DashboardLayout>
       </AccessTemplate>
     </PrivateTemplate>
   );
 };
 
-export default Index;
+export default assignmentsubmit;

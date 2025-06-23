@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   useCreateQuizMutation,
-  useGetCategoriesQuery,
+  
 } from "../../../../../feature/api/dashboardApi";
 
 function Options() {
@@ -23,27 +23,10 @@ function Options() {
   setGetId(singleQuiz?.id);
   const [toggle, setToggle] = useState(true);
 
-  const {
-    data: allcategory,
-    isSuccess,
-    isError,
-    isLoading,
-  } = useGetCategoriesQuery({});
-
+ 
   // console.log(error);
   // console.log(isSuccess);
-  let singleCategory;
-  isLoading ? (
-    <div>Loading....</div>
-  ) : isError ? (
-    <div>Error....</div>
-  ) : isSuccess &&
-    allcategory?.data?.categories &&
-    allcategory.data.categories.length > 0 ? (
-    (singleCategory = allcategory.data.categories)
-  ) : (
-    <div>No categories found</div>
-  );
+ 
   const {
     register,
     handleSubmit,

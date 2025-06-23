@@ -1,9 +1,11 @@
+"use client"
 import React from "react";
 import { MdEdit } from "react-icons/md";
 import AssignmentPhoto from "../../../../../assets/admin/pexels-flo-dahm-699459 1.png";
 import Image from "next/image";
 import {useSingleAssignmentQuery, useSingleStudentAssignmentQuery} from "../../../../../feature/api/dashboardApi";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import {Spinner} from "flowbite-react";
 import moment from "moment";
 import { useAppSelector } from "../../../../../redux-hook/hooks";
@@ -16,10 +18,14 @@ export default function OnePageAssignment() {
  /// useGetAllSubmitAssignmentQuery({});
   const { roles,id:studentId,_id } =
   useAppSelector((state) => state.auth.user);
-  console.log(roles)
   const router = useRouter();
-  const {id,courseId,instructor} = router.query;
-  console.log(id)
+  const searchParams = useParams();
+  
+  const id = searchParams?.id || "";
+  const courseId = searchParams?.courseId || "";
+  const instructor = searchParams?.instructor || "";
+console.log(id,courseId,instructor)
+ 
   const { data, isSuccess, isError, isLoading } = useSingleStudentAssignmentQuery(id);
   console.log(data)
 

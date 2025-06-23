@@ -132,7 +132,7 @@ const AssignmentCategory = ({
                   <div>No assignment found</div>
                 ))} */}
               {(roles?.includes("instructor") ||
-                roles?.includes("superAdmin")) &&
+                roles?.includes("superAdmin") || roles?.includes("admin")) &&
                 (instructorAssignmentLoading ? (
                   <div>Loading....</div>
                 ) : instructorAssignmentIsError ? (
