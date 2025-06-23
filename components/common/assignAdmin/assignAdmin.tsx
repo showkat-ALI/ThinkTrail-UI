@@ -192,8 +192,8 @@ function Table({ student, show, setShow, handleClose }: IStudentProps) {
     name: deptName,
     createdAt,
     _id,
-    academicSemester: { name, year },
-  } = student;
+    // academicSemester: { name, year } = { name: "", year: "" }, // Full fallback
+  } = student || {}; // Also protect against undefined student
   const date = new Date(createdAt).toLocaleDateString();
   const [modalDelete, setmodalDelete] = useState(false);
   const [deleteMentorId, setdeleteMentorId] = useState("");
@@ -220,8 +220,8 @@ function Table({ student, show, setShow, handleClose }: IStudentProps) {
             </div>
           </div>
         </td>
-        <td className="py-4 px-6 font-nunito">{name}</td>
-        <td className="py-4 px-6 font-nunito">{year}</td>
+        {/* <td className="py-4 px-6 font-nunito">{name}</td>
+        <td className="py-4 px-6 font-nunito">{year}</td> */}
 
         <td className="py-4 px-6">
           <div className="flex justify-center space-x-6">

@@ -7,7 +7,7 @@ import AccessTemplate from "../../../templates/AccessTemplate";
 const Assignmentcreation = () => {
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRoles={["superAdmin"]}>
+      <AccessTemplate accessRoles={["superAdmin","admin"]}>
         <Head>
           <title>Instructor | Think Trail</title>
         </Head>

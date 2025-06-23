@@ -1,3 +1,4 @@
+"use client"
 import { useState, useEffect } from "react";
 import responsiveStyle from "../../../../../styles/ContactStyle.module.css";
 import {

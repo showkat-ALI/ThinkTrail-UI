@@ -3,8 +3,7 @@ import {
   MapPinIcon,
   BellIcon,
   InboxIcon,
-  Squares2X2Icon,
-  ArrowRightIcon,
+  
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -149,465 +148,396 @@ const logoutHandler = async () => {
         </div>
         {/* menu section  */}
         <div className="flex flex-col gap-3 font-nunito">
-          {roles && roles.includes("admin")
-            ? [
-                {
-                  name: "Dashboard",
-                  id: 1,
-                  url: "/dashboard",
-                  icon: AiOutlineAppstore,
-                  active:
-                   pathname == "/dashboard"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Users",
-                  id: 2,
-                  url: "/dashboard/users",
-                  icon: AiOutlineUser,
-                  active:
-                   pathname == "/dashboard/users"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Messages",
-                  id: 3,
-                  url: "/dashboard/messages",
-                  icon: BsFillChatLeftDotsFill,
-                  active:
-                   pathname == "/dashboard/messages"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Courses",
-                  id: 4,
-                  url: "/dashboard/courses",
-                  icon: BsMenuButton,
-                  active:
-                   pathname === "/dashboard/courses" ||
-                   pathname === "/dashboard/course/creation" ||
-                   pathname === "/dashboard/course/edit/[editId]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Students",
-                  id: 5,
-                  url: "/dashboard/students",
-                  icon: AiOutlineTeam,
-                  active:
-                   pathname == "/dashboard/students"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Instructors",
-                  id: 6,
-                  url: "/dashboard/instructors",
-                  icon: AiOutlineUsergroupAdd,
-                  active:
-                   pathname == "/dashboard/instructors"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Reviews",
-                  id: 7,
-                  url: "/dashboard/review",
-                  icon: VscPreview,
-                  active:
-                   pathname == "/dashboard/review"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "My Account",
-                  id: 8,
-                  url: "/dashboard/my-account",
-                  icon: AiOutlineUserAdd,
-                  active:
-                   pathname == "/dashboard/my-account"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-              ].map((single, idx) => <Item key={idx} item={single} />)
-            : roles && roles.includes("superAdmin")
-            ? [
-                {
-                  name: "Main",
-                  id: 6,
-                  url: "/dashboard/semester",
-                  icon: AiOutlineTeam,
-                  active:
-                   pathname === "/dashboard/academic-faculty" ||
-                   pathname === "/dashboard/academic-department" ||
-                   pathname === "/dashboard/course/creation" ||
-                   pathname === "/dashboard/quiz/quiz-creation" ||
-                   pathname ===
-                      "/dashboard/assignments/[singleAssignment]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                  children: [
-                   
-                    // {
-                    //   name: "Academic department",
-                    //   url: "/dashboard/academic-department",
-                    //   active:
-                    //    pathname == "/dashboard/academic-department"
-                    //       ? "!border-[#3A57E8] !text-[#3A57E8]"
-                    //       : "",
-                    // },
-                   
-                  ],
-                },
-                {
-                  name: "Creation",
-                  id: 6,
-                  icon: AiOutlineTeam,
-                  active:
-                   pathname === "/dashboard/academic-faculty" ||
-                   pathname === "/dashboard/academic-department" ||
-                   pathname === "/dashboard/course/creation" ||
-                   pathname === "/dashboard/quiz/quiz-creation" ||
-                   pathname ===
-                      "/dashboard/assignments/[singleAssignment]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                  children: [
-                    {
-                      name: "Academic faculty",
-                      url: "/dashboard/academic-faculty",
-                      active:
-                       pathname == "/dashboard/academic-faculty"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                   
-                    {
-                      name: "Academic department",
-                      url: "/dashboard/academic-department",
-                      active:
-                       pathname == "/dashboard/academic-department"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Assignment-creation",
-                      url: "/dashboard/assignment-creation",
-                      active:
-                       pathname == "/dashboard/assignment-creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Course creation",
-                      url: "/dashboard/course/creation",
-                      active:
-                       pathname == "/dashboard/course/creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    
-                   
-                    {
-                      name: "Quiz Creation",
-                      url: "/dashboard/quiz/quiz-creation",
-                      active:
-                       pathname == "/dashboard/quiz/quiz-creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                  ],
-                },
-                {
-                  name: "All things",
-                  id: 6,
-                  url: "/dashboard/semester",
-                  icon: AiOutlineTeam,
-                 
-                  children: [
-                    {
-                      name: "All quizzes of a instructor",
-                      url: "/dashboard/quiz/quiz/all-quiz-instructor",
-                      active:
-                       pathname == "/dashboard/quiz/all-quiz-instructor"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "All submitted assignments",
-                      url: "/dashboard/assignment/all-assignments",
-                      active:
-                       pathname == "/dashboard/assignment/all-assignments"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    }
-                  
-                    
-                    
-                   ,{
-                      name: "Admission Requests",
-                      url: "/dashboard/admission-request",
-                      active:
-                       pathname == "/dashboard/admission-request"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    
-                  ],
-                },
-                {
-                  name: "Assign Admin",
-                  url: "/dashboard/assign-admin",
-                  id: 344,
-                  icon: AiOutlineAppstore,
-                  active:
-                   pathname == "/dashboard/assign-admin"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Assign Instructors",
-                  url: "/dashboard/assign-instructor",
-                  id: 344,
-                  icon: AiOutlineAppstore,
-                  active:
-                   pathname == "/dashboard/assign-instructor"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-              ].map((single, idx) => <Item key={idx} item={single} />)
-            : roles && roles.includes("instructor")
-            ? [
-                {
-                  name: "Dashboard",
-                  id: 1,
-                  url: "/dashboard",
-                  icon: AiOutlineAppstore,
-                  active:
-                   pathname == "/dashboard"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "My Courses",
-                  id: 2,
-                  url: "/dashboard/courses",
-                  icon: AiOutlineUser,
-                  active:
-                   pathname == "/dashboard/courses" ||
-                   pathname == "/dashboard/course/creation" ||
-                   pathname == "/dashboard/course/edit/[editId]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-
-                {
-                  name: "Quiz",
-                  id: 3,
-                  url: "/dashboard/quiz",
-                  icon: MdQuiz,
-                  active:
-                   pathname == "/dashboard/quiz/all-quiz" ||
-                   pathname == "/dashboard/quiz/quiz-creation" ||
-                   pathname == "/dashboard/quiz"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                  children: [
-                    {
-                      name: "All quizzes of a instructor",
-                      url: "/dashboard/quiz/quiz/all-quiz-instructor",
-                      active:
-                       pathname == "/dashboard/quiz/all-quiz-instructor"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "Add Quiz",
-                      url: "/dashboard/quiz/quiz-creation",
-                      active:
-                       pathname == "/dashboard/quiz/quiz-creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    // {
-                    //   name: "Quiz Result",
-                    //   url: "/dashboard/quiz/quiz-result",
-                    //   active:
-                    //    pathname == "/dashboard/quiz/quiz-result"
-                    //       ? "!border-[#3A57E8] !text-[#3A57E8]"
-                    //       : "",
-                    // },
-                  ],
-                },
+        {
+  roles && roles.includes("admin")
+    ? [
+        {
+          name: "Creation",
+          id: 6,
+          icon: AiOutlineTeam,
+          active:
+            pathname === "/dashboard/academic-faculty" ||
+            pathname === "/dashboard/academic-department" ||
+            pathname === "/dashboard/course/creation" ||
+            pathname === "/dashboard/quiz/quiz-creation" ||
+            pathname === "/dashboard/assignments/[singleAssignment]"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+          children: [
+            {
+              name: "Assignment-creation",
+              url: "/dashboard/assignment-creation",
+              active:
+                pathname == "/dashboard/assignment-creation"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "Course creation",
+              url: "/dashboard/course/creation",
+              active:
+                pathname == "/dashboard/course/creation"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "Quiz Creation",
+              url: "/dashboard/quiz/quiz-creation",
+              active:
+                pathname == "/dashboard/quiz/quiz-creation"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+          ],
+        },
+        
+        {
+          name: "All things",
+          id: 6,
+          url: "/dashboard/semester",
+          icon: AiOutlineTeam,
+          children: [
+            {
+              name: "All quizzes of a instructor",
+              url: "/dashboard/quiz/quiz/all-quiz-instructor",
+              active:
+                pathname == "/dashboard/quiz/all-quiz-instructor"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "All submitted assignments",
+              url: "/dashboard/assignment/all-assignments",
+              active:
+                pathname == "/dashboard/assignment/all-assignments"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
                 
-                {
-                  name: "Messages",
-                  id: 3,
-                  url: "/dashboard/messages",
-                  icon: BsFillChatLeftDotsFill,
-                  active:
-                   pathname == "/dashboard/messages"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Students",
-                  id: 5,
-                  url: "/dashboard/students",
-                  icon: BsMenuButton,
-                  active:
-                   pathname == "/dashboard/students"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                {
-                  name: "Assignments",
-                  id: 6,
-                  url: "/dashboard/assignment/all-assignments",
-                  icon: AiOutlineTeam,
-                  active:
-                   pathname ==
-                      "/dashboard/assignment/all-assignments" ||
-                   pathname === "/dashboard/assignment-creation" ||
-                   pathname ===
-                      "/dashboard/assignment/submitassignment" ||
-                   pathname === "/dashboard/assignmentmarking/[id]" ||
-                   pathname ===
-                      "/dashboard/assignment/submit-assignment" ||
-                   pathname === "/dashboard/assignment/edit/[id]" ||
-                   pathname ===
-                      "/dashboard/assignments/[singleAssignment]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                  children: [
-                    // {
-                    //   name: "All Assignment",
-                    //   url: "/dashboard/assignment/all-assignments",
-                    //   active:
-                    //    pathname ==
-                    //     "/dashboard/assignment/all-assignments"
-                    //       ? "!border-[#3A57E8] !text-[#3A57E8]"
-                    //       : "",
-                    // },
-                    {
-                      name: "Assignment-creation",
-                      url: "/dashboard/assignment-creation",
-                      active:
-                       pathname == "/dashboard/assignment-creation"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    },
-                    {
-                      name: "All submitted assignments",
-                      url: "/dashboard/assignment/all-assignments",
-                      active:
-                       pathname == "/dashboard/assignment/all-assignments"
-                          ? "!border-[#3A57E8] !text-[#3A57E8]"
-                          : "",
-                    }
-                  ],
-                },
-
-                {
-                  name: "Live Class",
-                  id: 7,
-                  url: "/dashboard/live-class-with-screen",
-                  icon: VscDeviceCameraVideo,
-                  active:
-                   pathname == "/dashboard/live-class-with-screen"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                
-               
-                
+              }
+            ]
+          }
               ].map((single, idx) => <Item key={idx} item={single} />)
-            : roles?.includes("student")
-            ? [
-              {
-                name: "Take Admission",
-                url: "/dashboard/take-admission",
-                id:0,
-                icon: AiOutlineAppstore,
-
-                active:
-                 pathname == "/dashboard/take-admission"
-                    ? "!border-[#3A57E8] !text-[#3A57E8]"
-                    : "",
-              },
-                {
-                  name: "Dashboard",
-                  id: 1,
-                  url: "/dashboard",
-                  icon: AiOutlineAppstore,
-                  active:
-                   pathname == "/dashboard"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-               
-              ].map((single, idx) => <Item key={idx} item={single} />)
-            : 
-              (roles?.includes("student") && roles?.includes("admitted")) &&
-              
-              [
-               
-                {
-                  name: "Dashboard",
-                  id: 1,
-                  url: "/dashboard",
-                  icon: AiOutlineAppstore,
-                },
-                {
-                  name: "My Courses",
-                  id: 2,
-                  url: "/dashboard/my-course",
-                  icon: AiOutlineUser,
-                  active:
-                   pathname == "/dashboard/my-course" ||
-                   pathname === "/dashboard/my-course/[id]" ||
-                   pathname == "/dashboard/page-overview/[id]"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-               
-                {
-                  name: "Messages",
-                  id: 5,
-                  url: "/dashboard/messages",
-                  icon: BsFillChatLeftDotsFill,
-                  active:
-                   pathname == "/dashboard/messages"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-                
-                {
-                  name: "Live Class",
-                  id: 7,
-                  url: "/dashboard/live-class-with-screen",
-                  active:
-                   pathname == "/dashboard/live-class-with-screen"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                  icon: VscDeviceCameraVideo,
-                },
-                {
-                  name: "Grades",
-                  id: 8,
-                  url: "/dashboard/students/grade",
-                  icon: MdNoteAdd,
-                  active:
-                   pathname == "/dashboard/students/grade"
-                      ? "!border-[#3A57E8] !text-[#3A57E8]"
-                      : "",
-                },
-               
-              ].map((single, idx) => <Item key={idx} item={single} />)}
+            
+    : roles && roles.includes("superAdmin")
+    ? [
+        {
+          name: "Main",
+          id: 6,
+          url: "/dashboard/semester",
+          icon: AiOutlineTeam,
+          active:
+            pathname === "/dashboard/academic-faculty" ||
+            pathname === "/dashboard/academic-department" ||
+            pathname === "/dashboard/course/creation" ||
+            pathname === "/dashboard/quiz/quiz-creation" ||
+            pathname === "/dashboard/assignments/[singleAssignment]"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+          children: [],
+        },
+        {
+          name: "Creation",
+          id: 6,
+          icon: AiOutlineTeam,
+          active:
+            pathname === "/dashboard/academic-faculty" ||
+            pathname === "/dashboard/academic-department" ||
+            pathname === "/dashboard/course/creation" ||
+            pathname === "/dashboard/quiz/quiz-creation" ||
+            pathname === "/dashboard/assignments/[singleAssignment]"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+          children: [
+            {
+              name: "Academic faculty",
+              url: "/dashboard/academic-faculty",
+              active:
+                pathname == "/dashboard/academic-faculty"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "Academic department",
+              url: "/dashboard/academic-department",
+              active:
+                pathname == "/dashboard/academic-department"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "Assignment-creation",
+              url: "/dashboard/assignment-creation",
+              active:
+                pathname == "/dashboard/assignment-creation"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "Course creation",
+              url: "/dashboard/course/creation",
+              active:
+                pathname == "/dashboard/course/creation"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "Quiz Creation",
+              url: "/dashboard/quiz/quiz-creation",
+              active:
+                pathname == "/dashboard/quiz/quiz-creation"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+          ],
+        },
+        {
+          name: "All things",
+          id: 6,
+          url: "/dashboard/semester",
+          icon: AiOutlineTeam,
+          children: [
+            {
+              name: "All quizzes of a instructor",
+              url: "/dashboard/quiz/quiz/all-quiz-instructor",
+              active:
+                pathname == "/dashboard/quiz/all-quiz-instructor"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "All submitted assignments",
+              url: "/dashboard/assignment/all-assignments",
+              active:
+                pathname == "/dashboard/assignment/all-assignments"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "Admission Requests",
+              url: "/dashboard/admission-request",
+              active:
+                pathname == "/dashboard/admission-request"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+          ],
+        },
+        {
+          name: "Assign Admin",
+          url: "/dashboard/assign-admin",
+          id: 344,
+          icon: AiOutlineAppstore,
+          active:
+            pathname == "/dashboard/assign-admin"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+        {
+          name: "Assign Instructors",
+          url: "/dashboard/assign-instructor",
+          id: 344,
+          icon: AiOutlineAppstore,
+          active:
+            pathname == "/dashboard/assign-instructor"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+      ].map((single, idx) => <Item key={idx} item={single} />)
+    : roles && roles.includes("instructor")
+    ? [
+        {
+          name: "Dashboard",
+          id: 1,
+          url: "/dashboard",
+          icon: AiOutlineAppstore,
+          active:
+            pathname == "/dashboard"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+        {
+          name: "My Courses",
+          id: 2,
+          url: "/dashboard/courses",
+          icon: AiOutlineUser,
+          active:
+            pathname == "/dashboard/courses" ||
+            pathname == "/dashboard/course/creation" ||
+            pathname == "/dashboard/course/edit/[editId]"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+        {
+          name: "Quiz",
+          id: 3,
+          url: "/dashboard/quiz",
+          icon: MdQuiz,
+          active:
+            pathname == "/dashboard/quiz/all-quiz" ||
+            pathname == "/dashboard/quiz/quiz-creation" ||
+            pathname == "/dashboard/quiz"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+          children: [
+            {
+              name: "All quizzes of a instructor",
+              url: "/dashboard/quiz/quiz/all-quiz-instructor",
+              active:
+                pathname == "/dashboard/quiz/all-quiz-instructor"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "Add Quiz",
+              url: "/dashboard/quiz/quiz-creation",
+              active:
+                pathname == "/dashboard/quiz/quiz-creation"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+          ],
+        },
+        {
+          name: "Messages",
+          id: 3,
+          url: "/dashboard/messages",
+          icon: BsFillChatLeftDotsFill,
+          active:
+            pathname == "/dashboard/messages"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+        {
+          name: "Students",
+          id: 5,
+          url: "/dashboard/students",
+          icon: BsMenuButton,
+          active:
+            pathname == "/dashboard/students"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+        {
+          name: "Assignments",
+          id: 6,
+          url: "/dashboard/assignment/all-assignments",
+          icon: AiOutlineTeam,
+          active:
+            pathname == "/dashboard/assignment/all-assignments" ||
+            pathname === "/dashboard/assignment-creation" ||
+            pathname === "/dashboard/assignment/submitassignment" ||
+            pathname === "/dashboard/assignmentmarking/[id]" ||
+            pathname === "/dashboard/assignment/submit-assignment" ||
+            pathname === "/dashboard/assignment/edit/[id]" ||
+            pathname === "/dashboard/assignments/[singleAssignment]"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+          children: [
+            {
+              name: "Assignment-creation",
+              url: "/dashboard/assignment-creation",
+              active:
+                pathname == "/dashboard/assignment-creation"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+            {
+              name: "All submitted assignments",
+              url: "/dashboard/assignment/all-assignments",
+              active:
+                pathname == "/dashboard/assignment/all-assignments"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+            },
+          ],
+        },
+        {
+          name: "Live Class",
+          id: 7,
+          url: "/dashboard/live-class-with-screen",
+          icon: VscDeviceCameraVideo,
+          active:
+            pathname == "/dashboard/live-class-with-screen"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+      ].map((single, idx) => <Item key={idx} item={single} />)
+    : roles?.includes("student")
+    ? [
+        {
+          name: "Take Admission",
+          url: "/dashboard/take-admission",
+          id: 0,
+          icon: AiOutlineAppstore,
+          active:
+            pathname == "/dashboard/take-admission"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+        {
+          name: "Dashboard",
+          id: 1,
+          url: "/dashboard",
+          icon: AiOutlineAppstore,
+          active:
+            pathname == "/dashboard"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+      ].map((single, idx) => <Item key={idx} item={single} />)
+    : roles?.includes("student") && roles?.includes("admitted")
+    ? [
+        {
+          name: "Dashboard",
+          id: 1,
+          url: "/dashboard",
+          icon: AiOutlineAppstore,
+        },
+        {
+          name: "My Courses",
+          id: 2,
+          url: "/dashboard/my-course",
+          icon: AiOutlineUser,
+          active:
+            pathname == "/dashboard/my-course" ||
+            pathname === "/dashboard/my-course/[id]" ||
+            pathname == "/dashboard/page-overview/[id]"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+        {
+          name: "Messages",
+          id: 5,
+          url: "/dashboard/messages",
+          icon: BsFillChatLeftDotsFill,
+          active:
+            pathname == "/dashboard/messages"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+        {
+          name: "Live Class",
+          id: 7,
+          url: "/dashboard/live-class-with-screen",
+          active:
+            pathname == "/dashboard/live-class-with-screen"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+          icon: VscDeviceCameraVideo,
+        },
+        {
+          name: "Grades",
+          id: 8,
+          url: "/dashboard/students/grade",
+          icon: MdNoteAdd,
+          active:
+            pathname == "/dashboard/students/grade"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+      ].map((single, idx) => <Item key={idx} item={single} />)
+    : null
+}
         </div>
         <div className="border-b mt-4 w-full px-5"></div>
 

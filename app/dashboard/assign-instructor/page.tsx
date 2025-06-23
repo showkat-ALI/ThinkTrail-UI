@@ -9,7 +9,7 @@ const AssignInstructor = () => {
   return (
     <>
       <PrivateTemplate>
-        <AccessTemplate accessRoles={["superAdmin"]}>
+        <AccessTemplate accessRoles={["superAdmin","admin","instructor"]}>
           <Head>
             <title>Instructor | Think Trail</title>
           </Head>

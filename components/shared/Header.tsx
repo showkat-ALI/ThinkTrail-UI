@@ -100,11 +100,19 @@ export default function Header() {
 
           <div className="hidden lg:flex items-center gap-2">
             {!isAuthorized(email, refresh) ? (
+              <>
               <Link href="/signin">
                 <span className="px-4 py-1 bg-black text-white flex items-center gap-2 rounded">
                   Sign in
                 </span>
               </Link>
+              <Link href="/registration">
+                <span className="px-4 py-1 bg-black text-white flex items-center gap-2 rounded">
+                 Registration
+                </span>
+              </Link>
+              </>
+
             ) : (
               <>
               <UserMenu

@@ -31,7 +31,7 @@ const AssignAdmin = () => {
     isError: AlldeptisError,
     isSuccess: AlldeptisSuccess,
   } = useGetAllAcademicDepartmentsQuery({});
-  console.log(data);
+  console.log(data); 
   const [show, setShow] = useState<boolean>(false);
   const [mentorId, setmentorId] = useState("");
   const handleClose = () => {
@@ -79,9 +79,17 @@ const AssignAdmin = () => {
           </thead>
           <tbody className="text-[#232D42]">
             {isLoading ? (
-              <p>Loading...</p>
+              <tr>
+                <td colSpan={5} className="text-center py-4">
+                  <span>Loading...</span>
+                </td>
+              </tr>
             ) : isError ? (
-              <p>Error...</p>
+              <tr>
+                <td colSpan={5} className="text-center py-4">
+                  <p>Error...</p>
+                </td>
+              </tr>
             ) : isSuccess && data?.data && data?.data.length > 0 ? (
               data?.data.map((student: any, idx: any) => (
                 <Table
@@ -95,7 +103,11 @@ const AssignAdmin = () => {
                 />
               ))
             ) : (
-              <div>No Admin found</div>
+              <tr>
+                <td colSpan={5} className="text-center py-4">
+                  <div>No Admin found</div>
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
@@ -148,9 +160,9 @@ function Table({
       <tr className="border-b font-nunito">
         <td scope="row" className="py-4 px-6">
           <p className="flex items-center space-x-2 justify-center">
-              <h2 className="text-[16px] md:text-[18px] text-[#232D42] font-medium  font-nunito">
+              <span className="text-[16px] md:text-[18px] text-[#232D42] font-medium  font-nunito">
                 {firstName}
-              </h2>
+              </span>
           </p>
         </td>
         <td className="py-4 px-6 font-nunito">{email}</td>
@@ -169,9 +181,9 @@ function Table({
         <td className="py-4 px-6">
           <p className="flex justify-center space-x-6">
             {assignedDepartment ? (
-              <p className="w-[32px] h-[32px] flex justify-center items-center text-white rounded-full bg-[#3A57E8]">
+              <span className="w-[32px] h-[32px] flex justify-center items-center text-white rounded-full bg-[#3A57E8]">
                 <IoCheckmarkDoneCircleSharp />
-              </p>
+              </span>
             ) : (
               <button
                 onClick={() => handleMentorView(_id)}

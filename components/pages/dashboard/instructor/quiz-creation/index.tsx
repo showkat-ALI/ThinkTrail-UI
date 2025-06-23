@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 import { useForm } from "react-hook-form";
 import {
   useCreateQuizMutation,
-  useGetCategoriesQuery,
   useCreateQuizQuestionMutation,
   useGetAllActiveCourseQuery,
 } from "../../../../../feature/api/dashboardApi";
@@ -43,12 +42,7 @@ export default function QuizCreation() {
     isError: isUserError,
   } = useGetUserQuery({});
 
-  const {
-    data: allcategory,
-    isSuccess,
-    isError,
-    isLoading,
-  } = useGetCategoriesQuery({});
+  
   const {
     data: allCourse,
     isSuccess: allCourseSuccess,
@@ -56,18 +50,7 @@ export default function QuizCreation() {
     isLoading: allCourseLoading,
   } = useGetAllActiveCourseQuery({});
 
-  let singleCategory;
-  isLoading ? (
-    <div>Loading....</div>
-  ) : isError ? (
-    <div>Error....</div>
-  ) : isSuccess &&
-    allcategory?.data?.categories &&
-    allcategory?.data?.categories.length > 0 ? (
-    (singleCategory = allcategory?.data?.categories)
-  ) : (
-    <div>No Categories Found</div>
-  );
+  
   let singleCourse;
   allCourseLoading ? (
     <div>Loading....</div>

@@ -13,9 +13,9 @@ const NotFound = () => {
                 <h5>Oops! This page is Not Found.</h5>
                 <p>The requested page dose not exist</p>
                 <Link href="/dashboard">
-                    <a>
+                    <>
                         <Button>Back to Home</Button>
-                    </a>
+                    </>
                 </Link>
             </div>
         </div>
