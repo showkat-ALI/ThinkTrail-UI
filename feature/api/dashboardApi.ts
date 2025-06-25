@@ -647,7 +647,7 @@ const dashboardApi = createApi({
     //get single assignment in instructor
     singleAssignment: builder.query({
       query: (id: any) => ({
-        url: `api/v1/assignments/${id}`,
+        url: `api/v1/assignment/${id}`,
         method: "GET",
       }),
       providesTags: ["assignment"],

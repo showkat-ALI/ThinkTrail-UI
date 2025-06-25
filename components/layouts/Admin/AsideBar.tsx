@@ -215,6 +215,15 @@ const logoutHandler = async () => {
                   ? "!border-[#3A57E8] !text-[#3A57E8]"
                   : "",
                 
+              },
+            {
+              name: "All created assignments",
+              url: "/dashboard/assignment/all-created-assignments",
+              active:
+                pathname == "/dashboard/assignment/all-assignments"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+                
               }
             ]
           }
@@ -314,6 +323,15 @@ const logoutHandler = async () => {
                   ? "!border-[#3A57E8] !text-[#3A57E8]"
                   : "",
             },
+            {
+              name: "All created assignments",
+              url: "/dashboard/assignment/all-created-assignments",
+              active:
+                pathname == "/dashboard/assignment/all-assignments"
+                  ? "!border-[#3A57E8] !text-[#3A57E8]"
+                  : "",
+                
+              },
             {
               name: "Admission Requests",
               url: "/dashboard/admission-request",

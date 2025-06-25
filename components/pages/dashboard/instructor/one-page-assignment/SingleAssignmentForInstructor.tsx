@@ -1,9 +1,9 @@
+"use client"
 import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
-import AssignmentPhoto from "../../../../../assets/admin/pexels-flo-dahm-699459 1.png";
-import Image from "next/image";
+
 import { useSingleAssignmentQuery } from "../../../../../feature/api/dashboardApi";
-import { useRouter } from "next/router";
+import { useRouter, useParams } from "next/navigation";
 import { Spinner } from "flowbite-react";
 import moment from "moment";
 import { GoFile } from "react-icons/go";
@@ -11,11 +11,11 @@ import Link from "next/link";
 import DeleteAssignment from "./DeleteAssignment";
 
 export default function OnePageAssignment() {
-  const router = useRouter();
-  const id = router.query.singleAssignment;
+  const searchParams= useParams()
+  const id = searchParams.singleAssignment;
   const { data, isSuccess, isError, isLoading } = useSingleAssignmentQuery(id);
   const [modalAssignment, setmodalAssignment] = useState(false);
-
+console.log(data)
   const handleCloseRejectAssignmentModal = () => {
     setmodalAssignment(false);
   };
@@ -40,7 +40,7 @@ export default function OnePageAssignment() {
             <div className="flex justify-between items-center mb-[20px] xsm:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row">
               <div>
                 <h1 className="font-bold text-lg">
-                  {data?.data?.assignment?.name}
+                  {data?.data?.assignments?.name}
                 </h1>
               </div>
 
@@ -75,19 +75,19 @@ export default function OnePageAssignment() {
                 <p
                   className="text-[#8A92A6]"
                   dangerouslySetInnerHTML={{
-                    __html: data?.data.assignment.description,
+                    __html: data?.data?.assignments?.description,
                   }}
                 ></p>
                 <div>
                   <a
                     rel="noreferrer"
                     target="_blank"
-                    href= {`https://docs.google.com/gview?url=${data?.data?.assignment?.fileUrl}`}
+                    href= {`https://docs.google.com/gview?url=${data?.data?.assignments?.fileUrl}`}
                     className="cursor-pointer flex items-center"
                   >
                     <GoFile className="text-[3rem] text-blue-500 mt-2" />
                     <span className="text-sm text-[#8A92A6]">
-                      {data.data.assignment.key}
+                      {data?.data?.assignments?.key}
                     </span>
                   </a>
                 </div>
@@ -95,7 +95,7 @@ export default function OnePageAssignment() {
               <div className="flex w-[60%] justify-between mt-[20px] mb-[40px] xl:flex-row lg:flex-row md:flex-row sm:flex-col xsm:flex-col">
                 <p>
                   <span className="font-bold">Points:</span>
-                  {data?.data?.assignment?.score}
+                  {data?.data?.assignments?.score}
                 </p>
                 <p>
                   <span className="font-bold">Submitting:</span>a website url or
@@ -112,18 +112,18 @@ export default function OnePageAssignment() {
                 <div className="h-[2px] w-full bg-slate-400 my-[5px]"></div>
                 <div className="flex justify-around xsm:items-start sm:items-start md:items-end lg:items-end xl:items-end  xl:flex-row lg:flex-row md:flex-row sm:flex-col xsm:flex-col">
                   <p>
-                    {moment(data?.data?.assignment?.createdAt).format(
+                    {moment(data?.data?.assignments?.createdAt).format(
                       "MM/DD/YYYY"
                     )}
                   </p>
                   <p>Everyone</p>
                   <p>
-                    {moment(data?.data?.assignment?.availFrom).format(
+                    {moment(data?.data?.assignments?.availFrom).format(
                       "MM/DD/YYYY"
                     )}
                   </p>
                   <p>
-                    {moment(data?.data?.assignment?.availUntil).format(
+                    {moment(data?.data?.assignments?.availUntil).format(
                       "MM/DD/YYYY"
                     )}
                   </p>
