@@ -28,7 +28,7 @@ const ActionConfirmModal = (props: Props) => {
 
     // HANDLE USER DELETE
     const actionHandler = () => {
-        DeleteAssignment({id:id});
+        DeleteAssignment(id);
         console.log(id)
     }
 

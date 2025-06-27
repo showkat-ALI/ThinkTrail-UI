@@ -644,15 +644,14 @@ const dashboardApi = createApi({
       }),
       providesTags: ["assignment"],
     }),
-    //get single assignment in instructor
-    singleAssignment: builder.query({
+    //delete single assignment
+    SingleAssignment: builder.query({
       query: (id: any) => ({
-        url: `api/v1/assignment/${id}`,
-        method: "GET",
+      url: `api/v1/assignment/${id}`,
+      method: "GET",
       }),
       providesTags: ["assignment"],
     }),
-    
     //get all quiz in instructor
     AllQuizInstructor: builder.query({
       query: (insId: any) => ({
@@ -792,8 +791,8 @@ const dashboardApi = createApi({
     }),
     //delete one assignment by id
     deleteAssignment: builder.mutation({
-      query: (body: any) => ({
-        url: `/api/v1/assignments/${body.id}`,
+      query: (id: any) => ({
+        url: `api/v1/assignment/deleteOneAssignment/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["assignment"],
