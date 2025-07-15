@@ -2,16 +2,15 @@
 import React from "react";
 import { ICommon } from "../../interfaces/ICommon";
 import Footer from "../shared/Footer";
-import Header from "../shared/Header";
 import TopHeader from "../shared/TopHeader";
+import Header from "../shared/Header";
 
 const HomeLayout = ({ children }: ICommon) => {
   return (
     <div className="home-layout"> {/* Added container div */}
-      <TopHeader />
-      <Header />
+    <Header></Header>
       <main>{children}</main> {/* Wrapped children in main tag */}
-      <Footer />
+      <Footer/>
     </div>
   );
 };
