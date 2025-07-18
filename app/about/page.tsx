@@ -45,7 +45,7 @@ const About = () => {
                 About Us
               </h1>
             </div>
-            <div className="text-gray-300 space-y-6">
+            <div className="text-black space-y-6">
               <p>
                 Think Trail focuses heavily on the Risk Management Framework. 
                 The risk management framework creates an effective means to help 
@@ -90,7 +90,7 @@ const About = () => {
                   Our Vision
                 </h1>
               </div>
-              <p className="text-gray-300">
+              <p className="text-black">
                 We are seeking to empower the next generation of tech
                 entrepreneurs as a way of overcoming extreme poverty and
                 unemployment - while promoting tech knowledge among the least
@@ -111,7 +111,7 @@ const About = () => {
                   Our Mission
                 </h1>
               </div>
-              <p className="text-gray-300">
+              <p className="text-black">
                 We believe a thriving workforce starts with equitable access to
                 education. Our mission is to advance economic equity through
                 rigorous training for tech careers and to connect skilled talent
@@ -127,7 +127,7 @@ const About = () => {
             <h2 className="text-3xl md:text-4xl font-black mb-6 bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
               Ready to Start Your Journey?
             </h2>
-            <p className="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-black mb-8 max-w-3xl mx-auto">
               Join our revolutionary learning platform and unlock unlimited potential with 
               AI-powered education designed for tomorrow's leaders.
             </p>

@@ -43,7 +43,7 @@ export default function Header() {
   } = useAppSelector((state) => state.auth);
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-sm bg-white/5 border-b border-slate-800/30">
+    <header className="sticky top-0 z-50 backdrop-blur-sm bg-green-300 border-b border-slate-800/30">
       <Popover className="relative">
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex items-center justify-between py-4">
@@ -84,7 +84,7 @@ export default function Header() {
                   ) : (
                     <Link 
                       href={menuItem?.url ? menuItem?.url : "#"}
-                      className="text-sm font-medium text-gray-300 hover:text-emerald-400 transition-colors duration-200"
+                      className="text-sm font-medium text-zinc-50 hover:text-emerald-400 transition-colors duration-200"
                     >
                       {menuItem.name}
                     </Link>
