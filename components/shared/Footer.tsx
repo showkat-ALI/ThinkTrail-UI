@@ -143,7 +143,7 @@ const Footer = () => {
         <p className="font-bold text-white text-xl">Think Trail</p>
         <p className=" text-white">
           Copyright &#169;{" "}
-          <span className="font-bold">All Rights Reserved. FITA</span>
+          <span className="font-bold">All Rights Reserved. Think Trail</span>
         </p>
         <div className="flex gap-2">
           <BsLinkedin className="border-2 rounded-full border-gray-200 text-4xl p-2" />

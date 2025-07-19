@@ -1211,6 +1211,13 @@ const dashboardApi = createApi({
         method: "POST",
         body: body,
       }),
+    }),
+    createChatWithAI:builder.mutation({
+      query: (body: any) => ({
+        url: `api/v1/course/chat-with-bot`,
+        method: "POST",
+        body: body,
+      }),
     })
   }),
 });
@@ -1349,6 +1356,7 @@ export const {
   useSingleStudentAssignmentQuery,
   useGetSingleModuleQuizesQuery,
   useGetSubMitQuizQuery,
-  useCreateSingleAdminMutation
+  useCreateSingleAdminMutation,
+  useCreateChatWithAIMutation
 } = dashboardApi;
 export default dashboardApi;

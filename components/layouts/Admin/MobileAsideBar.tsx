@@ -99,7 +99,7 @@ const MobileAsideBar = () => {
                 className="h-5 w-6"
                 alt={"logo"}
               />
-              <h3 className="uppercase font-semibold text-2xl">FITA </h3>
+              <h3 className="uppercase font-semibold text-2xl">Think Trail </h3>
             </div>
             {/* profile section  */}
             <div className="p-5 flex flex-col gap-2 items-center">

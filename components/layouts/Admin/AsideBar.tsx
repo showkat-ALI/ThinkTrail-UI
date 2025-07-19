@@ -102,7 +102,7 @@ const logoutHandler = async () => {
                 alt={"logo"}
               />
 
-              <span className="uppercase font-semibold text-2xl">FITA</span>
+              <span className="uppercase font-semibold text-2xl">Think Trail</span>
             </span>
           </Link>
         </div>

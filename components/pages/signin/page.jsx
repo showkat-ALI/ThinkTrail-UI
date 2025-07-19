@@ -17,7 +17,7 @@ const Signin = () => {
                         className="h-5 w-6"
                         alt={"logo"}
                     />
-                    <h3 className="uppercase font-semibold text-xl m-0">FITA</h3>
+                    <h3 className="uppercase font-semibold text-xl m-0">Think Trail</h3>
                 </span>
             </Link>
             <div className="grid grid-cols-12 h-[80vh]">

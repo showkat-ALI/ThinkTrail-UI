@@ -26,7 +26,7 @@ export default function successPage() {
                 className="h-5 w-6"
                 alt={"logo"}
               />
-              <h3 className="uppercase font-semibold text-xl">FITA</h3>
+              <h3 className="uppercase font-semibold text-xl">Think Trail</h3>
             </div>
             {/* <Copy size={30} className="text-red-500" />
           <Video size={30} className=" text-gray-400" /> */}
