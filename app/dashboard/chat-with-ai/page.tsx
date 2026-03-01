@@ -16,7 +16,9 @@ interface Message {
   timestamp: Date;
   isAnimating?: boolean;
 }
-//adding 
+//adding something more jlkjjalsd 
+
+//adding something more jlkjjalsd 
 const ChatMessage = ({ message, isUser, timestamp, isAnimating = false }: {
   message: string;
   isUser: boolean;
