@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 
@@ -45,18 +45,16 @@ const AssignInstructors = () => {
       <div
         className={` ${responsiveStyle.responsiveTable} overflow-x-scroll lg:overflow-x-auto md:w-full mx-auto shadow-md sm:rounded-lg mt-12`}
       >
-        {show && (
-          <AssignInstructorModal
-            show={show}
-            handleClose={handleClose}
-            _id={mentorId}
-            setShow={setShow}
-            Alldepartments={AllDepartments}
-            AlldeptisError={AlldeptisError}
-            AlldepisLoading={AlldepisLoading}
-            AlldeptisSuccess={AlldeptisSuccess}
-          />
-        )}
+        <AssignInstructorModal
+          show={show}
+          handleClose={handleClose}
+          _id={mentorId}
+          setShow={setShow}
+          Alldepartments={AllDepartments}
+          AlldeptisError={AlldeptisError}
+          AlldepisLoading={AlldepisLoading}
+          AlldeptisSuccess={AlldeptisSuccess}
+        />
         <table className="w-full text-[16px] md:text-[18px] text-left">
           <thead className="text-[#ADB5BD] font-nunito">
             <tr>
@@ -115,8 +113,8 @@ function Table({
   const [modalDelete, setmodalDelete] = useState(false);
   const [deleteMentorId, setdeleteMentorId] = useState("");
   const handleMentorView = (id: any) => {
-    setShow(true);
     setmentorId(id);
+    setShow(true);
   };
 
   const handleDelete = (id: any) => {

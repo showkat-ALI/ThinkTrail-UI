@@ -59,7 +59,7 @@ const ChatLists = ({setmsg,
           
             setsocketUser(unique)
         })
-        roles.includes("student") && setActive(2)
+        roles?.includes("student") && setActive(2)
     }
     if(socket.current) {
         socket.current.off("get_group_chat_list_recieved").on("get_group_chat_list_recieved",(chatInfo:any) => {
@@ -83,7 +83,7 @@ const ChatLists = ({setmsg,
     return (
         <div>
             <div className='flex justify-between mb-5 border-b border-gray-200'>
-               {!roles.includes("student") && 
+               {!roles?.includes("student") && 
                 <h4 onClick={()=>handleChatAndGroup(1)} className={`${active===1 && "border-b-[2px] border-[#232D42]"} cursor-pointer font-nunito`}>
                     Private
                 </h4>
@@ -93,7 +93,7 @@ const ChatLists = ({setmsg,
             <div>
                 <div className='overflow-auto chat-scroll w-full px-1 rounded h-[calc(100vh_-_129px)]'>
                     {
-                     !roles.includes("student")  && active === 1 && 
+                     !roles?.includes("student")  && active === 1 && 
                         <div>
                            {
                                isLoading ? <div className='flex justify-center items-center'><Spinner aria-label="Default status example" /></div>:  

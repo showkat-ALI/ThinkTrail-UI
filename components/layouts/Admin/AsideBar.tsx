@@ -58,9 +58,10 @@ const AsideBar = () => {
   // } = useAppSelector((state) => state.auth.user);
   const pathname = usePathname(); // Get the current pathname
   const { data, isError, error, isLoading } = useGetUserQuery({});
-  const roles = data?.data?.user?.roles;
-  const email = data?.data?.user?.email;
-  console.log(roles)
+  const userData = data?.data?.user ?? data?.data;
+  const roles = userData?.roles || [];
+  const email = userData?.email || "";
+  // console.log(email)
   const [show, setShow] = useState(true);
   let width = "w-[260px]";
   if (!show) {

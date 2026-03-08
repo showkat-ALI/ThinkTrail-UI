@@ -159,7 +159,7 @@ const ChatInterface = ({ assignmentId }: { assignmentId?: string }) => {
 
   return (
     <PrivateTemplate>
-      <AccessTemplate accessRoles={["student","admitted"]}>
+      <AccessTemplate accessRoles={["student","admitted","superAdmin"]}>
         <DashboardLayout>
           <div className="flex flex-col h-[calc(100vh-64px)]">
             <div className="border-b border-gray-200 dark:border-gray-700 p-4">

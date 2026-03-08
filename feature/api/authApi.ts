@@ -27,6 +27,17 @@ const authApi = createApi({
     // GET USER
     getUser: builder.query({
       query: () => ({ url: "/api/v1/users/me", credentials: "include" }),
+      transformResponse: (response: any) => {
+        const normalizedUser = response?.data?.user ?? response?.data ?? null;
+
+        return {
+          ...response,
+          data: {
+            ...response?.data,
+            user: normalizedUser,
+          },
+        };
+      },
     }),
     // LOG OUT
     logout: builder.mutation({
