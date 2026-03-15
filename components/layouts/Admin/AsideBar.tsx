@@ -362,7 +362,7 @@ const logoutHandler = async () => {
               : "",
         },
       ].map((single, idx) => <Item key={idx} item={single} />)
-    : roles && roles.includes("instructor")
+    : roles && roles.includes("instructor"||"faculty")
     ? [
         {
           name: "Dashboard",
@@ -376,6 +376,18 @@ const logoutHandler = async () => {
         },
         {
           name: "My Courses",
+          id: 2,
+          url: "/dashboard/course/creation",
+          icon: AiOutlineUser,
+          active:
+            pathname == "/dashboard/courses" ||
+            pathname == "/dashboard/course/creation" ||
+            pathname == "/dashboard/course/edit/[editId]"
+              ? "!border-[#3A57E8] !text-[#3A57E8]"
+              : "",
+        },
+        {
+          name: "All my courses",
           id: 2,
           url: "/dashboard/courses",
           icon: AiOutlineUser,
@@ -468,6 +480,15 @@ const logoutHandler = async () => {
                   ? "!border-[#3A57E8] !text-[#3A57E8]"
                   : "",
             },
+            // {
+            //   name: "All my courses",
+            //   url: "/dashboard/assignment/all-assignments",
+            //   active:
+            //     pathname == "/dashboard/assignment/all-assignments"
+            //       ? "!border-[#3A57E8] !text-[#3A57E8]"
+            //       : "",
+            // },
+
           ],
         },
         {

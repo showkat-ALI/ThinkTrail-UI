@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -55,12 +55,8 @@ const Creation1 = (props: StepPropss) => {
   });
 
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      TextStyle,
-      Underline,
-    ],
-    content: formData.description || '',
+    extensions: [StarterKit, TextStyle, Underline],
+    content: formData.description || "",
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       setValue("description", html, { shouldValidate: true });
@@ -74,7 +70,7 @@ const Creation1 = (props: StepPropss) => {
 
   useEffect(() => {
     register("description", { required: true, minLength: 1 });
-    
+
     // Set initial content if it exists
     if (editor && formData.description) {
       editor.commands.setContent(formData.description);
@@ -145,8 +141,6 @@ const Creation1 = (props: StepPropss) => {
             </div>
             <div className="from_middel lg:flex md:flex gap-7 sm:block">
               <div className="from_lft lg:w-3/6 sm:w-full">
-              
-
                 <div className="form_control h-[7rem]">
                   <label className="text-sm font-medium">Language</label>
                   <br />
@@ -167,7 +161,7 @@ const Creation1 = (props: StepPropss) => {
                         <option value={item} key={id}>
                           {item}
                         </option>
-                      )
+                      ),
                     )}
                   </select>
                   <div className="">
@@ -248,7 +242,7 @@ const Creation1 = (props: StepPropss) => {
                         <option value={item} key={id}>
                           {item}
                         </option>
-                      )
+                      ),
                     )}
                   </select>
                   <div className="">
@@ -344,35 +338,43 @@ const Creation1 = (props: StepPropss) => {
                     <button
                       type="button"
                       onClick={() => editor.chain().focus().toggleBold().run()}
-                      className={`p-1 rounded ${editor.isActive('bold') ? 'bg-gray-200' : ''}`}
+                      className={`p-1 rounded ${editor.isActive("bold") ? "bg-gray-200" : ""}`}
                     >
                       <strong>B</strong>
                     </button>
                     <button
                       type="button"
-                      onClick={() => editor.chain().focus().toggleItalic().run()}
-                      className={`p-1 rounded ${editor.isActive('italic') ? 'bg-gray-200' : ''}`}
+                      onClick={() =>
+                        editor.chain().focus().toggleItalic().run()
+                      }
+                      className={`p-1 rounded ${editor.isActive("italic") ? "bg-gray-200" : ""}`}
                     >
                       <em>I</em>
                     </button>
                     <button
                       type="button"
-                      onClick={() => editor.chain().focus().toggleUnderline().run()}
-                      className={`p-1 rounded ${editor.isActive('underline') ? 'bg-gray-200' : ''}`}
+                      onClick={() =>
+                        editor.chain().focus().toggleUnderline().run()
+                      }
+                      className={`p-1 rounded ${editor.isActive("underline") ? "bg-gray-200" : ""}`}
                     >
                       <u>U</u>
                     </button>
                     <button
                       type="button"
-                      onClick={() => editor.chain().focus().toggleBulletList().run()}
-                      className={`p-1 rounded ${editor.isActive('bulletList') ? 'bg-gray-200' : ''}`}
+                      onClick={() =>
+                        editor.chain().focus().toggleBulletList().run()
+                      }
+                      className={`p-1 rounded ${editor.isActive("bulletList") ? "bg-gray-200" : ""}`}
                     >
                       • List
                     </button>
                     <button
                       type="button"
-                      onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                      className={`p-1 rounded ${editor.isActive('orderedList') ? 'bg-gray-200' : ''}`}
+                      onClick={() =>
+                        editor.chain().focus().toggleOrderedList().run()
+                      }
+                      className={`p-1 rounded ${editor.isActive("orderedList") ? "bg-gray-200" : ""}`}
                     >
                       1. List
                     </button>

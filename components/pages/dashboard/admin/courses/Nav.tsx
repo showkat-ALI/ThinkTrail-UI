@@ -36,7 +36,7 @@ const TabLink = (props: TabLinkProps) => {
 
 const Nav = (props: NavProps) => {
   const { activeTab, setActiveTab, Modal, setShowModal } = props;
-  const router = useRouter();
+  
   const {
     user: { roles },
   } = useAppSelector((state) => state.auth);
@@ -60,7 +60,7 @@ const Nav = (props: NavProps) => {
             tabLink="courses-list"
             setActiveTab={setActiveTab}
           />
-          {roles.includes("admin") && (
+          {roles?.includes("admin") && (
             <>
               <span className="text-[#8A92A6] font-bold text-[20px] pb-3">
                 |

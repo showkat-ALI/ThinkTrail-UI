@@ -108,7 +108,15 @@ const Module = ({
         <h2 className="text-[15px] font-medium">
           Module {index + 1}: {name}-{_id}
         </h2>
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            className="bg-[#EBEEFD] border border-[#3A57E8] px-2 py-1 rounded flex items-center gap-[6px]"
+            onClick={() => setShowModal(true)}
+          >
+            <Image src={plusIconBg} alt="" />
+            Add Content
+          </button>
           <button
             type="button"
             className="flex justify-center h-[24px] items-center"
@@ -141,7 +149,15 @@ const Module = ({
                   {duration}mins
                 </span>
               </div>
-              <div className="flex justify-between gap-2">
+              <div className="flex justify-between gap-2 items-center">
+                <button
+                  type="button"
+                  className="bg-[#EBEEFD] border border-[#3A57E8] px-2 py-1 rounded flex items-center gap-[6px]"
+                  onClick={() => setShowModal(true)}
+                >
+                  <Image src={plusIconBg} alt="" />
+                  Add Content
+                </button>
                 <div
                   className="bg-[#D5EBDF] rounded-full w-[32px] h-[32px] flex justify-center items-center cursor-pointer"
                   onClick={() => handleEdit()}

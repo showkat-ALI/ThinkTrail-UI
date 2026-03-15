@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "../redux-hook/hooks";
 import { isAuthorized } from "../utils/auth";
-// import LoadingSpinner from "./LoadingSpinner"; // Create this component
 
 type PrivateTemplateProps = {
   children: React.ReactNode;
@@ -11,9 +10,10 @@ type PrivateTemplateProps = {
 
 const PrivateTemplate = ({ children }: PrivateTemplateProps) => {
   const [isReady, setIsReady] = useState(false);
+  const [isValidSession, setIsValidSession] = useState(false);
   const router = useRouter();
   const { refresh, user } = useAppSelector((state) => state.auth);
-console.log(user?.email)
+
   useEffect(() => {
     setIsReady(true);
   }, []);
@@ -21,31 +21,21 @@ console.log(user?.email)
   useEffect(() => {
     if (!isReady) return;
 
-    const checkAuth = async () => {
-      if (!refresh) {
-        router.push("/signin");
-        return;
-      }
+    const authorized = isAuthorized(user?.email, refresh);
+    if (!authorized) {
+      setIsValidSession(false);
+      router.push("/signin");
+      return;
+    }
 
-      try {
-        const authorized = await isAuthorized(user?.email, refresh);
-        if (!authorized) {
-          router.push("/signin");
-        }
-      } catch (error) {
-        console.error("Auth check failed:", error);
-        router.push("/signin");
-      }
-    };
-
-    checkAuth();
+    setIsValidSession(true);
   }, [isReady, refresh, user?.email, router]);
 
   if (!isReady) {
     return <p>Loading ...</p>;
   }
 
-  if (!refresh || !isAuthorized(user?.email, refresh)) {
+  if (!isValidSession) {
     return null;
   }
 

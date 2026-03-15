@@ -1218,7 +1218,14 @@ const dashboardApi = createApi({
         method: "POST",
         body: body,
       }),
-    })
+    }),
+    getCreatorCourse: builder.query({
+      query: (id: string) => ({
+        url: `api/v1/course/creator/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["courses"], // Add this to force a refetch
+    }),
   }),
 });
 
@@ -1357,6 +1364,7 @@ export const {
   useGetSingleModuleQuizesQuery,
   useGetSubMitQuizQuery,
   useCreateSingleAdminMutation,
-  useCreateChatWithAIMutation
+  useCreateChatWithAIMutation,
+  useGetCreatorCourseQuery
 } = dashboardApi;
 export default dashboardApi;

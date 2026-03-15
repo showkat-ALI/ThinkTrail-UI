@@ -21,10 +21,10 @@ import { useGetSingleCourseQuery } from "../../../../../feature/api/dashboardApi
 
 const CourseEditMain = () => {
   const router = useRouter();
-  const id = router.query.editId as any;
+  const _id = router.query.editId as any;
   const dispatch = useAppDispatch();
   const { isError, data, error, isLoading, isSuccess } =
-    useGetSingleCourseQuery(id);
+    useGetSingleCourseQuery(_id);
 
   useEffect(() => {
     if (isError) {
@@ -77,7 +77,23 @@ const CourseEditMain = () => {
   } = useAppSelector((state) => state.course);
 
   const [step, setStep] = useState(1);
-  // console.log(data)
+
+  // Restore persisted step once the course id is available from the router
+  useEffect(() => {
+    if (!_id) return;
+    const saved = localStorage.getItem(`course_edit_step_${_id}`);
+    if (saved) setStep(Number(saved));
+  }, [_id]);
+
+  // Persist step on every change; clear it when the flow is complete
+  useEffect(() => {
+    if (!_id) return;
+    if (step === 5) {
+      localStorage.removeItem(`course_edit_step_${_id}`);
+    } else {
+      localStorage.setItem(`course_edit_step_${_id}`, String(step));
+    }
+  }, [step, _id]);
 
   const onNext = () => {
     setStep(step + 1);

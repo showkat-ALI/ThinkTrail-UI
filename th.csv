@@ -1,0 +1,20 @@
+Issue Id,Issue Type,Summary,Description,Priority,Labels,Components,Epic Name,Epic Link,Story Points,Parent Id
+E-1,Epic,ThinkTrail LMS v2 Core Hardening,"Core hardening and feature completion roadmap for LMS.",High,"lms,v2,roadmap",Platform,ThinkTrail LMS v2 Core Hardening,,,
+S-1,Story,RBAC Matrix and Enforcement for LMS,"Implement role-based access control for Admin/Instructor/Student across APIs and frontend routes.",Highest,"backend,frontend,security,rbac","Auth;Access-Control",,E-1,5,
+S-2,Story,Complete Assignment Workflow (Create Submit Deadline Late Flag),"Instructor can create assignments, students can submit, deadline is enforced, late flag is stored.",Highest,"assignment,core-lms,frontend,backend","Assignments;Submissions",,E-1,8,
+S-3,Story,Quiz Engine v1 with Auto Grading (MCQ),"Create quiz authoring, attempt flow, server-side auto-grading, and result display.",High,"quiz,assessment,autograding","Quiz;Assessment",,E-1,8,
+S-4,Story,Instructor Assign and Unassign End-to-End Flow,"Complete assign/unassign with confirmation, optimistic update, rollback, and retry states.",High,"faculty,assignment,ui-fix","Academic-Management",,E-1,5,
+S-5,Story,Notification v1 (In-app and Email),"Send assignment and quiz event notifications through in-app and email channels.",High,"notification,email,events","Notifications;Messaging",,E-1,8,
+S-6,Story,Server-side Pagination Search and Filters,"Add page/limit/search/filter support for large data lists.",High,"performance,table,pagination","Faculty;Courses;Students",,E-1,8,
+S-7,Story,Observability Baseline (Logging Error Tracking Metrics),"Add request logs, error tracking, and latency/slow endpoint metrics.",Medium,"observability,monitoring,backend",Platform,,E-1,5,
+S-8,Story,CI Quality Gate (Lint and Test Required),"Block merges unless lint and tests pass for FE and BE.",Medium,"ci,quality,devops",CI-CD,,E-1,3,
+T-1,Sub-task,Define role-permission matrix,"Create permission matrix for Admin/Instructor/Student routes and APIs.",High,"rbac,auth",Auth,,,,S-1
+T-2,Sub-task,Implement authorize middleware,"Add middleware to enforce allowed roles on backend routes.",High,"rbac,backend",Auth,,,,S-1
+T-3,Sub-task,Add assignment submission endpoint,"Create endpoint with due-date and late-submission logic.",High,"assignment,backend",Submissions,,,,S-2
+T-4,Sub-task,Build FE assignment submission UI,"Create assignment details and submission flow UI with status handling.",High,"assignment,frontend",Assignments,,,,S-2
+T-5,Sub-task,Implement MCQ auto-grading service,"Calculate score server-side and store attempt result.",High,"quiz,backend,autograding",Assessment,,,,S-3
+T-6,Sub-task,Wire unassign action in AssignInstructor UI,"Connect delete icon to unassign mutation and confirmation.",High,"faculty,frontend,ui-fix","Academic-Management",,,,S-4
+T-7,Sub-task,Implement notification event producer,"Trigger notifications on assignment due and grade publish.",High,"notification,backend,events",Notifications,,,,S-5
+T-8,Sub-task,Add API pagination and search params,"Support page/limit/search/filter in list APIs.",High,"performance,backend,pagination",Platform,,,,S-6
+T-9,Sub-task,Configure structured request logging,"Log requestId method route latency status in backend.",Medium,"observability,backend",Platform,,,,S-7
+T-10,Sub-task,Add CI workflow for FE and BE,"Run lint/test on pull request and enforce merge checks.",Medium,"ci,devops",CI-CD,,,,S-8

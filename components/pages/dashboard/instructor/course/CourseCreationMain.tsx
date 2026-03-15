@@ -6,6 +6,8 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../../../../redux-hook/hooks";
+import { Course } from "../../../../../feature/course/courseSlice";
 
 //component
 import Creation1 from "./steps/Creation1";
@@ -30,7 +32,7 @@ export type InitialFormDataCourse = {
   fileUrl: string;
 };
 
-const InitialFormDataCourse = {
+const DEFAULT_FORM_DATA: InitialFormDataCourse = {
   title: "",
   shortDescription: "",
   language: "",
@@ -46,13 +48,71 @@ const InitialFormDataCourse = {
   fileUrl: "",
 };
 
-const CourseCreationMain = () => {
-  const [formData, setFormData] = useState<InitialFormDataCourse>(
-    InitialFormDataCourse
-  );
+// Keep name alias so existing child component imports still work
+const InitialFormDataCourse = DEFAULT_FORM_DATA;
 
-  // console.log("form data", formData);
-  const [step, setStep] = useState(1);
+const FORM_DATA_KEY = "course_creation_form_data";
+const COURSE_STATE_KEY = "course_creation_course_state";
+
+const CourseCreationMain = () => {
+  const dispatch = useAppDispatch();
+  const { course } = useAppSelector((state) => state.course);
+
+  // Restore formData from localStorage so step 1 fields survive a reload
+  const [formData, setFormData] = useState<InitialFormDataCourse>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem(FORM_DATA_KEY);
+        return saved ? JSON.parse(saved) : DEFAULT_FORM_DATA;
+      } catch {
+        return DEFAULT_FORM_DATA;
+      }
+    }
+    return DEFAULT_FORM_DATA;
+  });
+
+  const [step, setStep] = useState<number>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("course_creation_step");
+      return saved ? Number(saved) : 1;
+    }
+    return 1;
+  });
+
+  // On mount: re-hydrate Redux course state (course._id) from localStorage
+  // so step 4 can call updateCourse after a reload at step 3+
+  useEffect(() => {
+    if (!course._id) {
+      try {
+        const saved = localStorage.getItem(COURSE_STATE_KEY);
+        if (saved) dispatch(Course(JSON.parse(saved)));
+      } catch {}
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Persist Redux course state whenever step 2 sets the course _id
+  useEffect(() => {
+    if (course._id) {
+      localStorage.setItem(COURSE_STATE_KEY, JSON.stringify(course));
+    }
+  }, [course._id]);
+
+  // Persist formData on every change so step 1 fields survive a reload
+  useEffect(() => {
+    localStorage.setItem(FORM_DATA_KEY, JSON.stringify(formData));
+  }, [formData]);
+
+  // Persist step; clear ALL keys when the flow completes at step 5
+  useEffect(() => {
+    if (step === 5) {
+      localStorage.removeItem("course_creation_step");
+      localStorage.removeItem(FORM_DATA_KEY);
+      localStorage.removeItem(COURSE_STATE_KEY);
+    } else {
+      localStorage.setItem("course_creation_step", String(step));
+    }
+  }, [step]);
 
   const onNext = () => {
     setStep(step + 1);

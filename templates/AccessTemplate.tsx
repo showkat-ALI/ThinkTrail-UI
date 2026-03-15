@@ -1,17 +1,23 @@
-"use client"
+"use client";
 import { useAppSelector } from "../redux-hook/hooks";
 import NotFound from "../components/pages/404";
 
-type Roles =
-  | ("admin" | "student" | "instructor" | "hr" | "superAdmin"|"admitted")[]
-  | undefined;
+type Role =
+  | "superAdmin"
+  | "admin"
+  | "instructor"
+  | "hr"
+  | "faculty"
+  | "student"
+  | "admitted";
+
 type PrivateTemplateProps = {
   children: React.ReactNode;
-  accessRoles: Roles;
+  accessRoles?: Role[];
 };
 
 const AccessTemplate = (props: PrivateTemplateProps) => {
-  const roleAccessChecker = (userRoles: Roles, accessRoles: Roles) => {
+  const roleAccessChecker = (userRoles?: Role[], accessRoles?: Role[]) => {
     if (!userRoles || !accessRoles) {
       return false;
     }

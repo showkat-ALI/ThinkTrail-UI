@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import { useAppSelector } from "../../../../../redux-hook/hooks";
 import TableController from "../common/TableController";

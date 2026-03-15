@@ -5,20 +5,32 @@ import Table from "./Table";
 import {
   useGetAllCourseQuery,
   useGetAllInstructorCourseQuery,
+  useGetCreatorCourseQuery,
+  
 } from "../../../../../../feature/api/dashboardApi";
 import { useAppDispatch } from "../../../../../../redux-hook/hooks";
 import { DelEditCourse } from "../../../../../../feature/course/courseSlice";
 import { useAppSelector } from "../../../../../../redux-hook/hooks";
+import { useGetUserQuery } from "../../../../../../feature/api/authApi";
 
 function CourseTable() {
-  const { roles } = useAppSelector((state) => state.auth.user);
+  const { roles,_id } = useAppSelector((state) => state.auth.user);
+  
   const { data, isSuccess, isError, isLoading } = useGetAllCourseQuery({});
+  const {
+    data: userData,
+    isSuccess: userDataSuccess,
+    isError: userDataError,
+    isLoading: userDataLoading,
+  } = useGetUserQuery({});
+
   const {
     data: instructorCourseData,
     isSuccess: instructorCourseSuccess,
     isError: instructorCourseIsError,
     isLoading: instructorCourseLoading,
-  } = useGetAllInstructorCourseQuery({});
+  } = useGetCreatorCourseQuery(userData?.data?._id);
+  
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(DelEditCourse());
@@ -61,14 +73,14 @@ function CourseTable() {
                 </tr>
               </thead>
               <tbody className="text-[#232D42] font-nunito">
-                {data.data.courses.map(
+                {data?.data?.courses.map(
                   ({
                     title,
                     createdAt,
                     price,
                     isPending,
                     isPublished,
-                    id,
+                    _id,
                     isActive,
                     totalEnroll,
                     status,
@@ -78,7 +90,7 @@ function CourseTable() {
                     price: number;
                     isPending: boolean;
                     isPublished: boolean;
-                    id: string;
+                    _id: string;
                     isActive: boolean;
                     totalEnroll: number;
                     status: string;
@@ -90,7 +102,7 @@ function CourseTable() {
                       price={price}
                       isPending={isPending}
                       isPublished={isPublished}
-                      id={id}
+                      _id={_id}
                       isActive={isActive}
                       totalEnroll={totalEnroll}
                       status={status}
@@ -110,8 +122,8 @@ function CourseTable() {
         ) : instructorCourseIsError ? (
           <div>Error...</div>
         ) : instructorCourseSuccess &&
-          instructorCourseData?.data?.courses &&
-          instructorCourseData.data.courses.length > 0 ? (
+          instructorCourseData?.data &&
+          instructorCourseData?.data?.length > 0 ? (
           <>
             <table className={`w-full text-[16px] md:text-[18px] text-left`}>
               <thead className="text-[#ADB5BD] font-normal">
@@ -137,14 +149,14 @@ function CourseTable() {
                 </tr>
               </thead>
               <tbody className="text-[#232D42] font-nunito">
-                {instructorCourseData.data.courses.map(
+                {instructorCourseData?.data?.map(
                   ({
                     title,
                     createdAt,
                     price,
                     isPending,
                     isPublished,
-                    id,
+                    _id,
                     isActive,
                     totalEnroll,
                     status,
@@ -154,19 +166,22 @@ function CourseTable() {
                     price: number;
                     isPending: boolean;
                     isPublished: boolean;
-                    id: string;
+                    _id: string;
                     isActive: boolean;
                     totalEnroll: number;
                     status: string;
                   }) => (
+                    
+                     
+                    
                     <Table
-                      key={id}
+                      key={_id}
                       title={title}
                       createdAt={createdAt}
                       price={price}
                       isPending={isPending}
                       isPublished={isPublished}
-                      id={id}
+                      _id={_id}
                       isActive={isActive}
                       totalEnroll={totalEnroll}
                       status={status}

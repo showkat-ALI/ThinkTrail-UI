@@ -1,3 +1,4 @@
+"use client"
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiEditAlt } from "react-icons/bi";
 import { MdPersonAddAlt } from "react-icons/md";
@@ -5,7 +6,7 @@ import DeleteCourseModal from "./DeleteCourseModal";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import { useUpdateCourseStatusMutation } from "../../../../../../feature/api/dashboardApi";
+import { useUpdateCourseMutation } from "../../../../../../feature/api/dashboardApi";
 import { useAppSelector } from "../../../../../../redux-hook/hooks";
 
 type ITable = {
@@ -14,7 +15,7 @@ type ITable = {
   price: number;
   isPending: boolean;
   isPublished: boolean;
-  id: string;
+  _id: string;
   isActive: boolean;
   totalEnroll: number;
   status: string;
@@ -30,14 +31,14 @@ function Table(props: ITable) {
     price,
     isPending,
     isPublished,
-    id,
+    _id,
     isActive,
     totalEnroll,
     status,
   } = props;
   const [showDeleteCourseModal, setshowDeleteCourseModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
-
+console.log(_id)
   const [
     updateCourseStatus,
     {
@@ -46,7 +47,7 @@ function Table(props: ITable) {
       isSuccess: isUpdateCourseStatusSuccess,
       isError: isUpdateCourseStatusError,
     },
-  ] = useUpdateCourseStatusMutation();
+  ] = useUpdateCourseMutation();
 
   const onOptionChangeHandler = (id: string, status: string) => {
     // console.log("User Selected Value - ", event.target.value)
@@ -90,7 +91,7 @@ function Table(props: ITable) {
       </td>
       <td className="py-4 px-6 font-nunito">${price}</td>
       <td className="py-4 px-6">
-        {roles.includes("admin") && (
+        {roles?.includes("admin") && (
           <select
             className={`rounded-xl px-2 py-1 text-[12px] min-w-[100px]
             ${
@@ -116,7 +117,7 @@ function Table(props: ITable) {
             })}
           </select>
         )}
-        {roles.includes("instructor") && (
+        {roles?.includes("instructor") && (
           <button
             className={`rounded-xl px-2 py-1 text-[12px]
                ${
@@ -146,13 +147,13 @@ function Table(props: ITable) {
           </button> */}
           <Link
             href={"/dashboard/course/edit/[editId]"}
-            as={`/dashboard/course/edit/${id}`}
+            as={`/dashboard/course/edit/${_id}`}
           >
             <button className="w-[32px] h-[32px] flex justify-center items-center text-white rounded-full bg-[#3A57E8] ">
               <BiEditAlt />
             </button>
           </Link>
-          {roles.includes("admin") && (
+          {roles?.includes("admin") && (
             <button
               onClick={() => handleDeleteCourse(id)}
               className="w-[32px] h-[32px] flex justify-center items-center text-white rounded-full bg-[#3A57E8] "
