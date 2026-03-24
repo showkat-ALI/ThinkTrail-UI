@@ -76,7 +76,7 @@ const pageCategory = ({
           </Link>
           <div>
             <ul className="flex flex-col gap-[10px] text-[#8A92A6] text-[15px] mb-2 h-[12rem] overflow-y-scroll	">
-              {roles.includes("admin") &&
+              {roles?.includes("admin") &&
                 (isLoading ? (
                   <div>Loading....</div>
                 ) : isError ? (
@@ -91,7 +91,7 @@ const pageCategory = ({
                         description,
                         id,
                       }: { description: string; title: string; id: string },
-                      index: string
+                      index: string,
                     ) => (
                       <li
                         key={index}
@@ -102,13 +102,13 @@ const pageCategory = ({
                       >
                         Page {index + 1} - {title}
                       </li>
-                    )
+                    ),
                   )
                 ) : (
                   <div>No Page Found</div>
                 ))}
 
-              {roles.includes("instructor") &&
+              {roles?.includes("instructor") &&
                 (instructorPageIsLoading ? (
                   <div>Loading....</div>
                 ) : instructorPageIsError ? (
@@ -123,7 +123,7 @@ const pageCategory = ({
                         description,
                         id,
                       }: { description: string; title: string; id: string },
-                      index: string
+                      index: string,
                     ) => (
                       <li
                         key={index}
@@ -134,7 +134,7 @@ const pageCategory = ({
                       >
                         Page {index + 1} - {title}
                       </li>
-                    )
+                    ),
                   )
                 ) : (
                   <div>No Page Found</div>

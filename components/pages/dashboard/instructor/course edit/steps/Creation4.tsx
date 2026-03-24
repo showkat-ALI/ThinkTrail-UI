@@ -1,75 +1,73 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Router from "next/router";
-import { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useParams } from "next/navigation";
+import { skipToken } from "@reduxjs/toolkit/query/react";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { InputErrorMessage } from "../../../../../utils/error";
-import { StepPropss } from "./Creation1";
-import {
-  useUpdateCourseMutation,
-  useGetFaqsQuery,
-} from "../../../../../../feature/api/dashboardApi";
 import { TagsInput } from "react-tag-input-component";
-import { useAppSelector } from "../../../../../../redux-hook/hooks";
-import ButtonLoader from "../../../../../utils/loaders/ButtonLoader";
-import { useAppDispatch } from "../../../../../../redux-hook/hooks";
+import { StepPropss } from "./Creation1";
+import { InputErrorMessage } from "../../../../../utils/error";
 import {
-  SuccessCreate,
-  DelEditCourse,
-} from "../../../../../../feature/course/courseSlice";
-//icon
+  useGetFaqsQuery,
+  useUpdateCourseMutation,
+} from "../../../../../../feature/api/dashboardApi";
+import ButtonLoader from "../../../../../utils/loaders/ButtonLoader";
+import { DelEditCourse } from "../../../../../../feature/course/courseSlice";
+import { useAppDispatch } from "../../../../../../redux-hook/hooks";
+
+// icon
 import editIcon from "../../../../../../assets/editIcon.png";
 import closeIcon from "../../../../../../assets/closeIcon.png";
-import minus from "../../../../../../assets/minus.png";
-import plus from "../../../../../../assets/plus.png";
 import plusIconBg from "../../../../../../assets/Group34917.png";
-import { useRouter } from "next/router";
 
 import FaqsCreateModal from "./popup/FaqsCreateModal";
 
-type props = {
+type FormValues = {
   tags: string[];
   msgtoreviewer: string;
   anymsg: boolean;
 };
 
 const Creation4 = (props: StepPropss) => {
-  const router = useRouter();
-  const id = router.query.editId as any;
+  const params = useParams<{ editId?: string | string[] }>();
+  const routeEditId = params?.editId;
+  const courseId = Array.isArray(routeEditId) ? routeEditId[0] : routeEditId;
+
   const [moduleModalShow, setmoduleModalShow] = useState<boolean>(false);
   const { setStep, setFormData, formData, step } = props;
   const dispatch = useAppDispatch();
-  const [updateCourse, { isError, data, error, isLoading, isSuccess }] =
+
+  const [updateCourse, { isError, isLoading, isSuccess }] =
     useUpdateCourseMutation();
-  const {
-    data: faqsData,
-    isError: faqsisError,
-    error: faqsError,
-    isLoading: faqsLoading,
-    isSuccess: faqsIsSuccess,
-  } = useGetFaqsQuery(id);
+
+  const { data: faqsData, isSuccess: faqsIsSuccess } = useGetFaqsQuery(
+    courseId ?? skipToken,
+  );
+
   const {
     register,
     control,
-    setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<props>({
+  } = useForm<FormValues>({
     defaultValues: {
       tags: formData.tags,
       msgtoreviewer: formData.msgtoreviewer,
     },
   });
 
-  const courseRegister = async (data: props) => {
+  const courseRegister = async (data: FormValues) => {
+    const safeCourseId = courseId;
+    if (!safeCourseId) {
+      toast.error("Course id is missing");
+      return;
+    }
+
     setFormData((prev: object) => ({ ...prev, ...data }));
     const userData = { ...formData, ...data };
 
-    //console.log("userData", userData);
-
     await updateCourse({
-      id,
+      id: safeCourseId,
       isPublished: true,
       tags: userData.tags,
       title: userData.title,
@@ -89,22 +87,21 @@ const Creation4 = (props: StepPropss) => {
       messageToReviewer: userData.msgtoreviewer,
     });
   };
+
   const onPrev = () => {
     setStep(step - 1);
   };
 
   useEffect(() => {
     if (isError) {
-      toast.error("course has update error");
-      // console.log(error);
+      toast.error("Course update failed");
     } else if (isSuccess) {
-      toast.success("Course has update Successfully!");
+      toast.success("Course updated successfully!");
       dispatch(DelEditCourse());
-      //console.log(data);
       setStep(5);
-      // console.log(data);
     }
-  }, [isError, isSuccess]);
+  }, [isError, isSuccess, dispatch, setStep]);
+
   return (
     <>
       <FaqsCreateModal
@@ -128,12 +125,13 @@ const Creation4 = (props: StepPropss) => {
                 Add Question
               </button>
             </div>
+
             {faqsIsSuccess &&
-              faqsData.data.faqs.map((item: any) => (
+              faqsData?.data?.faqs?.map((item: any) => (
                 <div
                   className="p-4 mb-4"
                   style={{ boxShadow: "0px 1px 15px rgba(0, 0, 0, 0.15)" }}
-                  key={item}
+                  key={item?._id || item?.question}
                 >
                   <div className="flex justify-between items-center">
                     <h2 className="text-base font-medium">{item.question}?</h2>
@@ -161,15 +159,14 @@ const Creation4 = (props: StepPropss) => {
                 render={({ field }) => (
                   <TagsInput
                     {...field}
-                    value={formData.tags}
-                    onChange={(text: any) => {
-                      field.onChange(text);
-                    }}
+                    value={field.value || []}
+                    onChange={(text: string[]) => field.onChange(text)}
                   />
                 )}
               />
               {errors.tags && <InputErrorMessage message={"Enter your tag"} />}
             </div>
+
             <div
               className="upload_image_details flex justify-between bg-[#CDEBEC] mt-10 mb-8 flex-col sm:flex-row items-center"
               style={{ padding: "12px 21px" }}
@@ -186,7 +183,6 @@ const Creation4 = (props: StepPropss) => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[13px] sm:text-[10px] lg:text-base text-black">
-                  {" "}
                   e.g. javascript, react, marketing
                 </span>
               </div>
@@ -209,13 +205,14 @@ const Creation4 = (props: StepPropss) => {
 
             <div className="btn flex justify-end gap-5 mt-8">
               <button
+                type="button"
                 className="xsm:w-full lg:w-[8rem] bg-[#EBEEFD] border border-[#3A57E8] py-2 px-4 rounded"
                 onClick={onPrev}
               >
                 Previous
               </button>
               <button
-                className="flex xsm:w-full lg:w-[9rem] bg-[#3A57E8] py-2 px-4 text-[#fff] rounded"
+                className="flex xsm:w-full lg:w-[9rem] bg-[#3A57E8] py-2 px-4 text-[#fff] rounded justify-center"
                 type="submit"
               >
                 {isLoading ? <ButtonLoader /> : "Submit Course"}

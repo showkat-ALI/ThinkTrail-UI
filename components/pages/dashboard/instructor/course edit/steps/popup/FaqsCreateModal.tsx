@@ -7,8 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import { useCreateFaqsMutation } from "../../../../../../../feature/api/dashboardApi";
-import { useAppSelector } from "../../../../../../../redux-hook/hooks";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 
 type FormData = {
   question: string;
@@ -34,8 +33,9 @@ const AddModuleModal = ({
   } = useForm<FormData>({
     resolver: zodResolver(Schema),
   });
-  const router = useRouter();
-  const id = router.query.editId as any;
+  const params = useParams<{ editId?: string | string[] }>();
+  const routeEditId = params?.editId;
+  const id = Array.isArray(routeEditId) ? routeEditId[0] : routeEditId;
   const [CreateFaqs, { error, data, isLoading, isSuccess, isError }] =
     useCreateFaqsMutation();
 

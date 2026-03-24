@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
-//icon
+// icon
 import editIcon from "../../../../../../../../assets/editIcon.png";
 import closeIcon from "../../../../../../../../assets/closeIcon.png";
 import minus from "../../../../../../../../assets/minus.png";
@@ -9,6 +10,11 @@ import plus from "../../../../../../../../assets/plus.png";
 import plusIconBg from "../../../../../../../../assets/Group34917.png";
 import PopupModal from ".././PopupModal";
 import DeleteModule from "./deleteModule";
+import {
+  useGetModuleAssignmentsQuery,
+  useGetModuleVideosQuery,
+  useGetSingleModuleQuizesQuery,
+} from "../../../../../../../../feature/api/dashboardApi";
 
 const Module = ({
   setmoduleName,
@@ -37,14 +43,40 @@ const Module = ({
   videos: string[];
   slides: string[];
 }) => {
-  const [ModuleTab, setModuleTab] = useState(false);
+  const [moduleTab, setModuleTab] = useState(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showDeleteModal, setshowDeleteModal] = useState<boolean>(false);
   const [seletedModule, setseletedModule] = useState("");
+
   const handleClose = () => {
     setshowDeleteModal(false);
     setseletedModule("");
   };
+
+  const { data: assignmentData, refetch: refetchAssignments } =
+    useGetModuleAssignmentsQuery(id, { skip: !id });
+  const { data: videoData, refetch: refetchVideos } = useGetModuleVideosQuery(
+    id,
+    { skip: !id },
+  );
+  const { data: quizData, refetch: refetchQuizzes } =
+    useGetSingleModuleQuizesQuery(id, { skip: !id });
+
+  const moduleAssignments = assignmentData?.data || [];
+  const moduleVideos = videoData?.data || [];
+  const moduleQuizzes = quizData?.data || [];
+
+  useEffect(() => {
+    refetchAssignments();
+  }, [id, refetchAssignments]);
+
+  useEffect(() => {
+    if (!showModal) {
+      refetchAssignments();
+      refetchVideos();
+      refetchQuizzes();
+    }
+  }, [showModal, refetchAssignments, refetchVideos, refetchQuizzes]);
 
   const handleEdit = () => {
     setEditShowModal(true);
@@ -52,10 +84,11 @@ const Module = ({
     setmoduleName(name);
   };
 
-  const handleDeleteModule = (id: string) => {
+  const handleDeleteModule = (moduleId: string) => {
     setshowDeleteModal(true);
-    setseletedModule(id);
+    setseletedModule(moduleId);
   };
+
   return (
     <>
       {showModal && (
@@ -77,7 +110,7 @@ const Module = ({
         style={{ boxShadow: "0px 1px 15px rgba(0, 0, 0, 0.15)" }}
       >
         <h2 className="text-[15px] font-medium">
-          Module {index + 1}: {name}
+          Module {Number(index) + 1}: {name}
         </h2>
         <div className="flex items-center gap-2">
           <button
@@ -91,9 +124,9 @@ const Module = ({
           <button
             type="button"
             className="flex justify-center h-[24px] items-center"
-            onClick={() => setModuleTab(!ModuleTab)}
+            onClick={() => setModuleTab(!moduleTab)}
           >
-            {ModuleTab ? (
+            {moduleTab ? (
               <Image src={minus} className="w-8" width={23} alt="" />
             ) : (
               <Image src={plus} className="w-8" width={21} height={19} alt="" />
@@ -101,7 +134,8 @@ const Module = ({
           </button>
         </div>
       </div>
-      {ModuleTab && (
+
+      {moduleTab && (
         <div>
           <div
             className="rounded"
@@ -110,10 +144,10 @@ const Module = ({
             <div className="flex justify-between bg-[#F9F9F9] p-3">
               <div>
                 <h3 className="text-base font-medium">
-                  Module {index + 1}: {name}
+                  Module {Number(index) + 1}: {name}
                 </h3>
                 <span className="text-sm font-normal text-[#8A92A6]">
-                  {videos.length} Videos
+                  {moduleVideos.length} Videos
                 </span>{" "}
                 <span className="text-[#8A92A6]">|</span>{" "}
                 <span className="text-sm font-normal text-[#8A92A6]">
@@ -131,7 +165,7 @@ const Module = ({
                 </button>
                 <div
                   className="bg-[#D5EBDF] rounded-full w-[32px] h-[32px] flex justify-center items-center cursor-pointer"
-                  onClick={() => handleEdit()}
+                  onClick={handleEdit}
                 >
                   <Image src={editIcon} width={18} height={16} alt="" />
                 </div>
@@ -148,82 +182,94 @@ const Module = ({
             </div>
 
             <div className="p-4">
-              {assignments.map((item: any, i) => (
-                <div key={item._id} className="mb-5">
+              {moduleAssignments.map((item: any) => (
+                <div className="mb-5" key={item?._id}>
                   <div className="flex items-center mb-1">
                     <input
                       checked
+                      readOnly
                       id="default-checkbox"
                       type="checkbox"
                       value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300"
                     />
-                    <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      Assignment - {item.name}
+                    <label className="ml-2 text-base font-normal text-gray-900">
+                      Assignment - {item?.assignment?.name || item?.name}
                     </label>
                   </div>
                 </div>
               ))}
-              {quizzes.map((item: any, i) => (
-                <div key={item._id} className="mb-5">
+
+              {moduleVideos.map((item: any) => (
+                <div className="mb-5" key={item?._id}>
                   <div className="flex items-center mb-1">
                     <input
                       checked
+                      readOnly
                       id="default-checkbox"
                       type="checkbox"
                       value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300"
                     />
-                    <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      Quiz - {item.title}
+                    <Link
+                      className="ml-2 text-base font-normal text-gray-900"
+                      href={`${item?.localVideo || "#"}`}
+                    >
+                      Video - {item?.topicName || item?.localVideo}
+                    </Link>
+                  </div>
+                </div>
+              ))}
+
+              {moduleQuizzes.map((item: any) => (
+                <div className="mb-5" key={item?._id}>
+                  <div className="flex items-center mb-1">
+                    <input
+                      checked
+                      readOnly
+                      id="default-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300"
+                    />
+                    <label className="ml-2 text-base font-normal text-gray-900">
+                      Quiz - {item?.quiz?.title || item?.title}
                     </label>
                   </div>
                 </div>
               ))}
-              {videos.map((item: any, i) => (
-                <div key={item._id} className="mb-5">
+
+              {slides.map((item: any) => (
+                <div className="mb-5" key={item?._id || item?.id || item}>
                   <div className="flex items-center mb-1">
                     <input
                       checked
+                      readOnly
                       id="default-checkbox"
                       type="checkbox"
                       value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300"
                     />
-                    <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      Video - {item.topicName}
+                    <label className="ml-2 text-base font-normal text-gray-900">
+                      File - {item?.title || item?.name || item}
                     </label>
                   </div>
                 </div>
               ))}
-              {slides.map((item: any, i) => (
-                <div key={item._id} className="mb-5">
+
+              {pages.map((item: any) => (
+                <div className="mb-5" key={item?._id || item?.id || item}>
                   <div className="flex items-center mb-1">
                     <input
                       checked
+                      readOnly
                       id="default-checkbox"
                       type="checkbox"
                       value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300"
                     />
-                    <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      File - {item.title}
-                    </label>
-                  </div>
-                </div>
-              ))}
-              {pages.map((item: any, i) => (
-                <div key={item._id} className="mb-5">
-                  <div className="flex items-center mb-1">
-                    <input
-                      checked
-                      id="default-checkbox"
-                      type="checkbox"
-                      value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      Pages - {item.title}
+                    <label className="ml-2 text-base font-normal text-gray-900">
+                      Pages - {item?.title || item?.name || item}
                     </label>
                   </div>
                 </div>

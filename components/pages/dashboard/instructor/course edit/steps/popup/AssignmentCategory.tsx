@@ -3,7 +3,7 @@ import {
   useGetAssignmentQuery,
   useAllAssignmentInstructorQuery,
 } from "../../../../../../../feature/api/dashboardApi";
-import { useUpdateModuleMutation } from "../../../../../../../feature/api/dashboardApi";
+import { useAddModuleAssignmentMutation } from "../../../../../../../feature/api/dashboardApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import Link from "next/link";
@@ -28,11 +28,11 @@ const AssignmentCategory = ({
     updateModule,
     {
       error,
-      data: moduleData,
       isLoading: loadingModule,
       isSuccess: moduleisSuccess,
+      isError: moduleIsError,
     },
-  ] = useUpdateModuleMutation();
+  ] = useAddModuleAssignmentMutation();
   const [assignmentId, setassignmentId] = useState("");
   const [activeClass, setactiveClass] = useState("");
 
@@ -42,11 +42,15 @@ const AssignmentCategory = ({
   };
 
   const update = () => {
-    updateModule({ id, assignments: assignmentId });
+    if (!assignmentId) {
+      toast.error("Please select an assignment first");
+      return;
+    }
+    updateModule({ module: id, assignment: assignmentId });
     // console.log(assignmentId,id)
   };
   useEffect(() => {
-    if (isError) {
+    if (moduleIsError) {
       toast.error((error as any).data.message);
       // console.log(error);
     } else if (moduleisSuccess) {
@@ -54,7 +58,7 @@ const AssignmentCategory = ({
       // console.log(data);
       setShowModal(false);
     }
-  }, [isError, moduleisSuccess]);
+  }, [moduleIsError, moduleisSuccess, error, setShowModal]);
   return (
     <>
       <div>
@@ -75,7 +79,7 @@ const AssignmentCategory = ({
           </Link>
           <div>
             <ul className="flex flex-col gap-[10px] text-[#8A92A6] text-[15px] mb-2 h-[12rem] overflow-y-scroll	">
-              {roles.includes("admin") &&
+              {roles?.includes("admin") &&
                 (isLoading ? (
                   <div>Loading....</div>
                 ) : isError ? (
@@ -86,7 +90,7 @@ const AssignmentCategory = ({
                   data.data.assignments.map(
                     (
                       { name, id }: { name: string; id: string },
-                      index: string
+                      index: string,
                     ) => (
                       <li
                         key={id}
@@ -97,12 +101,12 @@ const AssignmentCategory = ({
                       >
                         Assignment {index + 1} - {name}
                       </li>
-                    )
+                    ),
                   )
                 ) : (
                   <div>No assignment found</div>
                 ))}
-              {roles.includes("instructor") &&
+              {roles?.includes("instructor") &&
                 (instructorAssignmentLoading ? (
                   <div>Loading....</div>
                 ) : instructorAssignmentIsError ? (
@@ -113,7 +117,7 @@ const AssignmentCategory = ({
                   instructorAssignmentData.data.assignments.map(
                     (
                       { name, id }: { name: string; id: string },
-                      index: string
+                      index: string,
                     ) => (
                       <li
                         key={index}
@@ -124,7 +128,7 @@ const AssignmentCategory = ({
                       >
                         Assignment {index + 1} - {name}
                       </li>
-                    )
+                    ),
                   )
                 ) : (
                   <div>No assignment found</div>

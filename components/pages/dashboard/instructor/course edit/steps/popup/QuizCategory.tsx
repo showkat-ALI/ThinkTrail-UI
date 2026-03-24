@@ -44,7 +44,11 @@ const QuizCategory = ({
   };
 
   const update = () => {
-    updateModuleQuiz({ id, quizzes: QuizId });
+    if (!QuizId) {
+      toast.error("Please select a quiz first");
+      return;
+    }
+    updateModuleQuiz({ module: id, quiz: QuizId });
   };
   useEffect(() => {
     if (isError) {
@@ -76,7 +80,7 @@ const QuizCategory = ({
           </Link>
           <div>
             <ul className="flex flex-col gap-[10px] text-[#8A92A6] text-[15px] mb-2 h-[12rem] overflow-y-scroll">
-              {roles.includes("admin") &&
+              {roles?.includes("admin") &&
                 (isLoading ? (
                   <div>Loading....</div>
                 ) : isError ? (
@@ -87,7 +91,7 @@ const QuizCategory = ({
                   data.data.quazes.map(
                     (
                       { title, id }: { title: string; id: string },
-                      index: string
+                      index: string,
                     ) => (
                       <li
                         key={id}
@@ -98,13 +102,13 @@ const QuizCategory = ({
                       >
                         Quiz {index + 1} - {title}
                       </li>
-                    )
+                    ),
                   )
                 ) : (
                   <div>No quiz found</div>
                 ))}
 
-              {roles.includes("instructor") &&
+              {roles?.includes("instructor") &&
                 (instructorQuizLoading ? (
                   <div>Loading....</div>
                 ) : instructorQuizIsError ? (
@@ -115,7 +119,7 @@ const QuizCategory = ({
                   instructorAllQuiz.data.quazes.map(
                     (
                       { title, id }: { title: string; id: string },
-                      index: string
+                      index: string,
                     ) => (
                       <li
                         key={id}
@@ -126,7 +130,7 @@ const QuizCategory = ({
                       >
                         Quiz {index + 1} - {title}
                       </li>
-                    )
+                    ),
                   )
                 ) : (
                   <div>No quiz found</div>

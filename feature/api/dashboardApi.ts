@@ -35,7 +35,7 @@ const dashboardApi = createApi({
     "courseModule",
     "moduleVideos",
     "admission",
-    "moduleQuiz"
+    "moduleQuiz",
   ],
 
   endpoints: (builder) => ({
@@ -95,8 +95,7 @@ const dashboardApi = createApi({
       }),
       invalidatesTags: ["courses"],
     }),
-   
-   
+
     // GET ALL STUDENTS
     getAllStudents: builder.query({
       query: () => ({
@@ -164,7 +163,7 @@ const dashboardApi = createApi({
         courseImage: string;
         videoUrl: string;
       }) => ({
-        url: `/api/v1/courses/${body.id}`,
+        url: `/api/v1/course/${body.id}`,
         method: "PATCH",
         body: body,
       }),
@@ -258,7 +257,7 @@ const dashboardApi = createApi({
     // DELETE A Module
     deleteModule: builder.mutation({
       query: (id: string) => ({
-        url: `/api/v1/modules/${id}`,
+        url: `/api/v1/module/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["courseModule"],
@@ -281,7 +280,7 @@ const dashboardApi = createApi({
           body: body,
         };
       },
-      invalidatesTags: ["courseModule"],
+      invalidatesTags: ["courseModule", "moduleVideos"],
     }),
     //Get all assignment
     getQuiz: builder.query({
@@ -299,7 +298,7 @@ const dashboardApi = createApi({
           body: body,
         };
       },
-      invalidatesTags: ["courseModule"],
+      invalidatesTags: ["courseModule", "moduleQuiz"],
     }),
     //create slide
     createSlide: builder.mutation({
@@ -326,7 +325,7 @@ const dashboardApi = createApi({
     }),
     //Get my enrollmentsall course
     getMyEnrollmentAll: builder.query({
-      query: (id:string) => ({
+      query: (id: string) => ({
         url: `api/v1/admission/my-admission/${id}`,
         method: "GET",
       }),
@@ -388,8 +387,8 @@ const dashboardApi = createApi({
         text: string;
         fileUrl: string[];
         comment: string;
-        submittedBy:string;
-        createdBy:any;
+        submittedBy: string;
+        createdBy: any;
       }) => ({
         url: "/api/v1/assignment/submit-assignment",
         method: "POST",
@@ -407,7 +406,7 @@ const dashboardApi = createApi({
     }),
     //Get  one submit assignment
     getOneSubmitAssignment: builder.query({
-      query: ({assignmentId,id}) => ({
+      query: ({ assignmentId, id }) => ({
         url: `/api/v1/assignment/submit-assignment/single-assignment/${assignmentId}/${id}`,
         method: "GET",
       }),
@@ -432,27 +431,25 @@ const dashboardApi = createApi({
     }),
     //create quiz question
     submitQuiz: builder.mutation({
-      query: (body: { 
-      quiz: any; 
-      course: any; 
-      answers: any; 
-      score: number; 
-      totalQuestions: number; 
-      submittedBy: { name: string; email: string } 
+      query: (body: {
+        quiz: any;
+        course: any;
+        answers: any;
+        score: number;
+        totalQuestions: number;
+        submittedBy: { name: string; email: string };
       }) => ({
-      url: "/api/v1/quiz/submit-quiz",
-      method: "POST",
-      body: body,
+        url: "/api/v1/quiz/submit-quiz",
+        method: "POST",
+        body: body,
       }),
       invalidatesTags: ["quiz"],
     }),
     getSubMitQuiz: builder.query({
       query: () => ({
-      url: "/api/v1/quiz/submit-quiz/get-all-sub-Quiz",
-      method: "GET",
-    
+        url: "/api/v1/quiz/submit-quiz/get-all-sub-Quiz",
+        method: "GET",
       }),
-     
     }),
     // GET ALL active course by gatecory
     getCourseByCategory: builder.query({
@@ -464,7 +461,7 @@ const dashboardApi = createApi({
     // GET single active course by gatecory
     getSingleCourse: builder.query({
       query: (id: any) => ({
-        url: `/api/v1/courses/${id}`,
+        url: `/api/v1/course/${id}`,
         method: "GET",
       }),
     }),
@@ -647,8 +644,8 @@ const dashboardApi = createApi({
     //delete single assignment
     SingleAssignment: builder.query({
       query: (id: any) => ({
-      url: `api/v1/assignment/${id}`,
-      method: "GET",
+        url: `api/v1/assignment/${id}`,
+        method: "GET",
       }),
       providesTags: ["assignment"],
     }),
@@ -1124,7 +1121,7 @@ const dashboardApi = createApi({
         method: "POST",
         body: body,
       }),
-      invalidatesTags: [],
+      invalidatesTags: ["moduleVideos", "courseModule"],
     }),
     addModuleAssignment: builder.mutation({
       query: (body: any) => ({
@@ -1132,7 +1129,7 @@ const dashboardApi = createApi({
         method: "POST",
         body: body,
       }),
-      invalidatesTags: ["moduleVideos"],
+      invalidatesTags: ["moduleVideos", "courseModule"],
     }),
     getModuleAssignments: builder.query({
       query: (id: string) => {
@@ -1150,7 +1147,7 @@ const dashboardApi = createApi({
       }),
       providesTags: ["moduleVideos"], // Add this to force a refetch
     }),
-    
+
     getAllDepartments: builder.query({
       query: () => ({
         url: `api/v1/academic-departments`,
@@ -1205,14 +1202,14 @@ const dashboardApi = createApi({
       }),
       providesTags: ["moduleQuiz"], // Add this to force a refetch
     }),
-    createSingleAdmin:builder.mutation({
+    createSingleAdmin: builder.mutation({
       query: (body: any) => ({
         url: `api/v1/users/create-admin`,
         method: "POST",
         body: body,
       }),
     }),
-    createChatWithAI:builder.mutation({
+    createChatWithAI: builder.mutation({
       query: (body: any) => ({
         url: `api/v1/course/chat-with-bot`,
         method: "POST",
@@ -1289,7 +1286,7 @@ export const {
   useGetAllCourseQuery,
   useGetAllActiveCourseQuery,
   useDeleteCourseMutation,
-  
+
   useGetAllStudentsQuery,
   useCreateCourseMutation,
   useGetAllAdmissionRequestQuery,
@@ -1365,6 +1362,6 @@ export const {
   useGetSubMitQuizQuery,
   useCreateSingleAdminMutation,
   useCreateChatWithAIMutation,
-  useGetCreatorCourseQuery
+  useGetCreatorCourseQuery,
 } = dashboardApi;
 export default dashboardApi;

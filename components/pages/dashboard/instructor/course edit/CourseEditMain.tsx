@@ -1,11 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import {
-  useForm,
-  SubmitHandler,
-  FormProvider,
-  useFormContext,
-} from "react-hook-form";
-import { useRouter } from "next/router";
+import { useParams, useSearchParams } from "next/navigation";
 
 //component
 import { useAppDispatch } from "../../../../../redux-hook/hooks";
@@ -20,15 +16,21 @@ import CourseCreationSuccessful from "./steps/CourseCreationSuccessful";
 import { useGetSingleCourseQuery } from "../../../../../feature/api/dashboardApi";
 
 const CourseEditMain = () => {
-  const router = useRouter();
-  const _id = router.query.editId as any;
+  const params = useParams<{ editId?: string | string[] }>();
+  const searchParams = useSearchParams();
+  const routeEditId = params?.editId;
+  const _id =
+    (Array.isArray(routeEditId) ? routeEditId[0] : routeEditId) ||
+    searchParams.get("editId") ||
+    searchParams.get("id") ||
+    "";
   const dispatch = useAppDispatch();
   const { isError, data, error, isLoading, isSuccess } =
-    useGetSingleCourseQuery(_id);
+    useGetSingleCourseQuery(_id, { skip: !_id });
 
   useEffect(() => {
     if (isError) {
-      // console.log("upload error", isError);
+      console.log("upload error", error);
     } else if (isSuccess) {
       const {
         title,
@@ -69,7 +71,7 @@ const CourseEditMain = () => {
         })
       );
     }
-  }, [isError, isSuccess]);
+  }, [isError, isSuccess, data, dispatch]);
 
   const {
     courseEdit: { title, shortDescription },

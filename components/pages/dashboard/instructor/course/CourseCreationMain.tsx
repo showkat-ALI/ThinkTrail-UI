@@ -7,7 +7,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../../redux-hook/hooks";
-import { Course } from "../../../../../feature/course/courseSlice";
+import { Course, SuccessCreate } from "../../../../../feature/course/courseSlice";
 
 //component
 import Creation1 from "./steps/Creation1";
@@ -51,6 +51,7 @@ const DEFAULT_FORM_DATA: InitialFormDataCourse = {
 // Keep name alias so existing child component imports still work
 const InitialFormDataCourse = DEFAULT_FORM_DATA;
 
+const STEP_KEY = "course_creation_step";
 const FORM_DATA_KEY = "course_creation_form_data";
 const COURSE_STATE_KEY = "course_creation_course_state";
 
@@ -62,6 +63,10 @@ const CourseCreationMain = () => {
   const [formData, setFormData] = useState<InitialFormDataCourse>(() => {
     if (typeof window !== "undefined") {
       try {
+        const savedStep = localStorage.getItem(STEP_KEY);
+        // Only restore saved form when there is an active in-progress step.
+        if (!savedStep) return DEFAULT_FORM_DATA;
+
         const saved = localStorage.getItem(FORM_DATA_KEY);
         return saved ? JSON.parse(saved) : DEFAULT_FORM_DATA;
       } catch {
@@ -73,11 +78,22 @@ const CourseCreationMain = () => {
 
   const [step, setStep] = useState<number>(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("course_creation_step");
+      const saved = localStorage.getItem(STEP_KEY);
       return saved ? Number(saved) : 1;
     }
     return 1;
   });
+
+  // If step key is missing, treat this as a fresh course creation and clear stale draft data.
+  useEffect(() => {
+    const savedStep = localStorage.getItem(STEP_KEY);
+    if (!savedStep) {
+      localStorage.removeItem(FORM_DATA_KEY);
+      localStorage.removeItem(COURSE_STATE_KEY);
+      localStorage.removeItem("currentStep");
+      dispatch(SuccessCreate());
+    }
+  }, [dispatch]);
 
   // On mount: re-hydrate Redux course state (course._id) from localStorage
   // so step 4 can call updateCourse after a reload at step 3+
@@ -96,7 +112,7 @@ const CourseCreationMain = () => {
     if (course._id) {
       localStorage.setItem(COURSE_STATE_KEY, JSON.stringify(course));
     }
-  }, [course._id]);
+  }, [course]);
 
   // Persist formData on every change so step 1 fields survive a reload
   useEffect(() => {
@@ -106,13 +122,15 @@ const CourseCreationMain = () => {
   // Persist step; clear ALL keys when the flow completes at step 5
   useEffect(() => {
     if (step === 5) {
-      localStorage.removeItem("course_creation_step");
+      localStorage.removeItem(STEP_KEY);
       localStorage.removeItem(FORM_DATA_KEY);
       localStorage.removeItem(COURSE_STATE_KEY);
+      localStorage.removeItem("currentStep");
+      dispatch(SuccessCreate());
     } else {
-      localStorage.setItem("course_creation_step", String(step));
+      localStorage.setItem(STEP_KEY, String(step));
     }
-  }, [step]);
+  }, [step, dispatch]);
 
   const onNext = () => {
     setStep(step + 1);
@@ -120,6 +138,16 @@ const CourseCreationMain = () => {
 
   const onPrev = () => {
     setStep(step - 1);
+  };
+
+  const goToStep = (targetStep: number) => {
+    if (targetStep < 1 || targetStep > 4) return;
+
+    // Forward jump to curriculum/additional info requires a created course id.
+    const canJumpForward = targetStep <= step || Boolean(course?._id);
+    if (!canJumpForward) return;
+
+    setStep(targetStep);
   };
 
   return (
@@ -132,7 +160,15 @@ const CourseCreationMain = () => {
           <CourseCreationSuccessful onPrev={onPrev} onNext={onNext} />
         ) : (
           <div className="step-indicator flex items-center ">
-            <div className="flex items-center flex-col z-10 relative">
+            <div
+              className="flex items-center flex-col z-10 relative cursor-pointer"
+              onClick={() => goToStep(1)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") goToStep(1);
+              }}
+            >
               <div className={`${step === 1 ? "activeBorder" : ""}`}>
                 <div
                   className={`${
@@ -147,7 +183,15 @@ const CourseCreationMain = () => {
               </p>
             </div>
             <div className="indicator-line  w-[100%] h-[1px] bg-[#ADB5BD] flex-1 mb-5"></div>
-            <div className="flex items-center flex-col z-10 relative">
+            <div
+              className="flex items-center flex-col z-10 relative cursor-pointer"
+              onClick={() => goToStep(2)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") goToStep(2);
+              }}
+            >
               <div className={`${step === 2 ? "activeBorder" : ""}`}>
                 <div
                   className={`${
@@ -162,7 +206,15 @@ const CourseCreationMain = () => {
               </p>
             </div>
             <div className="indicator-line  w-[100%] h-[1px] bg-[#ADB5BD] flex-1 mb-5"></div>
-            <div className="flex items-center flex-col z-10 relative">
+            <div
+              className="flex items-center flex-col z-10 relative cursor-pointer"
+              onClick={() => goToStep(3)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") goToStep(3);
+              }}
+            >
               <div className={`${step === 3 ? "activeBorder" : ""}`}>
                 <div
                   className={`${
@@ -177,7 +229,15 @@ const CourseCreationMain = () => {
               </p>
             </div>
             <div className="indicator-line  w-[100%] h-[1px] bg-[#ADB5BD] flex-1 mb-5"></div>
-            <div className="step step3  flex items-center flex-col z-10 relative">
+            <div
+              className="step step3  flex items-center flex-col z-10 relative cursor-pointer"
+              onClick={() => goToStep(4)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") goToStep(4);
+              }}
+            >
               <div className={`${step === 4 ? "activeBorder" : ""}`}>
                 <div
                   className={`${

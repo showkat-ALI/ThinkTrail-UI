@@ -97,6 +97,9 @@ const Creation4 = (props: StepPropss) => {
       // console.log(error);
     } else if (isSuccess) {
       toast.success("Course has update Successfully!");
+      localStorage.removeItem("course_creation_step");
+      localStorage.removeItem("course_creation_form_data");
+      localStorage.removeItem("course_creation_course_state");
       dispatch(SuccessCreate());
       //  console.log(data);
       setStep(5);

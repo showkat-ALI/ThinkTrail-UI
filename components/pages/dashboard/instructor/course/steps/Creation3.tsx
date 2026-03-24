@@ -1,12 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { useForm, useFormContext } from "react-hook-form";
-import { InputErrorMessage } from "../../../../../utils/error";
+import { useForm } from "react-hook-form";
 import { StepPropss } from "./Creation1";
 import Module from "./popup/module/Module";
 import { useAppSelector } from "../../../../../../redux-hook/hooks";
 //icon
-import plus from "../../../../../../assets/plus.png";
 import plusIconBg from "../../../../../../assets/Group34917.png";
 import { Spinner } from "flowbite-react";
 
@@ -22,28 +20,14 @@ const Creation3 = (props: StepPropss) => {
   } = useAppSelector((state) => state.course);
   const [moduleModalShow, setmoduleModalShow] = useState<boolean>(false);
   const { setStep, setFormData, formData, step } = props;
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { handleSubmit } = useForm<FormData>();
   const { isError, data, error, isLoading, isSuccess } =
-    useGetCourseModuleQuery(_id);
+    useGetCourseModuleQuery(_id, { skip: !_id });
   const [EditshowModal, setEditShowModal] = useState<boolean>(false);
   const [ModuleId, setModuleId] = useState("");
   const [moduleName, setmoduleName] = useState("");
   //console.log(data);
 
-  React.useEffect(() => {
-    const currentStep = localStorage.getItem("currentStep");
-    if (currentStep) {
-      setStep(Number(currentStep));
-    }
-  }, [setStep]);
-
-  React.useEffect(() => {
-    localStorage.setItem("currentStep", step.toString());
-  }, [step]);
   const submitThirdStep = () => {
     setStep(4);
   };

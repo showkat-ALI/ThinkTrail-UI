@@ -16,6 +16,7 @@ import {
   useGetSingleModuleQuizesQuery,
 } from "../../../../../../../../feature/api/dashboardApi";
 import Link from "next/link";
+
 const Module = ({
   setmoduleName,
   setModuleId,
@@ -52,28 +53,30 @@ const Module = ({
     setseletedModule("");
   };
 
-  const { error, data, isLoading, isSuccess, isError, refetch } =
-    useGetModuleAssignmentsQuery(_id);
-  if (isSuccess) {
-    console.log(data);
-  }
+  const { data, refetch } = useGetModuleAssignmentsQuery(_id);
   const {
-    error: vidsErr,
     data: vidsData,
-    isLoading: vidsLoading,
-    isSuccess: vidsIsSuccess,
-    isError: vidsIsError,
+    refetch: refetchVideos,
   } = useGetModuleVideosQuery(_id);
   const {
-    error: quizErr,
     data: quizDat,
-    isLoading: quizIsLoading,
-    isSuccess: quizIsSuccess,
-    isError: quizIsError,
+    refetch: refetchQuizzes,
   } = useGetSingleModuleQuizesQuery(_id);
+
+  const moduleAssignments = data?.data || [];
+  const moduleVideos = vidsData?.data || [];
+  const moduleQuizzes = quizDat?.data || [];
   useEffect(() => {
     refetch(); // Force a refetch when the component mounts or _id changes
   }, [_id, refetch]);
+
+  useEffect(() => {
+    if (!showModal) {
+      refetch();
+      refetchVideos();
+      refetchQuizzes();
+    }
+  }, [showModal, refetch, refetchVideos, refetchQuizzes]);
   const handleEdit = () => {
     setEditShowModal(true);
     setModuleId(_id);
@@ -177,7 +180,7 @@ const Module = ({
             </div>
 
             <div className="p-4">
-              {data?.data?.map((item: any) => (
+              {moduleAssignments.map((item: any) => (
                 <div className="mb-5" key={item._id}>
                   <div className="flex items-center mb-1">
                     <input
@@ -193,24 +196,9 @@ const Module = ({
                   </div>
                 </div>
               ))}
-              {/* {quizDat.map((item: any, i) => (
-                <div className="mb-5" key={item._id}>
-                  <div className="flex items-center mb-1">
-                    <input
-                      checked
-                      id="default-checkbox"
-                      type="checkbox"
-                      value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      Quiz - {item.title}
-                    </label>
-                  </div>
-                </div>
-              ))} */}
-              {vidsData?.data?.length > 0 ? (
-                vidsData?.data?.map((item: any) => (
+
+              {moduleVideos.length > 0 ? (
+                moduleVideos.map((item: any) => (
                   <div className="mb-5" key={item._id}>
                     <div className="flex items-center mb-1">
                       <input
@@ -224,15 +212,14 @@ const Module = ({
                         className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300"
                         href={`${item?.localVideo}`}
                       >
-                        video - {item?.localVideo}
+                        Video - {item?.topicName || item?.localVideo}
                       </Link>
                     </div>
                   </div>
                 ))
-              ) : (
-                <p>No videos found.</p>
-              )}
-              {/* {slides.map((item: any, i) => (
+              ) : null}
+
+              {moduleQuizzes.map((item: any) => (
                 <div className="mb-5" key={item._id}>
                   <div className="flex items-center mb-1">
                     <input
@@ -243,13 +230,14 @@ const Module = ({
                       className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      File - {item.title}
+                      Quiz - {item?.quiz?.title || item?.title}
                     </label>
                   </div>
                 </div>
               ))}
-              {pages.map((item: any, i) => (
-                <div className="mb-5" key={item._id}>
+
+              {slides.map((item: any) => (
+                <div className="mb-5" key={item?._id || item?.id || item}>
                   <div className="flex items-center mb-1">
                     <input
                       checked
@@ -259,11 +247,36 @@ const Module = ({
                       className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
-                      Pages - {item.title}
+                      File - {item?.title || item?.name || item}
                     </label>
                   </div>
                 </div>
-              ))}  */}
+              ))}
+
+              {pages.map((item: any) => (
+                <div className="mb-5" key={item?._id || item?.id || item}>
+                  <div className="flex items-center mb-1">
+                    <input
+                      checked
+                      id="default-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label className="ml-2 text-base font-normal text-gray-900 dark:text-gray-300">
+                      Page - {item?.title || item?.name || item}
+                    </label>
+                  </div>
+                </div>
+              ))}
+
+              {moduleAssignments.length === 0 &&
+              moduleVideos.length === 0 &&
+              moduleQuizzes.length === 0 &&
+              slides.length === 0 &&
+              pages.length === 0 ? (
+                <p>No module content added yet.</p>
+              ) : null}
             </div>
           </div>
 
