@@ -30,6 +30,7 @@ const Module = ({
   slides,
   duration,
   pages,
+  onModuleDeleted,
 }: {
   pages: string[];
   setmoduleName: Function;
@@ -38,11 +39,12 @@ const Module = ({
   setModuleId: any;
   _id: string;
   name: string;
-  index: string;
+  index: number;
   assignments: string[];
   quizzes: string[];
   videos: string[];
   slides: string[];
+  onModuleDeleted?: (id: string) => void;
 }) => {
   const [ModuleTab, setModuleTab] = useState(false);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -93,7 +95,7 @@ const Module = ({
       {showModal && (
         <PopupModal
           name={name}
-          index={index}
+          index={String(index)}
           id={_id}
           setShowModal={setShowModal}
         />
@@ -103,6 +105,7 @@ const Module = ({
         show={showDeleteModal}
         handleClose={handleClose}
         id={seletedModule}
+        onDeleted={onModuleDeleted}
       />
       <div
         className="flex justify-between items-center bg-[#F9F9F9] mb-4 p-3"

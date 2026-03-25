@@ -9,10 +9,11 @@ type DeleteUserConfirmModalProps = {
   show: boolean;
   handleClose: () => void;
   id: string;
+  onDeleted?: (id: string) => void;
 };
 
 const DeleteModule = (props: DeleteUserConfirmModalProps) => {
-  const { show, handleClose, id } = props;
+  const { show, handleClose, id, onDeleted } = props;
 
   const [deleteModule, { isError, error, isLoading, isSuccess }] =
     useDeleteModuleMutation();
@@ -28,10 +29,11 @@ const DeleteModule = (props: DeleteUserConfirmModalProps) => {
       // console.log(error);
     } else if (isSuccess) {
       toast.success("Module has deleted Successfully!");
+      onDeleted?.(id);
       // console.log(data);
       handleClose();
     }
-  }, [isError, isSuccess]);
+  }, [isError, isSuccess, error, handleClose, id, onDeleted]);
   return (
     <Modal show={show} size="md" popup={true} onClose={handleClose}>
       <Modal.Header />

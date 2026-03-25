@@ -1,7 +1,6 @@
+"use client"
 import React, { useState, useEffect } from "react";
-import { InputErrorMessage } from "../../../../../../utils/error";
-import { useForm, useFormContext } from "react-hook-form";
-import { useUpdateVideoModuleMutation } from "../../../../../../../feature/api/dashboardApi";
+import { useAddModuleVideoMutation } from "../../../../../../../feature/api/dashboardApi";
 import { useSingleVideoUploadMutation } from "../../../../../../../feature/api/mediaUploadApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
@@ -40,8 +39,15 @@ const VideoCategory = ({
   });
   const [localVideo, setlocalVideo] = useState("");
   const [localVideoKey, setlocalVideoKey] = useState("");
-  const [updateVideoModule, { isError, error, data, isLoading, isSuccess }] =
-    useUpdateVideoModuleMutation();
+  const [
+    moduleVideoUpload,
+    {
+      isLoading: moduleVideoLoading,
+      error: moduleVideoError,
+      isSuccess: moduleVideoSuccess,
+      isError: moduleVideoIsError,
+    },
+  ] = useAddModuleVideoMutation();
   const [
     singleVideoUpload,
     {
@@ -61,7 +67,7 @@ const VideoCategory = ({
     if (file && file.length > 0 && file["0"].type.substr(0, 5) === "video") {
       const formData = new FormData();
       setshowVideoInputLocal(true);
-      formData.append("video", file["0"]);
+      formData.append("file", file["0"]);
       //  console.log(file);
       singleVideoUpload(formData);
     } else if (
@@ -76,13 +82,22 @@ const VideoCategory = ({
   useEffect(() => {
     if (isUploadError) {
       // console.log("upload error", uploadError);
-      toast.error((uploadError as any).data.message);
+      toast.error((uploadError as any)?.data?.message || "Video upload failed");
     } else if (isUploadSuccess) {
-      setlocalVideo(uploadData.data.video);
-      setlocalVideoKey(uploadData.data.key);
+      const uploadedVideoUrl = uploadData?.data?.fileUrl || uploadData?.data?.video;
+      if (!uploadedVideoUrl) {
+        toast.error("Video upload failed");
+        return;
+      }
+
+      setlocalVideo(uploadedVideoUrl);
+      setlocalVideoKey(
+        uploadData?.data?.key ||
+          `video_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      );
       toast.success("success");
     }
-  }, [isUploadError, isUploadSuccess]);
+  }, [isUploadError, isUploadSuccess, uploadData, uploadError]);
 
   //handle submit updates
   function handleChange(e: any) {
@@ -97,51 +112,36 @@ const VideoCategory = ({
   const videoSubmit = (event: any) => {
     event.preventDefault();
     event.stopPropagation();
+    const payload = { ...inputValue };
     if (localVideo) {
-      inputValue.localVideo = localVideo;
+      payload.localVideo = localVideo;
     }
     if (localVideoKey) {
-      inputValue.key = localVideoKey;
+      payload.key = localVideoKey;
     }
     if (youtubeUrl) {
-      inputValue.key = inputValue.topicName;
+      payload.key = payload.topicName;
+      payload.youtubeVide = youtubeUrl;
     }
 
-    // console.log(inputValue.topicName.trim())
-
-    if (
-      !inputValue.topicName.trim() ||
-      !inputValue.minutes ||
-      !inputValue.second
-    ) {
+    if (!payload.topicName.trim() || !payload.minutes || !payload.second) {
       toast.error("Invalid Input Field");
     } else {
-      if (youtubeUrl.length > 0 || inputValue.localVideo.length > 0) {
-        updateVideoModule({
-          module: id,
-          topicName: inputValue.topicName,
-          localVideo: inputValue.localVideo,
-          youtubeVideo: youtubeUrl,
-          minutes: inputValue.minutes,
-          second: inputValue.second,
-          key: inputValue.key,
-        });
+      if (youtubeUrl.length > 0 || payload.localVideo.length > 0) {
+        moduleVideoUpload({ ...payload, module: id });
       } else {
-        toast.error("Invalid input field");
+        toast.error("Invalid Input Field");
       }
     }
   };
   useEffect(() => {
-    if (isError) {
-      toast.error("Video Moudle has added error");
-      //console.log(error);
-    } else if (isSuccess) {
-      //console.log(data);
+    if (moduleVideoIsError) {
+      toast.error(`Video Moudle has added error ${moduleVideoError}`);
+    } else if (moduleVideoSuccess) {
       setShowModal(false);
       toast.success("Video Module has Added Successfully!");
-      // console.log(data);
     }
-  }, [isError, isSuccess]);
+  }, [moduleVideoIsError, moduleVideoSuccess, setShowModal, moduleVideoError]);
   return (
     <>
       <form>
@@ -265,12 +265,12 @@ const VideoCategory = ({
             Cancel
           </button>
           <button
-            disabled={isLoading}
+            disabled={moduleVideoLoading}
             onClick={videoSubmit}
             data-modal-hide="staticModal"
             className="flex items-center justify-center text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
           >
-            {isLoading ? <ButtonLoader /> : "Add Item"}
+            {moduleVideoLoading ? <ButtonLoader /> : "Add Item"}
           </button>
         </div>
       </form>

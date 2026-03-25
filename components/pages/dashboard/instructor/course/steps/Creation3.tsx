@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { StepPropss } from "./Creation1";
 import Module from "./popup/module/Module";
 import { useAppSelector } from "../../../../../../redux-hook/hooks";
+import ButtonLoader from "../../../../../utils/loaders/ButtonLoader";
 //icon
 import plusIconBg from "../../../../../../assets/Group34917.png";
 import { Spinner } from "flowbite-react";
 
 //component
 import AddModuleModal from "./popup/module/AddModuleModal";
-import { useGetCourseModuleQuery } from "../../../../../../feature/api/dashboardApi";
+import {
+  useGetCourseModuleQuery,
+  useUpdateCourseMutation,
+} from "../../../../../../feature/api/dashboardApi";
 import EditModuleModal from "./popup/module/EditModuleModal";
 
 const Creation3 = (props: StepPropss) => {
@@ -23,18 +28,68 @@ const Creation3 = (props: StepPropss) => {
   const { handleSubmit } = useForm<FormData>();
   const { isError, data, error, isLoading, isSuccess } =
     useGetCourseModuleQuery(_id, { skip: !_id });
+  const [updateCourse, { isLoading: isUpdating, isError: updateIsError, isSuccess: updateIsSuccess }] =
+    useUpdateCourseMutation();
+  const [modules, setModules] = useState<any[]>([]);
   const [EditshowModal, setEditShowModal] = useState<boolean>(false);
   const [ModuleId, setModuleId] = useState("");
   const [moduleName, setmoduleName] = useState("");
   //console.log(data);
 
-  const submitThirdStep = () => {
-    setStep(4);
+  const submitThirdStep = async () => {
+    const safeCourseId = _id;
+    if (!safeCourseId) {
+      toast.error("Course id is missing");
+      return;
+    }
+
+    const userData: any = formData;
+    await updateCourse({
+      id: safeCourseId,
+      isPublished: true,
+      tags: userData.tags || [],
+      title: userData.title,
+      shortDescription: userData.shortDescription,
+      category: userData.category,
+      language: userData.language,
+      durationInMinutes: userData.durationInMinutes,
+      price: userData.price,
+      level: userData.level,
+      featured: userData.featured,
+      numberOfLectures: userData.numberOfLectures,
+      discountPrice: userData.discountPrice,
+      isDiscount: userData.isDiscount,
+      description: userData.description,
+      courseImage: userData.courseImage,
+      videoUrl: userData.videoUrl,
+      messageToReviewer: userData.msgtoreviewer || "",
+    });
   };
 
   const onPrev = () => {
     setStep(step - 1);
   };
+
+  React.useEffect(() => {
+    if (isSuccess && data?.data) {
+      setModules(data.data);
+    }
+  }, [isSuccess, data]);
+
+  const handleModuleDeleted = (deletedId: string) => {
+    setModules((prev) =>
+      prev.filter((m) => (m?._id || m?.id || "") !== deletedId),
+    );
+  };
+
+  React.useEffect(() => {
+    if (updateIsError) {
+      toast.error("Course update failed");
+    } else if (updateIsSuccess) {
+      toast.success("Course updated successfully!");
+      setStep(4);
+    }
+  }, [updateIsError, updateIsSuccess, setStep]);
 
   return (
     <>
@@ -73,7 +128,7 @@ const Creation3 = (props: StepPropss) => {
               </div>
             ) : (
               isSuccess &&
-              data?.data?.map(
+              modules?.map(
                 (
                   {
                     pages = [],
@@ -89,14 +144,13 @@ const Creation3 = (props: StepPropss) => {
                     duration?: number;
                     id: string;
                     name?: string;
-                    index: string;
                     assignments?: string[];
                     quizzes?: string[];
                     videos?: string[];
                     slides?: string[];
                     _id: string;
                   },
-                  index: string
+                  index: number
                 ) => (
                   <Module
                     pages={pages}
@@ -112,6 +166,7 @@ const Creation3 = (props: StepPropss) => {
                     quizzes={quizzes}
                     videos={videos}
                     slides={slides}
+                    onModuleDeleted={handleModuleDeleted}
                   />
                 )
               )
@@ -128,7 +183,7 @@ const Creation3 = (props: StepPropss) => {
                 className="xsm:w-full lg:w-[7rem] bg-[#3A57E8] py-2 px-6 text-[#fff] rounded-sm"
                 type="submit"
               >
-                Next
+                {isUpdating ? <ButtonLoader /> : "Next"}
               </button>
             </div>
           </div>

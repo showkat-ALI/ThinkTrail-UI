@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
-  useGetAssignmentQuery,
-  useAllAssignmentInstructorQuery,
+  useGetAllAssignmentsofAInstructorQuery,
+  useGetModuleAssignmentsQuery,
 } from "../../../../../../../feature/api/dashboardApi";
 import { useAddModuleAssignmentMutation } from "../../../../../../../feature/api/dashboardApi";
 import { toast } from "react-toastify";
 import ButtonLoader from "../../../../../../utils/loaders/ButtonLoader";
 import Link from "next/link";
-import { useAppSelector } from "../../../../../../../redux-hook/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../../../redux-hook/hooks";
+import { useGetUserQuery } from "../../../../../../../feature/api/authApi";
+import { moduleAssignments } from "../../../../../../../feature/moduleAssignment/moduleAssignment";
 
 const AssignmentCategory = ({
   id,
@@ -16,21 +18,36 @@ const AssignmentCategory = ({
   id: string;
   setShowModal: any;
 }) => {
-  const { id: userId, roles } = useAppSelector((state) => state.auth.user);
+  const {
+    email,
+    isDeleted,
+    roles,
+    needsPasswordChange,
+    status,
+    passwordChangedAt,
+  } = useAppSelector((state: { auth: { user: any } }) => state.auth.user);
+  const {
+    data: userData,
+    isSuccess: userIsSuccess,
+    isError: isErrorUser,
+  } = useGetUserQuery({});
+  const dispatch = useAppDispatch();
+
+  // console.log("me data", userData);
+
   const {
     data: instructorAssignmentData,
     isSuccess: instructorAssignmentSuccess,
     isError: instructorAssignmentIsError,
     isLoading: instructorAssignmentLoading,
-  } = useAllAssignmentInstructorQuery(userId);
-  const { data, isSuccess, isError, isLoading } = useGetAssignmentQuery({});
+  } = useGetAllAssignmentsofAInstructorQuery(userData?.data._id);
   const [
     updateModule,
     {
       error,
+      data: moduleData,
       isLoading: loadingModule,
       isSuccess: moduleisSuccess,
-      isError: moduleIsError,
     },
   ] = useAddModuleAssignmentMutation();
   const [assignmentId, setassignmentId] = useState("");
@@ -40,25 +57,33 @@ const AssignmentCategory = ({
     setassignmentId(id);
     setactiveClass(id);
   };
+  // const { data: moduleAssignmentData, isLoading: moduleAssgnmntIsLoading, isSuccess: moduleAssgnmntIsSuccess, isError: moduleAssgnmntIsError } = useGetModuleAssignmentsQuery(id, {
+  //   skip: !moduleisSuccess, // Skip the query if moduleisSuccess is false
+  // });
+  // useEffect(() => {
+  //     if (moduleAssignmentData) {
 
-  const update = () => {
-    if (!assignmentId) {
-      toast.error("Please select an assignment first");
-      return;
-    }
+  //       dispatch(
+  //         moduleAssignments(moduleAssignmentData )
+  //       );
+  //     }
+  //   }, [moduleAssignmentData, dispatch, moduleisSuccess]);
+  // const { module } = useAppSelector((state) => state.module);
+  const Update = () => {
     updateModule({ module: id, assignment: assignmentId });
-    // console.log(assignmentId,id)
+
+    //   console.log(assignmentId,id)
   };
   useEffect(() => {
-    if (moduleIsError) {
+    if (instructorAssignmentIsError) {
       toast.error((error as any).data.message);
       // console.log(error);
     } else if (moduleisSuccess) {
       toast.success("Module has updated Successfully!");
-      // console.log(data);
+      //  console.log(data);
       setShowModal(false);
     }
-  }, [moduleIsError, moduleisSuccess, error, setShowModal]);
+  }, [instructorAssignmentIsError, moduleisSuccess]);
   return (
     <>
       <div>
@@ -79,56 +104,57 @@ const AssignmentCategory = ({
           </Link>
           <div>
             <ul className="flex flex-col gap-[10px] text-[#8A92A6] text-[15px] mb-2 h-[12rem] overflow-y-scroll	">
-              {roles?.includes("admin") &&
-                (isLoading ? (
-                  <div>Loading....</div>
-                ) : isError ? (
-                  <div>Error....</div>
-                ) : isSuccess &&
-                  data?.data?.assignments &&
-                  data.data.assignments.length > 0 ? (
-                  data.data.assignments.map(
-                    (
-                      { name, id }: { name: string; id: string },
-                      index: string,
-                    ) => (
-                      <li
-                        key={id}
-                        onClick={() => clickAssignment(id)}
-                        className={`${
-                          activeClass == id && "text-[#3A57E8]"
-                        } hover:text-[#da7b4f] cursor-pointer`}
-                      >
-                        Assignment {index + 1} - {name}
-                      </li>
-                    ),
-                  )
-                ) : (
-                  <div>No assignment found</div>
-                ))}
-              {roles?.includes("instructor") &&
+              {/* {roles?.includes("superAdmin") &&
                 (instructorAssignmentLoading ? (
                   <div>Loading....</div>
                 ) : instructorAssignmentIsError ? (
                   <div>Error....</div>
                 ) : instructorAssignmentSuccess &&
                   instructorAssignmentData?.data?.assignments &&
-                  instructorAssignmentData.data.assignments.length > 0 ? (
-                  instructorAssignmentData.data.assignments.map(
+                  instructorAssignmentData?.data?.assignments?.length > 0 ? (
+                  instructorAssignmentData?.data?.assignments.map(
                     (
-                      { name, id }: { name: string; id: string },
-                      index: string,
+                      { name, _id }: { name: string; _id: string },
+                      index: string
                     ) => (
                       <li
                         key={index}
-                        onClick={() => clickAssignment(id)}
+                        onClick={() => clickAssignment(_id)}
                         className={`${
                           activeClass == id && "text-[#3A57E8]"
                         } hover:text-[#da7b4f] cursor-pointer`}
                       >
                         Assignment {index + 1} - {name}
                       </li>
-                    ),
+                    )
+                  )
+                ) : (
+                  <div>No assignment found</div>
+                ))} */}
+              {(roles?.includes("instructor") ||
+                roles?.includes("superAdmin") || roles?.includes("admin")) &&
+                (instructorAssignmentLoading ? (
+                  <div>Loading....</div>
+                ) : instructorAssignmentIsError ? (
+                  <div>Error....</div>
+                ) : instructorAssignmentSuccess &&
+                  instructorAssignmentData?.data?.assignments &&
+                  instructorAssignmentData?.data?.assignments.length > 0 ? (
+                  instructorAssignmentData?.data?.assignments.map(
+                    (
+                      { name, _id }: { name: string; _id: string },
+                      index: string
+                    ) => (
+                      <li
+                        key={index}
+                        onClick={() => clickAssignment(_id)}
+                        className={`${
+                          activeClass === _id ? "text-[#3A57E8]" : ""
+                        } hover:text-[#da7b4f] cursor-pointer`}
+                      >
+                        Assignment {index + 1} - {name}
+                      </li>
+                    )
                   )
                 ) : (
                   <div>No assignment found</div>
@@ -137,17 +163,7 @@ const AssignmentCategory = ({
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-3 p-4">
-        <label className="font-medium text-base mb-2">Indentation</label>
-        <select
-          className="w-[16rem] h-[3rem] mb-2 border-none"
-          style={{ boxShadow: "0px 1px 15px rgba(0, 0, 0, 0.15)" }}
-        >
-          <option>Indent 1 Level</option>
-          <option>Indent 2 Level</option>
-          <option>Indent 4 Level</option>
-        </select>
-      </div>
+
       <div className="flex items-center justify-end p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
         <button
           onClick={() => setShowModal(false)}
@@ -158,13 +174,20 @@ const AssignmentCategory = ({
           Cancel
         </button>
         <button
-          disabled={loadingModule}
-          onClick={update}
+          onClick={Update}
           data-modal-hide="staticModal"
           type="button"
-          className="flex text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+          disabled={loadingModule}
+          className="text-gray-500 flex bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
         >
-          {loadingModule ? <ButtonLoader /> : "Add Item"}
+          {loadingModule ? (
+            <>
+              <ButtonLoader />
+              loading ...
+            </>
+          ) : (
+            "Add Item"
+          )}
         </button>
       </div>
     </>
