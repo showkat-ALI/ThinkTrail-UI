@@ -10,14 +10,14 @@ import MyCourses from "../../components/pages/dashboard/stundent-self/my-courses
 
 const DashboardPage = () => {
   const { roles } = useAppSelector((state) => state.auth.user);
-console.log(roles)
+  console.log(roles);
   // Only render content after PrivateTemplate verifies auth
   return (
     <PrivateTemplate>
       <Head>
         <title>Think Trail Dashboard</title>
       </Head>
-      
+
       {roles?.includes("instructor") && (
         <AccessTemplate accessRoles={["instructor"]}>
           <DashboardLayout>
@@ -27,7 +27,7 @@ console.log(roles)
       )}
 
       {(roles?.includes("admin") || roles?.includes("superAdmin")) && (
-        <AccessTemplate accessRoles={["admin","superAdmin"]}>
+        <AccessTemplate accessRoles={["admin", "superAdmin"]}>
           <DashboardLayout>
             <HomeComponent />
           </DashboardLayout>

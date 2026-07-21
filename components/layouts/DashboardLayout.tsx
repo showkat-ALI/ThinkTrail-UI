@@ -15,10 +15,13 @@ const DashboardLayout = ({ children }: ICommon) => {
           <Announce />
           <main className="bg-[#F9F9F9] p-5 min-h-[100vh]">{children}</main>
           <Footer />
-        </div>
+        </div>yes
       </div>
+      
     </>
+    
   );
+ 
 };
 
 export default DashboardLayout;
