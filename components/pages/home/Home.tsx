@@ -25,7 +25,7 @@ const HomePage = () => {
           <CTASection />
         </main>
 
-        <Footer />
+        
       </div>
     </div>
   );
